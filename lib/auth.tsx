@@ -1,11 +1,13 @@
 import { useState, useEffect, createContext, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { useLoginMutation } from '../graphql/generated'
+
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     const router = useRouter();
     const [user, setUser] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     const [loginMutation] = useLoginMutation()
 
@@ -24,16 +26,17 @@ export const AuthProvider = ({ children }) => {
     }, [])
 
     const login = async ({ username, password }) => {
-        const { data } = await loginMutation({
+        const { data, loading } = await loginMutation({
             variables: {
                 username: username,
                 password: password
             }
         })
-        if (data?.tokenAuth?.success) {
+        if (!loading && data?.tokenAuth?.success) {
+            setIsLoading(false);
             localStorage.setItem('JWT', data.tokenAuth.token)
             setUser(data.tokenAuth.user)
-            router.push('/hospital/database')
+            router.push('/hospital/dashboard')
         }
     }
 
@@ -45,10 +48,11 @@ export const AuthProvider = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated: !!user, user, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated: !!user, user, login, isLoading, logout }}>
             {children}
         </AuthContext.Provider>
     )
 }
+
 
 export const useAuth = () => useContext(AuthContext)

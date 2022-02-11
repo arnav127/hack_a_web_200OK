@@ -15,8 +15,6 @@ const Login = () => {
             username: formData.get('username'),
             password: formData.get('password'),
         })
-            .then((errors) => setErr(errors))
-            .catch((error) => setErr(error))
     }
 
     return (
