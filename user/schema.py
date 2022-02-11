@@ -45,7 +45,7 @@ class HospitalQuery(graphene.ObjectType):
         return Hospital.objects.all()
 
     def resolve_hospital(root, info, name):
-        return Hospital.objects.filter(name=name)
+        return Hospital.objects.get(name=name)
 
 class PatientType(DjangoObjectType):
     class Meta:
