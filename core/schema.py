@@ -1,7 +1,10 @@
 import graphene
 from user.schema import AuthMutation, AuthQuery, HospitalQuery, PatientQuery, PatientMutation, PatientAuthorizedHospitalQuery, PatientAuthorizedHospitalMutation
 
+
+from resources.schema import HospitalResourceQuery
 class Query(
+    HospitalResourceQuery,
     PatientQuery,
     PatientAuthorizedHospitalQuery,
     HospitalQuery,
