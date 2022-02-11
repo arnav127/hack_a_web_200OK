@@ -7,8 +7,10 @@ name = "pypi"
 django = "<4"
 graphene-django = "*"
 django-graphql-auth = "*"
+django-graphql-jwt = "<0.3.2"
 graphene = "*"
 django-cors-headers = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
