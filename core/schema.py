@@ -1,6 +1,6 @@
 import graphene
 from user.schema import AuthMutation, AuthQuery, HospitalQuery, PatientQuery, PatientMutation, PatientAuthorizedHospitalQuery, PatientAuthorizedHospitalMutation
-
+from patientrecord.schema import MedicineRecordQuery, DoctorNotesQuery, TestResultQuery
 
 from resources.schema import HospitalResourceQuery
 class Query(
@@ -8,6 +8,9 @@ class Query(
     PatientQuery,
     PatientAuthorizedHospitalQuery,
     HospitalQuery,
+    MedicineRecordQuery,
+    DoctorNotesQuery,
+    TestResultQuery,
     AuthQuery, 
     graphene.ObjectType,
     ):
