@@ -21,6 +21,13 @@ class TestResultType(DjangoObjectType):
     class Meta:
         model = TestResult
 
+class MedicinePrescriptionQuery(models.Model):
+    medicine_prescription = graphene.List(MedicinePrescriptionType)
+
+    @login_required
+    def resolve_medicine_prescription(root, info):
+        return MedicinePrescription.objects.all()
+
 class MedicineRecordQuery(graphene.ObjectType):
     medicine_records = graphene.List(MedicineRecordType, patient = graphene.String())
     latest_medicine_records = graphene.Field(MedicinePrescriptionType, patient = graphene.String())
