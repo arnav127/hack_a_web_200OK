@@ -33,7 +33,7 @@ class Patient(models.Model):
         return f'{self.name}'
 
 
-class PatientAuthorizedHospitals(models.Model):
+class PatientAuthorizedHospital(models.Model):
     patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE)
     hospital_id = models.ForeignKey(Hospital, on_delete=models.CASCADE)
 
