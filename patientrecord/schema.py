@@ -1,4 +1,4 @@
-from turtle import update
+
 import graphene
 from graphene_django import DjangoObjectType
 from graphql_jwt.decorators import login_required
@@ -22,7 +22,7 @@ class TestResultType(DjangoObjectType):
     class Meta:
         model = TestResult
 
-class MedicinePrescriptionQuery(models.Model):
+class MedicinePrescriptionQuery(graphene.ObjectType):
     medicine_prescription = graphene.List(MedicinePrescriptionType)
 
     @login_required
@@ -72,7 +72,8 @@ class CreateMedicinePrescription(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, medicine, doses):
-        return MedicinePrescription.objects.create(medicine=medicine, doses=doses)
+        medp = MedicinePrescription.objects.create(medicine=medicine, doses=doses)
+        return CreateMedicinePrescription(medp=medp)
 
 class UpdateMedicinePrescription(graphene.Mutation):
     class Arguments:
@@ -94,3 +95,37 @@ class UpdateMedicinePrescription(graphene.Mutation):
 class MedicinePrescriptionMutation(graphene.ObjectType):
     create_medicine_prescription = CreateMedicinePrescription.Field()
     update_medicine_prescription = UpdateMedicinePrescription.Field()
+
+class CreateMedicineRecord(graphene.Mutation):
+    class Arguments:
+        patient_id = graphene.String()
+        prescription_id = graphene.String()
+
+    medr = graphene.Field(MedicineRecordType)
+
+    @classmethod
+    @login_required
+    def mutate(self, root, info, medicine, doses):
+        medr = MedicineRecord.objects.create(medicine=medicine, doses=doses)
+        return CreateMedicineRecord(medr = medr)
+
+class UpdateMedicineRecord(graphene.Mutation):
+    class Arguments:
+        id = graphene.String(required = True)
+        patient_id = graphene.String()
+        prescription_id = graphene.String()
+
+    medr = graphene.Field(MedicineRecordType)
+
+    @classmethod
+    @login_required
+    def mutate(self, root, info, id, **kwargs):
+        medr = MedicineRecord.objects.get(pk = id)
+        for k, v in kwargs.items():
+            setattr(medr, k, v)
+        medr.save()
+        return UpdateMedicineRecord(medr=medr)
+
+class MedicineRecordMutation(graphene.ObjectType):
+    create_medicine_record = CreateMedicineRecord.Field()
+    update_medicine_record = UpdateMedicineRecord.Field()
