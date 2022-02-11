@@ -11,6 +11,7 @@ django-graphql-jwt = "<0.3.2"
 graphene = "*"
 django-cors-headers = "*"
 psycopg2 = "*"
+inflection = "*"
 
 [dev-packages]
 

@@ -1,6 +1,6 @@
 import graphene
 from graphene_django import DjangoObjectType
-
+from inflection import underscore
 from resources.models import HospitalResource
 from graphql_jwt.decorators import login_required
 
@@ -106,7 +106,27 @@ class UpdateHospitalResource(graphene.Mutation):
         hospital_resource.save()
         return UpdateHospitalResource(ok=True, hospital_resource=hospital_resource)
 
+class IncrementHospitalResource(graphene.Mutation):
+    class Arguments:
+        resource = graphene.String()
+
+    ok = graphene.Boolean()
+    hospital_resource = graphene.Field(HospitalResourceType)
+
+    @classmethod
+    @login_required
+    def mutate(cls, root, info, resource):
+        hospital_resource = HospitalResource.objects.get(hospital=info.context.user.hospital)
+        resource_name = underscore(resource)
+        val = getattr(hospital_resource, resource_name)
+        setattr(hospital_resource, resource, val+1)
+        print(val, val+1)
+        hospital_resource.save()
+        print(hospital_resource.bedAvailable)
+        return IncrementHospitalResource(ok=True, hospital_resource=hospital_resource)
 
 class HospitalResourceMutation(graphene.ObjectType):
     create_hospital_resource = CreateHospitalResource.Field()
     update_hospital_resource = UpdateHospitalResource.Field()
+    increment_hospital_resource = IncrementHospitalResource.Field()
+
