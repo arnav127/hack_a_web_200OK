@@ -112,13 +112,13 @@ class CreateMedicineRecord(graphene.Mutation):
         patient_id = graphene.String()
         prescription_id = graphene.String()
 
-    medr = graphene.Field(MedicineRecordType)
+    medicine_record = graphene.Field(MedicineRecordType)
 
     @classmethod
     @login_required
     def mutate(self, root, info, medicine, doses):
         medr = MedicineRecord.objects.create(medicine=medicine, doses=doses)
-        return CreateMedicineRecord(medr=medr)
+        return CreateMedicineRecord(medicine_record=medr)
 
 
 class UpdateMedicineRecord(graphene.Mutation):
@@ -127,7 +127,7 @@ class UpdateMedicineRecord(graphene.Mutation):
         patient_id = graphene.String()
         prescription_id = graphene.String()
 
-    medr = graphene.Field(MedicineRecordType)
+    medicine_record = graphene.Field(MedicineRecordType)
 
     @classmethod
     @login_required
@@ -136,7 +136,7 @@ class UpdateMedicineRecord(graphene.Mutation):
         for k, v in kwargs.items():
             setattr(medr, k, v)
         medr.save()
-        return UpdateMedicineRecord(medr=medr)
+        return UpdateMedicineRecord(medicine_record=medr)
 
 
 class MedicineRecordMutation(graphene.ObjectType):
