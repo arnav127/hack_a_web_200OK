@@ -27,6 +27,7 @@ class Hospital(models.Model):
 class Patient(models.Model):
     name = models.CharField(max_length=255, blank=False, verbose_name="Patient Name")
     phone = models.CharField(max_length=255, blank=True, verbose_name="Patient Phone")
+    aadhar = models.CharField(max_length=20, blank=True, verbose_name="Patient Aadhar Number")
     
 
 
