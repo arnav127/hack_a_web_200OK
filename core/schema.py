@@ -3,6 +3,7 @@ from user.schema import AuthMutation, AuthQuery, HospitalQuery, PatientQuery, Pa
 
 
 from resources.schema import HospitalResourceQuery
+from resources.schema import HospitalResourceMutation
 class Query(
     HospitalResourceQuery,
     PatientQuery,
@@ -14,6 +15,7 @@ class Query(
     pass
 
 class Mutation(
+    HospitalResourceMutation,
     PatientMutation,
     PatientAuthorizedHospitalMutation,
     AuthMutation, 
