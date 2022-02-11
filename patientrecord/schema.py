@@ -142,3 +142,44 @@ class UpdateMedicineRecord(graphene.Mutation):
 class MedicineRecordMutation(graphene.ObjectType):
     create_medicine_record = CreateMedicineRecord.Field()
     update_medicine_record = UpdateMedicineRecord.Field()
+
+
+class CreateDoctorNotes(graphene.Mutation):
+    class Arguments:
+        patient_id = graphene.String()
+        doctor = graphene.String()
+        diagnosis = graphene.String()
+        notes = graphene.String()
+
+    doctor_notes = graphene.Field(DoctorNotesType)
+
+    @classmethod
+    @login_required
+    def mutate(self, root, info, patient_id, doctor, diagnosis, notes):
+        doctor_notes = DoctorNotes.objects.create(patient_id=patient_id, doctor=doctor, diagnosis=diagnosis, notes=notes)
+        return CreateDoctorNotes(doctor_notes=doctor_notes)
+
+class UpdateDoctorNotes(graphene.Mutation):
+    class Arguments:
+        id = graphene.String(required=True)
+        patient_id = graphene.String()
+        doctor = graphene.String()
+        diagnosis = graphene.String()
+        notes = graphene.String()
+
+    doctor_notes = graphene.Field(DoctorNotesType)
+
+    @classmethod
+    @login_required
+    def mutate(self, root, info, id, **kwargs):
+        doctor_notes = DoctorNotes.objects.get(pk=id)
+        for k, v in kwargs.items():
+            setattr(doctor_notes, k, v)
+        doctor_notes.save()
+        return UpdateDoctorNotes(doctor_notes=doctor_notes)
+
+
+class DoctorNotesMutation(graphene.ObjectType):
+    create_doctor_notes = CreateDoctorNotes.Field()
+    update_doctor_notes = UpdateDoctorNotes.Field()
+
