@@ -31,7 +31,7 @@ class MedicinePrescriptionQuery(graphene.ObjectType):
 
 class MedicineRecordQuery(graphene.ObjectType):
     medicine_records = graphene.List(MedicineRecordType, patient = graphene.String())
-    latest_medicine_records = graphene.Field(MedicinePrescriptionType, patient = graphene.String())
+    latest_medicine_records = graphene.Field(MedicineRecordType, patient = graphene.String())
 
     @login_required
     def resolve_medicine_records(root, info, patient):
