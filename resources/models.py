@@ -3,7 +3,7 @@ from user.models import Hospital
 
 # Create your models here.
 
-class HospitalResources(models.Model):
+class HospitalResource(models.Model):
     hospital = models.OneToOneField(Hospital, on_delete=models.CASCADE)
     
     bed_capacity = models.IntegerField(default=0, verbose_name="Beds Count")
