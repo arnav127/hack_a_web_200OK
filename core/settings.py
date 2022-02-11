@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     'graphql_auth',
     'django_filters',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -145,6 +146,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'user.ExtendUser'
 
 GRAPHENE = {
     'SCHEMA': 'core.schema.schema',

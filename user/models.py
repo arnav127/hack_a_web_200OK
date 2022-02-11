@@ -10,3 +10,26 @@ class ExtendUser(AbstractUser):
     
     def __str__(self) -> str:
         return f'{self.username}'
+
+
+class Hospital(models.Model):
+    user = models.OneToOneField(ExtendUser, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255, blank=False, verbose_name="Hospital Name")
+    address = models.CharField(max_length=255, blank=True, verbose_name="Hospital Address")
+    phone = models.CharField(max_length=255, blank=True, verbose_name="Hospital Phone")
+    longitude = models.FloatField(null=True, verbose_name="Hospital Longitude")
+    latitude = models.FloatField(null=True, verbose_name="Hospital Latitude")
+
+    def __str__(self) -> str:
+        return f'{self.user.username} - {self.name}'
+
+
+class Patient(models.Model):
+    name = models.CharField(max_length=255, blank=False, verbose_name="Patient Name")
+    phone = models.CharField(max_length=255, blank=True, verbose_name="Patient Phone")
+    
+
+
+# medicines
+# test result
+# doctor notes
