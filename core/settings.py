@@ -89,8 +89,6 @@ config_file = os.path.join(BASE_DIR, 'config.ini')
 config.read(config_file)
 
 database_config = config['database']
-print(database_config)
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
