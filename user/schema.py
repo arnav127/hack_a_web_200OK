@@ -3,7 +3,7 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphql_auth.schema import UserQuery, MeQuery
 from graphql_auth import mutations
-from .models import ExtendUser, Hospital, Patient
+from .models import ExtendUser, Hospital, Patient, PatientAuthorizedHospital
 from graphql_jwt.decorators import login_required
 
 class UserType(DjangoObjectType):
@@ -53,10 +53,14 @@ class PatientType(DjangoObjectType):
 
 class PatientQuery(graphene.ObjectType):
     patient = graphene.Field(PatientType, phone=graphene.String(), aadhar=graphene.String())
+    patients_all = graphene.List(PatientType)
 
-    @login_required
     def resolve_patient(root, info, phone, aadhar):
         return Patient.objects.filter(phone = phone, aadhar=aadhar).first()
+
+    @login_required
+    def resolve_patients_all(root, info):
+        return Patient.objects.all()
 
 class CreatePatient (graphene.Mutation):
     
@@ -93,3 +97,33 @@ class UpdatePatient(graphene.Mutation):
 class PatientMutation(graphene.ObjectType):
     create_patient = CreatePatient.Field()
     update_patient = UpdatePatient.Field()
+
+class PatientAuthorizedHospitalType(DjangoObjectType):
+    class Meta:
+        model = PatientAuthorizedHospital
+
+class PatientAuthorizedHospitalQuery(graphene.ObjectType):
+    patients_admitted = graphene.List(PatientAuthorizedHospitalType)
+
+    def resolve_patients_admitted(root, info):
+        hospital_id = Hospital.objects.get(user = info.context.user)
+        return PatientAuthorizedHospital.objects.filter(hospital_id = hospital_id)
+
+class CreatePatientAuthorizedHospital(graphene.Mutation):
+    class Arguments:
+        patient_id = graphene.String()
+
+    ok = graphene.Boolean()
+    pah = graphene.Field(PatientAuthorizedHospitalType)
+
+    @classmethod
+    @login_required
+    def mutate(self, root, info, patient_id):
+        hospital = Hospital.objects.filter(user = info.context.user).first()
+        print(hospital, "\n\n\n\n\n")
+        patient = Patient.objects.get(pk=patient_id)
+        pah = PatientAuthorizedHospital.objects.create(patient_id=patient, hospital_id = hospital)
+        return CreatePatientAuthorizedHospital(ok=True, pah=pah)
+
+class PatientAuthorizedHospitalMutation(graphene.ObjectType):
+    create_patient_authorized_hospitals = CreatePatientAuthorizedHospital.Field()
