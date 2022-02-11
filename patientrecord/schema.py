@@ -1,3 +1,4 @@
+from turtle import update
 import graphene
 from graphene_django import DjangoObjectType
 from graphql_jwt.decorators import login_required
@@ -61,3 +62,35 @@ class TestResultQuery(graphene.ObjectType):
     def resolve_test_result(root, info, patient):
         return TestResult.objects.filter(patient = patient)
 
+class CreateMedicinePrescription(graphene.Mutation):
+    class Arguments:
+        medicine = graphene.String()
+        doses = graphene.String()
+
+    medp = graphene.Field(MedicinePrescriptionType)
+
+    @classmethod
+    @login_required
+    def mutate(self, root, info, medicine, doses):
+        return MedicinePrescription.objects.create(medicine=medicine, doses=doses)
+
+class UpdateMedicinePrescription(graphene.Mutation):
+    class Arguments:
+        id = graphene.String(required = True)
+        medicine = graphene.String()
+        doses = graphene.String()
+
+    medp = graphene.Field(MedicinePrescriptionType)
+
+    @classmethod
+    @login_required
+    def mutate(self, root, info, id, **kwargs):
+        medp = MedicinePrescription.objects.get(pk = id)
+        for k, v in kwargs.items():
+            setattr(medp, k, v)
+        medp.save()
+        return UpdateMedicinePrescription(medp=medp)
+
+class MedicinePrescriptionMutation(graphene.ObjectType):
+    create_medicine_prescription = CreateMedicinePrescription.Field()
+    update_medicine_prescription = UpdateMedicinePrescription.Field()
