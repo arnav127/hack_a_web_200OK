@@ -7,39 +7,82 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='DoctorNotes',
+            name="DoctorNotes",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('doctor', models.CharField(max_length=255, verbose_name='Doctor Name')),
-                ('diagnosis', models.TextField(verbose_name='Diagnosis')),
-                ('notes', models.TextField(verbose_name='Doctor Notes')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "doctor",
+                    models.CharField(max_length=255, verbose_name="Doctor Name"),
+                ),
+                ("diagnosis", models.TextField(verbose_name="Diagnosis")),
+                ("notes", models.TextField(verbose_name="Doctor Notes")),
             ],
         ),
         migrations.CreateModel(
-            name='MedicinePrescription',
+            name="MedicinePrescription",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('medicine', models.CharField(max_length=255, verbose_name='Medicine Name')),
-                ('doses', models.CharField(blank=True, max_length=255, verbose_name='Doses')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "medicine",
+                    models.CharField(max_length=255, verbose_name="Medicine Name"),
+                ),
+                (
+                    "doses",
+                    models.CharField(blank=True, max_length=255, verbose_name="Doses"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='MedicineRecord',
+            name="MedicineRecord",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='TestResult',
+            name="TestResult",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('test_name', models.CharField(max_length=255, verbose_name='Test Name')),
-                ('test_result', models.TextField(verbose_name='Test Result')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "test_name",
+                    models.CharField(max_length=255, verbose_name="Test Name"),
+                ),
+                ("test_result", models.TextField(verbose_name="Test Result")),
             ],
         ),
     ]

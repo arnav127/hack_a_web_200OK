@@ -3,13 +3,18 @@ from user.models import Hospital
 
 # Create your models here.
 
+
 class HospitalResource(models.Model):
     hospital = models.OneToOneField(Hospital, on_delete=models.CASCADE)
-    
+
     bed_capacity = models.IntegerField(default=0, verbose_name="Beds Count")
     bed_available = models.IntegerField(default=0, verbose_name="Beds Available")
-    ventilator_capacity = models.IntegerField(default=0, verbose_name="Ventilator Capacity")
-    ventilator_available = models.IntegerField(default=0, verbose_name="Ventilator Available")
+    ventilator_capacity = models.IntegerField(
+        default=0, verbose_name="Ventilator Capacity"
+    )
+    ventilator_available = models.IntegerField(
+        default=0, verbose_name="Ventilator Available"
+    )
     icu_capacity = models.IntegerField(default=0, verbose_name="ICU Capacity")
     icu_available = models.IntegerField(default=0, verbose_name="ICU Available")
 
@@ -27,6 +32,5 @@ class HospitalResource(models.Model):
     mammogram = models.BooleanField(default=False, verbose_name="Mammogram")
     colonoscopy = models.BooleanField(default=False, verbose_name="Colonoscopy")
 
-
     def __str__(self) -> str:
-        return f'{self.hospital.name} Resources'
+        return f"{self.hospital.name} Resources"

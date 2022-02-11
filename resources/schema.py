@@ -4,11 +4,12 @@ from graphene_django import DjangoObjectType
 from resources.models import HospitalResource
 from graphql_jwt.decorators import login_required
 
+
 class HospitalResourceType(DjangoObjectType):
     class Meta:
         model = HospitalResource
         filter_fields = [
-            'hospital',
+            "hospital",
         ]
 
 
@@ -60,8 +61,11 @@ class CreateHospitalResource(graphene.Mutation):
     @login_required
     def mutate(cls, root, info, **kwargs):
         HospitalResource.objects.get
-        hospital_resource, _ = HospitalResource.objects.get_or_create(hospital=info.context.user.hospital, defaults={**kwargs})
+        hospital_resource, _ = HospitalResource.objects.get_or_create(
+            hospital=info.context.user.hospital, defaults={**kwargs}
+        )
         return CreateHospitalResource(ok=True, hospital_resource=hospital_resource)
+
 
 class UpdateHospitalResource(graphene.Mutation):
     ok = graphene.Boolean()
@@ -93,12 +97,15 @@ class UpdateHospitalResource(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(cls, root, info, **kwargs):
-        hospital_resource = HospitalResource.objects.get(hospital=info.context.user.hospital)
+        hospital_resource = HospitalResource.objects.get(
+            hospital=info.context.user.hospital
+        )
         for key, value in kwargs.items():
             setattr(hospital_resource, key, value)
 
         hospital_resource.save()
         return UpdateHospitalResource(ok=True, hospital_resource=hospital_resource)
+
 
 class HospitalResourceMutation(graphene.ObjectType):
     create_hospital_resource = CreateHospitalResource.Field()

@@ -1,4 +1,3 @@
-
 import graphene
 from graphene_django import DjangoObjectType
 from graphql_jwt.decorators import login_required
@@ -6,21 +5,26 @@ from graphql_jwt.decorators import login_required
 from user.models import Patient
 from .models import MedicinePrescription, MedicineRecord, DoctorNotes, TestResult
 
+
 class MedicinePrescriptionType(DjangoObjectType):
     class Meta:
         model = MedicinePrescription
+
 
 class MedicineRecordType(DjangoObjectType):
     class Meta:
         model = MedicineRecord
 
+
 class DoctorNotesType(DjangoObjectType):
     class Meta:
         model = DoctorNotes
 
+
 class TestResultType(DjangoObjectType):
     class Meta:
         model = TestResult
+
 
 class MedicinePrescriptionQuery(graphene.ObjectType):
     medicine_prescription = graphene.List(MedicinePrescriptionType)
@@ -29,38 +33,42 @@ class MedicinePrescriptionQuery(graphene.ObjectType):
     def resolve_medicine_prescription(root, info):
         return MedicinePrescription.objects.all()
 
+
 class MedicineRecordQuery(graphene.ObjectType):
-    medicine_records = graphene.List(MedicineRecordType, patient = graphene.String())
-    latest_medicine_records = graphene.Field(MedicineRecordType, patient = graphene.String())
+    medicine_records = graphene.List(MedicineRecordType, patient=graphene.String())
+    latest_medicine_records = graphene.Field(
+        MedicineRecordType, patient=graphene.String()
+    )
 
     @login_required
     def resolve_medicine_records(root, info, patient):
-        return MedicineRecord.objects.filter(patient = patient)
+        return MedicineRecord.objects.filter(patient=patient)
 
     @login_required
     def resolve_medicine_records(root, info, patient):
-        return MedicineRecord.objects.filter(patient = patient).order_by("-id").first()
+        return MedicineRecord.objects.filter(patient=patient).order_by("-id").first()
+
 
 class DoctorNotesQuery(graphene.ObjectType):
-    doctor_notes = graphene.List(DoctorNotesType, patient = graphene.String())
-    latest_doctor_notes = graphene.Field(DoctorNotesType, patient = graphene.String())
+    doctor_notes = graphene.List(DoctorNotesType, patient=graphene.String())
+    latest_doctor_notes = graphene.Field(DoctorNotesType, patient=graphene.String())
 
     @login_required
     def resolve_doctor_notes(root, info, patient):
-        return DoctorNotes.objects.filter(patient = patient)
+        return DoctorNotes.objects.filter(patient=patient)
 
     @login_required
     def resolve_latest_doctor_notes(root, info, patient):
-        return DoctorNotes.objects.filter(patient = patient).order_by("-id").first()
+        return DoctorNotes.objects.filter(patient=patient).order_by("-id").first()
 
-    
 
 class TestResultQuery(graphene.ObjectType):
-    test_result = graphene.List(TestResultType, patient= graphene.String())
+    test_result = graphene.List(TestResultType, patient=graphene.String())
 
     @login_required
     def resolve_test_result(root, info, patient):
-        return TestResult.objects.filter(patient = patient)
+        return TestResult.objects.filter(patient=patient)
+
 
 class CreateMedicinePrescription(graphene.Mutation):
     class Arguments:
@@ -75,9 +83,10 @@ class CreateMedicinePrescription(graphene.Mutation):
         medp = MedicinePrescription.objects.create(medicine=medicine, doses=doses)
         return CreateMedicinePrescription(medp=medp)
 
+
 class UpdateMedicinePrescription(graphene.Mutation):
     class Arguments:
-        id = graphene.String(required = True)
+        id = graphene.String(required=True)
         medicine = graphene.String()
         doses = graphene.String()
 
@@ -86,15 +95,17 @@ class UpdateMedicinePrescription(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, id, **kwargs):
-        medp = MedicinePrescription.objects.get(pk = id)
+        medp = MedicinePrescription.objects.get(pk=id)
         for k, v in kwargs.items():
             setattr(medp, k, v)
         medp.save()
         return UpdateMedicinePrescription(medp=medp)
 
+
 class MedicinePrescriptionMutation(graphene.ObjectType):
     create_medicine_prescription = CreateMedicinePrescription.Field()
     update_medicine_prescription = UpdateMedicinePrescription.Field()
+
 
 class CreateMedicineRecord(graphene.Mutation):
     class Arguments:
@@ -107,11 +118,12 @@ class CreateMedicineRecord(graphene.Mutation):
     @login_required
     def mutate(self, root, info, medicine, doses):
         medr = MedicineRecord.objects.create(medicine=medicine, doses=doses)
-        return CreateMedicineRecord(medr = medr)
+        return CreateMedicineRecord(medr=medr)
+
 
 class UpdateMedicineRecord(graphene.Mutation):
     class Arguments:
-        id = graphene.String(required = True)
+        id = graphene.String(required=True)
         patient_id = graphene.String()
         prescription_id = graphene.String()
 
@@ -120,11 +132,12 @@ class UpdateMedicineRecord(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, id, **kwargs):
-        medr = MedicineRecord.objects.get(pk = id)
+        medr = MedicineRecord.objects.get(pk=id)
         for k, v in kwargs.items():
             setattr(medr, k, v)
         medr.save()
         return UpdateMedicineRecord(medr=medr)
+
 
 class MedicineRecordMutation(graphene.ObjectType):
     create_medicine_record = CreateMedicineRecord.Field()

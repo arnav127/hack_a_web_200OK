@@ -9,14 +9,16 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('user', '0001_initial'),
-        ('resources', '0001_initial'),
+        ("user", "0001_initial"),
+        ("resources", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='hospitalresource',
-            name='hospital',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='user.hospital'),
+            model_name="hospitalresource",
+            name="hospital",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE, to="user.hospital"
+            ),
         ),
     ]

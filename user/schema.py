@@ -6,9 +6,11 @@ from graphql_auth import mutations
 from .models import ExtendUser, Hospital, Patient, PatientAuthorizedHospital
 from graphql_jwt.decorators import login_required
 
+
 class UserType(DjangoObjectType):
     class Meta:
         model = ExtendUser
+
 
 class AuthMutation(graphene.ObjectType):
     register = mutations.Register.Field()
@@ -30,6 +32,7 @@ class AuthMutation(graphene.ObjectType):
     refresh_token = mutations.RefreshToken.Field()
     revoke_token = mutations.RevokeToken.Field()
 
+
 class AuthQuery(UserQuery, MeQuery, graphene.ObjectType):
     pass
 
@@ -38,39 +41,47 @@ class HospitalType(DjangoObjectType):
     class Meta:
         model = Hospital
 
+
 class HospitalQuery(graphene.ObjectType):
     all_hospitals = graphene.List(HospitalType)
     hospital = graphene.Field(HospitalType, name=graphene.String())
+
     def resolve_all_hospitals(root, info):
         return Hospital.objects.all()
 
     def resolve_hospital(root, info, name):
         return Hospital.objects.get(name=name)
 
+
 class PatientType(DjangoObjectType):
     class Meta:
         model = Patient
 
+
 class PatientQuery(graphene.ObjectType):
-    patient = graphene.Field(PatientType, phone=graphene.String(), aadhar=graphene.String())
+    patient = graphene.Field(
+        PatientType, phone=graphene.String(), aadhar=graphene.String()
+    )
     patients_all = graphene.List(PatientType)
 
     def resolve_patient(root, info, **kwargs):
-        print(kwargs['phone'])
-        if kwargs['phone']:
-            return Patient.objects.get(phone = kwargs['phone'])
-        
-        if kwargs['aadhar']:
-            return Patient.objects.get(aadhar = kwargs['aadhar'])
+        print(kwargs["phone"])
+        if kwargs["phone"]:
+            return Patient.objects.get(phone=kwargs["phone"])
+
+        if kwargs["aadhar"]:
+            return Patient.objects.get(aadhar=kwargs["aadhar"])
         return None
 
     @login_required
     def resolve_patients_all(root, info):
         return Patient.objects.all()
 
-class CreatePatient (graphene.Mutation):
-    
+
+class CreatePatient(graphene.Mutation):
+
     patient = graphene.Field(PatientType)
+
     class Arguments:
         name = graphene.String(required=True)
         phone = graphene.String(required=True)
@@ -82,6 +93,7 @@ class CreatePatient (graphene.Mutation):
         patient = Patient.objects.create(name=name, phone=phone, aadhar=aadhar)
         return CreatePatient(patient=patient)
 
+
 class UpdatePatient(graphene.Mutation):
     patient = graphene.Field(PatientType)
 
@@ -90,30 +102,34 @@ class UpdatePatient(graphene.Mutation):
         name = graphene.String()
         phone = graphene.String()
         aadhar = graphene.String()
-        
+
     @classmethod
     @login_required
     def mutate(self, root, info, id, **kwargs):
-        patient = Patient.objects.get(pk = id)
+        patient = Patient.objects.get(pk=id)
         for k, v in kwargs.items():
             setattr(patient, k, v)
         patient.save()
         return UpdatePatient(patient=patient)
 
+
 class PatientMutation(graphene.ObjectType):
     create_patient = CreatePatient.Field()
     update_patient = UpdatePatient.Field()
+
 
 class PatientAuthorizedHospitalType(DjangoObjectType):
     class Meta:
         model = PatientAuthorizedHospital
 
+
 class PatientAuthorizedHospitalQuery(graphene.ObjectType):
     patients_admitted = graphene.List(PatientAuthorizedHospitalType)
 
     def resolve_patients_admitted(root, info):
-        hospital_id = Hospital.objects.get(user = info.context.user)
-        return PatientAuthorizedHospital.objects.filter(hospital_id = hospital_id)
+        hospital_id = Hospital.objects.get(user=info.context.user)
+        return PatientAuthorizedHospital.objects.filter(hospital_id=hospital_id)
+
 
 class CreatePatientAuthorizedHospital(graphene.Mutation):
     class Arguments:
@@ -125,10 +141,13 @@ class CreatePatientAuthorizedHospital(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, patient_id):
-        hospital = Hospital.objects.filter(user = info.context.user).first()
+        hospital = Hospital.objects.filter(user=info.context.user).first()
         patient = Patient.objects.get(pk=patient_id)
-        pah = PatientAuthorizedHospital.objects.create(patient_id=patient, hospital_id = hospital)
+        pah = PatientAuthorizedHospital.objects.create(
+            patient_id=patient, hospital_id=hospital
+        )
         return CreatePatientAuthorizedHospital(ok=True, pah=pah)
+
 
 class DeletePatientAuthorizedHospital(graphene.Mutation):
     class Arguments:
@@ -139,11 +158,14 @@ class DeletePatientAuthorizedHospital(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, patient_id):
-        hospital = Hospital.objects.filter(user = info.context.user).first()
+        hospital = Hospital.objects.filter(user=info.context.user).first()
         print(hospital, "\n\n\n\n\n")
         patient = Patient.objects.get(pk=patient_id)
-        PatientAuthorizedHospital.objects.get(patient_id=patient, hospital_id = hospital).delete()
+        PatientAuthorizedHospital.objects.get(
+            patient_id=patient, hospital_id=hospital
+        ).delete()
         return DeletePatientAuthorizedHospital(ok=True)
+
 
 class PatientAuthorizedHospitalMutation(graphene.ObjectType):
     create_patient_authorized_hospital = CreatePatientAuthorizedHospital.Field()

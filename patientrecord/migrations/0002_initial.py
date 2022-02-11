@@ -9,29 +9,35 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('patientrecord', '0001_initial'),
-        ('user', '0001_initial'),
+        ("patientrecord", "0001_initial"),
+        ("user", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='testresult',
-            name='patient',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='user.patient'),
+            model_name="testresult",
+            name="patient",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE, to="user.patient"
+            ),
         ),
         migrations.AddField(
-            model_name='medicinerecord',
-            name='patient',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='user.patient'),
+            model_name="medicinerecord",
+            name="patient",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE, to="user.patient"
+            ),
         ),
         migrations.AddField(
-            model_name='medicinerecord',
-            name='prescriptions',
-            field=models.ManyToManyField(to='patientrecord.MedicinePrescription'),
+            model_name="medicinerecord",
+            name="prescriptions",
+            field=models.ManyToManyField(to="patientrecord.MedicinePrescription"),
         ),
         migrations.AddField(
-            model_name='doctornotes',
-            name='patient',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='user.patient'),
+            model_name="doctornotes",
+            name="patient",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE, to="user.patient"
+            ),
         ),
     ]

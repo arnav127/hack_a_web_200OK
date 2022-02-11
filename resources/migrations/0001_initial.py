@@ -7,31 +7,74 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='HospitalResource',
+            name="HospitalResource",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('bed_capacity', models.IntegerField(default=0, verbose_name='Beds Count')),
-                ('bed_available', models.IntegerField(default=0, verbose_name='Beds Available')),
-                ('ventilator_capacity', models.IntegerField(default=0, verbose_name='Ventilator Capacity')),
-                ('ventilator_available', models.IntegerField(default=0, verbose_name='Ventilator Available')),
-                ('icu_capacity', models.IntegerField(default=0, verbose_name='ICU Capacity')),
-                ('icu_available', models.IntegerField(default=0, verbose_name='ICU Available')),
-                ('blood_test', models.BooleanField(default=False, verbose_name='Blood Test')),
-                ('urine_test', models.BooleanField(default=False, verbose_name='Urine Test')),
-                ('xray', models.BooleanField(default=False, verbose_name='X-Ray')),
-                ('ultrasound', models.BooleanField(default=False, verbose_name='Ultrasound')),
-                ('mri', models.BooleanField(default=False, verbose_name='MRI')),
-                ('ekg', models.BooleanField(default=False, verbose_name='EKG')),
-                ('ecg', models.BooleanField(default=False, verbose_name='ECG')),
-                ('eeg', models.BooleanField(default=False, verbose_name='EEG')),
-                ('catscan', models.BooleanField(default=False, verbose_name='Cat Scan')),
-                ('mammogram', models.BooleanField(default=False, verbose_name='Mammogram')),
-                ('colonoscopy', models.BooleanField(default=False, verbose_name='Colonoscopy')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "bed_capacity",
+                    models.IntegerField(default=0, verbose_name="Beds Count"),
+                ),
+                (
+                    "bed_available",
+                    models.IntegerField(default=0, verbose_name="Beds Available"),
+                ),
+                (
+                    "ventilator_capacity",
+                    models.IntegerField(default=0, verbose_name="Ventilator Capacity"),
+                ),
+                (
+                    "ventilator_available",
+                    models.IntegerField(default=0, verbose_name="Ventilator Available"),
+                ),
+                (
+                    "icu_capacity",
+                    models.IntegerField(default=0, verbose_name="ICU Capacity"),
+                ),
+                (
+                    "icu_available",
+                    models.IntegerField(default=0, verbose_name="ICU Available"),
+                ),
+                (
+                    "blood_test",
+                    models.BooleanField(default=False, verbose_name="Blood Test"),
+                ),
+                (
+                    "urine_test",
+                    models.BooleanField(default=False, verbose_name="Urine Test"),
+                ),
+                ("xray", models.BooleanField(default=False, verbose_name="X-Ray")),
+                (
+                    "ultrasound",
+                    models.BooleanField(default=False, verbose_name="Ultrasound"),
+                ),
+                ("mri", models.BooleanField(default=False, verbose_name="MRI")),
+                ("ekg", models.BooleanField(default=False, verbose_name="EKG")),
+                ("ecg", models.BooleanField(default=False, verbose_name="ECG")),
+                ("eeg", models.BooleanField(default=False, verbose_name="EEG")),
+                (
+                    "catscan",
+                    models.BooleanField(default=False, verbose_name="Cat Scan"),
+                ),
+                (
+                    "mammogram",
+                    models.BooleanField(default=False, verbose_name="Mammogram"),
+                ),
+                (
+                    "colonoscopy",
+                    models.BooleanField(default=False, verbose_name="Colonoscopy"),
+                ),
             ],
         ),
     ]

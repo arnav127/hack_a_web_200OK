@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from patientrecord.models import DoctorNotes, MedicinePrescription, MedicineRecord, TestResult
+from patientrecord.models import (
+    DoctorNotes,
+    MedicinePrescription,
+    MedicineRecord,
+    TestResult,
+)
 
 # Register your models here.
 

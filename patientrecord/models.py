@@ -4,19 +4,23 @@ from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 
+
 class MedicinePrescription(models.Model):
-    medicine = models.CharField(max_length=255, blank=False, verbose_name="Medicine Name")
+    medicine = models.CharField(
+        max_length=255, blank=False, verbose_name="Medicine Name"
+    )
     doses = models.CharField(max_length=255, blank=True, verbose_name="Doses")
 
     def __str__(self) -> str:
-        return f'{self.medicine} - {self.doses}'
+        return f"{self.medicine} - {self.doses}"
+
 
 class MedicineRecord(models.Model):
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
     prescriptions = models.ManyToManyField(MedicinePrescription, blank=False)
 
     def __str__(self) -> str:
-        return f'MedRec - {self.patient.name}'
+        return f"MedRec - {self.patient.name}"
 
 
 class DoctorNotes(models.Model):
@@ -26,7 +30,8 @@ class DoctorNotes(models.Model):
     notes = models.TextField(verbose_name="Doctor Notes")
 
     def __str__(self) -> str:
-        return f'Notes - {self.patient.name}'
+        return f"Notes - {self.patient.name}"
+
 
 class TestResult(models.Model):
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
@@ -34,4 +39,4 @@ class TestResult(models.Model):
     test_result = models.TextField(verbose_name="Test Result")
 
     def __str__(self) -> str:
-        return f'{self.test_name} Test - {self.patient.name}'
+        return f"{self.test_name} Test - {self.patient.name}"
