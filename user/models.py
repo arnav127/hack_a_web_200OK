@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.contrib.postgres.fields import ArrayField
 
 class ExtendUser(AbstractUser):
     email = models.EmailField(blank=False, max_length=255, verbose_name="email")
@@ -27,7 +27,9 @@ class Hospital(models.Model):
 class Patient(models.Model):
     name = models.CharField(max_length=255, blank=False, verbose_name="Patient Name")
     phone = models.CharField(max_length=255, blank=True, verbose_name="Patient Phone")
-    
+    authorized_hospitals = ArrayField(
+        Hospital
+    )
 
 
 # medicines
