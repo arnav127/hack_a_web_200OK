@@ -30,6 +30,8 @@ class Patient(models.Model):
     authorized_hospitals = ArrayField(
         Hospital
     )
+    aadhar = models.CharField(max_length=20, blank=True, verbose_name="Patient Aadhar Number")
+    
 
 
 # medicines
