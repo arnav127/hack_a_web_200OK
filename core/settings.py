@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -79,12 +80,26 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+import configparser
+
+config = configparser.ConfigParser()
+config_file = os.path.join(BASE_DIR, 'config.ini')
+config.read(config_file)
+
+database_config = config['database']
+print(database_config)
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hackthewebdb',
+        'USER': database_config['user'],
+        'PASSWORD': database_config['password'],
+        'HOST': database_config['host'],
+        'PORT': database_config['port'],
     }
 }
+
 
 
 # Password validation
