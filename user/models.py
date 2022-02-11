@@ -27,12 +27,18 @@ class Hospital(models.Model):
 class Patient(models.Model):
     name = models.CharField(max_length=255, blank=False, verbose_name="Patient Name")
     phone = models.CharField(max_length=255, blank=True, verbose_name="Patient Phone")
-    authorized_hospitals = ArrayField(
-        Hospital
-    )
     aadhar = models.CharField(max_length=20, blank=True, verbose_name="Patient Aadhar Number")
-    
 
+    def __str__(self) -> str:
+        return f'{self.name}'
+
+
+class PatientAuthorizedHospitals(models.Model):
+    patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    hospital_id = models.ForeignKey(Hospital, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f'{self.patient_id.name} - {self.hospital_id.name}'
 
 # medicines
 # test result
