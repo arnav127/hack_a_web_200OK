@@ -14,6 +14,8 @@ from patientrecord.schema import (
     TestResultQuery,
     MedicinePrescriptionMutation,
     MedicineRecordMutation,
+    DoctorNotesMutation,
+    TestResultMutation
 )
 
 from resources.schema import HospitalResourceQuery
@@ -40,6 +42,8 @@ class Mutation(
     PatientAuthorizedHospitalMutation,
     MedicinePrescriptionMutation,
     MedicineRecordMutation,
+    DoctorNotesMutation,
+    TestResultMutation,
     AuthMutation,
     graphene.ObjectType,
 ):
