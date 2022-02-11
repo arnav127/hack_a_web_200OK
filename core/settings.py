@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'graphql_auth',
     'django_filters',
     'user',
+    'patientrecord',
 ]
 
 MIDDLEWARE = [
