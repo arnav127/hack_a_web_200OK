@@ -4,6 +4,7 @@ from graphene_django import DjangoObjectType
 from graphql_auth.schema import UserQuery, MeQuery
 from graphql_auth import mutations
 from .models import ExtendUser, Hospital, Patient
+from graphql_jwt.decorators import login_required
 
 class UserType(DjangoObjectType):
     class Meta:
@@ -53,8 +54,42 @@ class PatientType(DjangoObjectType):
 class PatientQuery(graphene.ObjectType):
     patient = graphene.Field(PatientType, phone=graphene.String(), aadhar=graphene.String())
 
-
+    @login_required
     def resolve_patient(root, info, phone, aadhar):
         return Patient.objects.filter(phone = phone, aadhar=aadhar).first()
 
+class CreatePatient (graphene.Mutation):
+    
+    patient = graphene.Field(PatientType)
+    class Arguments:
+        name = graphene.String(required=True)
+        phone = graphene.String(required=True)
+        aadhar = graphene.String(required=True)
 
+    @classmethod
+    @login_required
+    def mutate(self, root, info, name, phone, aadhar):
+        patient = Patient.objects.create(name=name, phone=phone, aadhar=aadhar)
+        return CreatePatient(patient=patient)
+
+class UpdatePatient(graphene.Mutation):
+    patient = graphene.Field(PatientType)
+
+    class Arguments:
+        id = graphene.String(required=True)
+        name = graphene.String()
+        phone = graphene.String()
+        aadhar = graphene.String()
+        
+    @classmethod
+    @login_required
+    def mutate(self, root, info, id, **kwargs):
+        patient = Patient.objects.get(pk = id)
+        for k, v in kwargs.items():
+            setattr(patient, k, v)
+        patient.save()
+        return UpdatePatient(patient=patient)
+
+class PatientMutation(graphene.ObjectType):
+    create_patient = CreatePatient.Field()
+    update_patient = UpdatePatient.Field()
