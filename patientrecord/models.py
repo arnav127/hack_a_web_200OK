@@ -1,4 +1,3 @@
-from typing import Any
 from django.db import models
 from user.models import Hospital, Patient
 from django.contrib.postgres.fields import ArrayField
