@@ -75,13 +75,13 @@ class CreateMedicinePrescription(graphene.Mutation):
         medicine = graphene.String()
         doses = graphene.String()
 
-    medp = graphene.Field(MedicinePrescriptionType)
+    medicine_prescription = graphene.Field(MedicinePrescriptionType)
 
     @classmethod
     @login_required
     def mutate(self, root, info, medicine, doses):
         medp = MedicinePrescription.objects.create(medicine=medicine, doses=doses)
-        return CreateMedicinePrescription(medp=medp)
+        return CreateMedicinePrescription(medicine_prescription=medp)
 
 
 class UpdateMedicinePrescription(graphene.Mutation):
@@ -90,7 +90,7 @@ class UpdateMedicinePrescription(graphene.Mutation):
         medicine = graphene.String()
         doses = graphene.String()
 
-    medp = graphene.Field(MedicinePrescriptionType)
+    medicine_prescription = graphene.Field(MedicinePrescriptionType)
 
     @classmethod
     @login_required
@@ -99,7 +99,7 @@ class UpdateMedicinePrescription(graphene.Mutation):
         for k, v in kwargs.items():
             setattr(medp, k, v)
         medp.save()
-        return UpdateMedicinePrescription(medp=medp)
+        return UpdateMedicinePrescription(medicine_prescription=medp)
 
 
 class MedicinePrescriptionMutation(graphene.ObjectType):
