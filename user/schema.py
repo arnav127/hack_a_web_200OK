@@ -120,10 +120,25 @@ class CreatePatientAuthorizedHospital(graphene.Mutation):
     @login_required
     def mutate(self, root, info, patient_id):
         hospital = Hospital.objects.filter(user = info.context.user).first()
-        print(hospital, "\n\n\n\n\n")
         patient = Patient.objects.get(pk=patient_id)
         pah = PatientAuthorizedHospital.objects.create(patient_id=patient, hospital_id = hospital)
         return CreatePatientAuthorizedHospital(ok=True, pah=pah)
 
+class DeletePatientAuthorizedHospital(graphene.Mutation):
+    class Arguments:
+        patient_id = graphene.String()
+
+    ok = graphene.Boolean()
+
+    @classmethod
+    @login_required
+    def mutate(self, root, info, patient_id):
+        hospital = Hospital.objects.filter(user = info.context.user).first()
+        print(hospital, "\n\n\n\n\n")
+        patient = Patient.objects.get(pk=patient_id)
+        PatientAuthorizedHospital.objects.get(patient_id=patient, hospital_id = hospital).delete()
+        return DeletePatientAuthorizedHospital(ok=True)
+
 class PatientAuthorizedHospitalMutation(graphene.ObjectType):
-    create_patient_authorized_hospitals = CreatePatientAuthorizedHospital.Field()
+    create_patient_authorized_hospital = CreatePatientAuthorizedHospital.Field()
+    delete_patient_authorized_hospital = DeletePatientAuthorizedHospital.Field()
