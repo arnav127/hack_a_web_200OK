@@ -1,0 +1,43 @@
+mutation login($username: String!, $password: String!) {
+  tokenAuth(username: $username, password: $password) {
+    token
+    success
+    errors
+    user {
+      firstName
+      hospital {
+        name
+      }
+    }
+  }
+}
+
+mutation createPatient($aadhar: String!, $name: String!, $phone: String!) {
+  createPatient(aadhar: $aadhar, name: $name, phone: $phone) {
+    patient {
+      id
+    }
+  }
+}
+
+mutation addAuthorizedHospital($patientId: String!) {
+  createPatientAuthorizedHospital(patientId: $patientId) {
+    ok
+  }
+}
+
+mutation removeAuthorizedHospital($patientId: String!) {
+  deletePatientAuthorizedHospital(patientId: $patientId) {
+    ok
+  }
+}
+
+query user {
+  me {
+    id
+    firstName
+    hospital {
+      name
+    }
+  }
+}

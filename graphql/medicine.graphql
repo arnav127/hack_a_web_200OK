@@ -1,0 +1,15 @@
+mutation createMedicinePrescription($doses: String, $medicine: String) {
+  createMedicinePrescription(doses: $doses, medicine: $medicine) {
+    medp {
+      id
+    }
+  }
+}
+
+mutation createMedicineRecord($patientId: String, $prescriptionId: String) {
+  createMedicineRecord(patientId: $patientId, prescriptionId: $prescriptionId) {
+    medr {
+      id
+    }
+  }
+}
