@@ -156,8 +156,11 @@ class CreateDoctorNotes(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, patient_id, doctor, diagnosis, notes):
-        doctor_notes = DoctorNotes.objects.create(patient_id=patient_id, doctor=doctor, diagnosis=diagnosis, notes=notes)
+        doctor_notes = DoctorNotes.objects.create(
+            patient_id=patient_id, doctor=doctor, diagnosis=diagnosis, notes=notes
+        )
         return CreateDoctorNotes(doctor_notes=doctor_notes)
+
 
 class UpdateDoctorNotes(graphene.Mutation):
     class Arguments:
@@ -195,7 +198,9 @@ class CreateTestResult(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, patient, test_name, test_result):
-        test_result = TestResult.objects.create(patient=patient, test_name=test_name, test_result=test_result)
+        test_result = TestResult.objects.create(
+            patient=patient, test_name=test_name, test_result=test_result
+        )
         return CreateTestResult(test_result=test_result)
 
 

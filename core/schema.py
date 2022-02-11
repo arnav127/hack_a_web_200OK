@@ -15,7 +15,7 @@ from patientrecord.schema import (
     MedicinePrescriptionMutation,
     MedicineRecordMutation,
     DoctorNotesMutation,
-    TestResultMutation
+    TestResultMutation,
 )
 
 from resources.schema import HospitalResourceQuery
