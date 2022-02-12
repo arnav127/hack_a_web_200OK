@@ -1,0 +1,28 @@
+mutation createDoctorPatientAssigned($doctorId: String!, $patientId: String!, $status: String) {
+  createDoctorPatientAssigned(doctorId: $doctorId, patientId: $patientId, status: $status) {
+    ok
+    doctorPatientAssigned {
+      id
+    }
+  }
+}
+
+mutation changeDoctorPatientAssignedStatus($doctorId: String!, $newStatus: String!, $patientId: String!) {
+  changeDoctorPatientAssignedStatus(doctorId: $doctorId, newStatus: $newStatus, patientId: $patientId) {
+    ok
+    doctorPatientAssigned {
+      id
+      status
+    }
+  }
+}
+
+mutation updateDoctorPatientAssigned($id: String!, $newStatus: String!) {
+  updateDoctorPatientAssigned(id: $id, newStatus: $newStatus) {
+    ok
+    doctorPatientAssigned {
+      id
+      status
+    }
+  }
+}
