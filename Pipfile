@@ -14,6 +14,7 @@ psycopg2 = "*"
 inflection = "*"
 
 [dev-packages]
+pandas = "*"
 
 [requires]
 python_version = "3.10"
