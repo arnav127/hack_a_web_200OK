@@ -84,11 +84,12 @@ mutation updateMedicineRecord($id: String!, $patientId: String, $prescriptionId:
   }
 }
 
-mutation createMedicinePrescription($doses: String, $medicine: String) {
-  createMedicinePrescription(doses: $doses, medicine: $medicine) {
-    medp {
+mutation createMedicinePrescription($doses: String! $medicine: String!) {
+  createMedicinePrescription(doses: $doses medicine: $medicine) {
+    medicinePrescription {
       id
+      medicine
+      doses
     }
   }
 }
-

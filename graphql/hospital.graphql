@@ -33,6 +33,20 @@ mutation deletePatientAuthorizedHospital($patientId: String) {
   }
 }
 
+
+mutation incrementHospitalResource($resource: String) {
+  incrementHospitalResource(resource: $resource) {
+    ok
+  }
+}
+
+mutation decrementHospitalResource($resource: String) {
+  decrementHospitalResource(resource: $resource) {
+    ok
+  }
+}
+
+
 query user {
   me {
     id
