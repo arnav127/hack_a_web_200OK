@@ -117,7 +117,9 @@ class CreateMedicineRecord(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, patient_id, prescription_id):
-        medr = MedicineRecord.objects.create(patient_id=patient_id, prescription_id=prescription_id)
+        medr = MedicineRecord.objects.create(
+            patient_id=patient_id, prescription_id=prescription_id
+        )
         return CreateMedicineRecord(medicine_record=medr)
 
 

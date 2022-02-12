@@ -10,29 +10,69 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('user', '0001_initial'),
+        ("user", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Doctor',
+            name="Doctor",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='Doctor Name')),
-                ('specialization', models.CharField(max_length=255, verbose_name='Specialization')),
-                ('hospital', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='user.hospital')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="Doctor Name")),
+                (
+                    "specialization",
+                    models.CharField(max_length=255, verbose_name="Specialization"),
+                ),
+                (
+                    "hospital",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="user.hospital"
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='DoctorPatientAssigned',
+            name="DoctorPatientAssigned",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('assigned_at', models.DateTimeField(auto_now_add=True)),
-                ('status', models.CharField(max_length=255, verbose_name='Status')),
-                ('doctor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='opd.doctor')),
-                ('patient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='user.patient')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("assigned_at", models.DateTimeField(auto_now_add=True)),
+                ("status", models.CharField(max_length=255, verbose_name="Status")),
+                (
+                    "doctor",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="opd.doctor"
+                    ),
+                ),
+                (
+                    "patient",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="user.patient"
+                    ),
+                ),
             ],
         ),
     ]

@@ -5,6 +5,7 @@ from graphql_jwt.decorators import login_required
 from opd.models import Doctor, DoctorPatientAssigned
 from user.models import ExtendUser
 
+
 class DoctorType(DjangoObjectType):
     class Meta:
         model = Doctor

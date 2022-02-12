@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0001_initial'),
+        ("user", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='extenduser',
-            name='is_doctor',
+            model_name="extenduser",
+            name="is_doctor",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='extenduser',
-            name='is_hospital',
+            model_name="extenduser",
+            name="is_hospital",
             field=models.BooleanField(default=False),
         ),
     ]
