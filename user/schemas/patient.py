@@ -14,11 +14,14 @@ class PatientType(DjangoObjectType):
 
 class PatientQuery(graphene.ObjectType):
     patient = graphene.Field(
-        PatientType, phone=graphene.String(), aadhar=graphene.String()
+        PatientType, phone=graphene.String(), aadhar=graphene.String(), id=graphene.String()
     )
     patients_all = graphene.List(PatientType)
 
     def resolve_patient(root, info, **kwargs):
+        if kwargs.get("id"):
+            return Patient.objects.get(pk=kwargs["id"])
+
         if kwargs.get("phone"):
             return Patient.objects.get(phone=kwargs["phone"])
 
