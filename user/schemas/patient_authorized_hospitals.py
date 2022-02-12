@@ -23,7 +23,7 @@ class CreatePatientAuthorizedHospital(graphene.Mutation):
         patient_id = graphene.String()
 
     ok = graphene.Boolean()
-    pah = graphene.Field(PatientAuthorizedHospitalType)
+    patient_authorized_hospital = graphene.Field(PatientAuthorizedHospitalType)
 
     @classmethod
     @login_required
@@ -33,7 +33,7 @@ class CreatePatientAuthorizedHospital(graphene.Mutation):
         pah = PatientAuthorizedHospital.objects.create(
             patient_id=patient, hospital_id=hospital
         )
-        return CreatePatientAuthorizedHospital(ok=True, pah=pah)
+        return CreatePatientAuthorizedHospital(ok=True, patient_authorized_hospital=pah)
 
 
 class DeletePatientAuthorizedHospital(graphene.Mutation):
