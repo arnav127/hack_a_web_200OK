@@ -11,6 +11,7 @@ from opd.schema import OpdQuery, OpdMutation
 class Query(
     OpdQuery,
     HospitalResourceQuery,
+    PatientRecordQuery,
     UserQuery,
     graphene.ObjectType,
 ):
@@ -20,6 +21,7 @@ class Query(
 class Mutation(
     OpdMutation,
     HospitalResourceMutation,
+    PatientRecordMutation,
     UserMutation,
     graphene.ObjectType,
 ):
