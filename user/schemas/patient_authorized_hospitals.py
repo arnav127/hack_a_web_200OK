@@ -1,6 +1,7 @@
 import graphene
 
 from graphene_django import DjangoObjectType
+from back.resources.models import HospitalResource
 from user.models import Hospital, Patient, PatientAuthorizedHospital
 from graphql_jwt.decorators import login_required
 
@@ -28,7 +29,10 @@ class CreatePatientAuthorizedHospital(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, patient_id):
-        hospital = Hospital.objects.filter(user=info.context.user).first()
+        hospital = info.context.user.hospital
+        hospitalResource = HospitalResource.objects.get(hospital=hospital)
+        hospitalResource.bed_available -= 1
+
         patient = Patient.objects.get(pk=patient_id)
         pah = PatientAuthorizedHospital.objects.create(
             patient_id=patient, hospital_id=hospital

@@ -25,17 +25,17 @@ class MedicineRecord(models.Model):
 
 
 class DoctorNotes(models.Model):
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
-    doctor = models.OneToOneField(Doctor, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     diagnosis = models.TextField(verbose_name="Diagnosis")
     notes = models.TextField(verbose_name="Doctor Notes")
 
     def __str__(self) -> str:
-        return f"Notes - {self.patient.name}"
+        return f"Notes - {self.patient.name} - {self.doctor.name}"
 
 
 class TestResult(models.Model):
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     test_name = models.CharField(max_length=255, verbose_name="Test Name")
     test_result = models.TextField(verbose_name="Test Result")
 
