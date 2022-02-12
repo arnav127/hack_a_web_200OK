@@ -9,6 +9,9 @@ class ExtendUser(AbstractUser):
     USERNAME_FIELD = "username"
     EMAIL_FIELD = "email"
 
+    is_hospital = models.BooleanField(default=False)
+    is_doctor = models.BooleanField(default=False)
+
     def __str__(self) -> str:
         return f"{self.username}"
 
