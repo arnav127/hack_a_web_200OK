@@ -8,6 +8,7 @@ import {
 
 import Layout from '../../../../components/Hospital/Layout'
 import Doctor from '../../../../components/Hospital/Patients/Doctor'
+import PatientRecords from '../../../../components/Hospital/Patients/PatientRecords'
 
 const PatientRecord = () => {
     const router = useRouter()
@@ -33,6 +34,7 @@ const PatientRecord = () => {
 
 
                     <Doctor pid={pid} data={data} />
+                    <PatientRecords pid={pid} data={data} />
                 </div>
 
             )}
