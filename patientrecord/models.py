@@ -1,4 +1,5 @@
 from django.db import models
+from opd.models import Doctor
 from user.models import Hospital, Patient
 from django.contrib.postgres.fields import ArrayField
 
@@ -25,7 +26,7 @@ class MedicineRecord(models.Model):
 
 class DoctorNotes(models.Model):
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
-    doctor = models.CharField(max_length=255, verbose_name="Doctor Name")
+    doctor = models.OneToOneField(Doctor, on_delete=models.CASCADE)
     diagnosis = models.TextField(verbose_name="Diagnosis")
     notes = models.TextField(verbose_name="Doctor Notes")
 
