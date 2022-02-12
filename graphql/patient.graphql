@@ -37,6 +37,19 @@ query patientById($id: String) {
       diagnosis
       notes
     }
+    medicinerecordSet {
+      id
+      prescriptions {
+        id
+        medicine
+        doses
+      }
+    }
+    testresultSet {
+      id
+      testName
+      testResult
+      media
+    }
   }
 }
-

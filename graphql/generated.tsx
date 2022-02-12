@@ -1270,7 +1270,7 @@ export type PatientByIdQueryVariables = Exact<{
 }>;
 
 
-export type PatientByIdQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', id: string, status: string, assignedAt: any, doctor: { __typename?: 'DoctorType', name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, notes: string }> } | null };
+export type PatientByIdQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', id: string, status: string, assignedAt: any, doctor: { __typename?: 'DoctorType', name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, notes: string }>, medicinerecordSet: Array<{ __typename?: 'MedicineRecordType', id: string, prescriptions: Array<{ __typename?: 'MedicinePrescriptionType', id: string, medicine: string, doses: string }> }>, testresultSet: Array<{ __typename?: 'TestResultType', id: string, testName: string, testResult: string, media: string }> } | null };
 
 export type CreateTestResultMutationVariables = Exact<{
   media?: InputMaybe<Scalars['String']>;
@@ -1871,6 +1871,20 @@ export const PatientByIdDocument = gql`
     doctornotesSet {
       diagnosis
       notes
+    }
+    medicinerecordSet {
+      id
+      prescriptions {
+        id
+        medicine
+        doses
+      }
+    }
+    testresultSet {
+      id
+      testName
+      testResult
+      media
     }
   }
 }
