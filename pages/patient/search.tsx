@@ -45,7 +45,7 @@ const Admit = () => {
                     </button>
                 </form>
 
-                {data && (
+                {data ? (
                     <>
                         <h2>Record found!</h2>
 
@@ -56,7 +56,7 @@ const Admit = () => {
                         </div>
 
                         <button
-                            className="w-36 rounded-lg bg-gray-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                            className="w-48 rounded-lg bg-gray-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
                             onClick={() => {
                                 createPatientAuthorizedHospital({
                                     variables: { patientId: data.patient.id }
@@ -64,6 +64,17 @@ const Admit = () => {
                             }}>
                             Admit patient?
                         </button>
+                    </>
+                ) : (
+                    <>
+                        <p>Record not found!</p>
+                        <Link href="/patient/create">
+                            <a
+                                className="rounded-lg bg-gray-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                            >
+                                Create new patient?
+                            </a>
+                        </Link>
                     </>
                 )}
             </div>

@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import Layout from '../../components/Hospital/Layout'
 
-import { usePatientQuery, useCreatePatientMutation } from '../../graphql/generated'
+import { usePatientQuery, useCreatePatientMutation, useCreatePatientAuthorizedHospitalMutation } from '../../graphql/generated'
 
 const Admit = () => {
     const [success, setSuccess] = useState(false)
     const [createPatient] = useCreatePatientMutation();
+    const [createPatientAuthorizedHospital] = useCreatePatientAuthorizedHospitalMutation();
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
-        const { data } = await createPatient({
+        const { data, loading, error } = await createPatient({
             variables: {
                 name: formData.get('name'),
                 phone: formData.get('phone'),
@@ -19,7 +20,13 @@ const Admit = () => {
             },
 
         });
-        console.log(data)
+
+        if (!loading && !error) {
+            createPatientAuthorizedHospital({
+                variables: { patientId: data?.createPatient?.patient?.id }
+            })
+        }
+
         if (!!data) setSuccess(true);
     }
 
@@ -61,7 +68,7 @@ const Admit = () => {
                         Submit
                     </button>
                 </form>
-                {success && "Patient created successfully!"}
+                {success && "Patient created and admitted successfully!"}
             </div>
         </Layout >
     )
