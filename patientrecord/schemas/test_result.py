@@ -22,14 +22,16 @@ class CreateTestResult(graphene.Mutation):
         patient = graphene.String()
         test_name = graphene.String()
         test_result = graphene.String()
+        media = graphene.String()
 
     test_result = graphene.Field(TestResultType)
 
     @classmethod
     @login_required
-    def mutate(self, root, info, patient, test_name, test_result):
+    def mutate(self, root, info, patient, test_name, test_result, **kwargs):
+        media = kwargs.get("media", "")
         test_result = TestResult.objects.create(
-            patient=patient, test_name=test_name, test_result=test_result
+            patient=patient, test_name=test_name, test_result=test_result, media=media
         )
         return CreateTestResult(test_result=test_result)
 
@@ -40,6 +42,7 @@ class UpdateTestResult(graphene.Mutation):
         patient = graphene.String()
         test_name = graphene.String()
         test_result = graphene.String()
+        media = graphene.String()
 
     test_result = graphene.Field(TestResultType)
 
