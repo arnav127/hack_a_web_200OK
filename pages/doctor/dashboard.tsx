@@ -21,7 +21,7 @@ const Dashboard = () => {
   return isLoading ? (
     'Loading...'
   ) : (
-    <Layout title="Dashboard">Doctor dashboard</Layout>
+    <Layout title="Dashboard">Doctor ka dashboard</Layout>
   )
 }
 
