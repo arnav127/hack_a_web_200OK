@@ -9,7 +9,6 @@ import {
 import Layout from '../../../components/Hospital/Layout'
 import Doctor from '../../../components/Hospital/Patients/Doctor'
 import PatientRecords from '../../../components/Hospital/Patients/PatientRecords'
-import TestResults from '../../../components/Hospital/Patients/TestResults'
 import MedicineRecords from '../../../components/Hospital/Patients/MedicineRecords'
 
 const PatientRecord = () => {
@@ -37,7 +36,6 @@ const PatientRecord = () => {
 
                     <Doctor pid={pid} data={data} />
                     <PatientRecords pid={pid} data={data} />
-                    <TestResults pid={pid} data={data} />
                     <MedicineRecords pid={pid} data={data} />
                 </div>
 
