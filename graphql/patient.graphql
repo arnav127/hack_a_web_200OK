@@ -10,3 +10,13 @@ mutation createPatient($name: String!, $phone: String!, $aadhar: String!) {
     }
   }
 }
+
+query patient($phone: String $aadhar: String) {
+  patient(phone: $phone aadhar: $aadhar) {
+    id
+    name
+    phone
+    aadhar
+    
+  }
+}
