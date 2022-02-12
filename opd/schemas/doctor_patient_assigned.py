@@ -37,7 +37,7 @@ class CreateDoctorPatientAssigned(graphene.Mutation):
     @login_required
     def mutate(cls, root, info, doctor_id, patient_id, **kwargs):
         if not info.context.user.is_hospital:
-            return CreateDoctorPatientAssigned(ok=False, doctor_patent_assigned=None)
+            return CreateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
 
         # check if the hospital is authorized to assign the patient to the doctor
         authorized_hospital_list = PatientAuthorizedHospital.objects.filter(
