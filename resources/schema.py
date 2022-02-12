@@ -120,12 +120,32 @@ class IncrementHospitalResource(graphene.Mutation):
         resource_name = underscore(resource)
         val = getattr(hospital_resource, resource_name)
         setattr(hospital_resource, resource_name, val+1)
-        print(val, val+1)
         hospital_resource.save()
         return IncrementHospitalResource(ok=True, hospital_resource=hospital_resource)
+
+
+class DecrementHospitalResource(graphene.Mutation):
+    class Arguments:
+        resource = graphene.String()
+
+    ok = graphene.Boolean()
+    hospital_resource = graphene.Field(HospitalResourceType)
+
+    @classmethod
+    @login_required
+    def mutate(cls, root, info, resource):
+        hospital_resource = HospitalResource.objects.get(hospital=info.context.user.hospital)
+        resource_name = underscore(resource)
+        val = getattr(hospital_resource, resource_name)
+        if val-1>=0:
+            setattr(hospital_resource, resource_name, val-1)
+        hospital_resource.save()
+        return DecrementHospitalResource(ok=True, hospital_resource=hospital_resource)
+
 
 class HospitalResourceMutation(graphene.ObjectType):
     create_hospital_resource = CreateHospitalResource.Field()
     update_hospital_resource = UpdateHospitalResource.Field()
     increment_hospital_resource = IncrementHospitalResource.Field()
+    decrement_hospital_resource = DecrementHospitalResource.Field()
 
