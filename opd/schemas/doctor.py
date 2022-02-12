@@ -44,6 +44,8 @@ class CreateDoctor(graphene.Mutation):
             hospital=info.context.user.hospital,
             specialization=specialization,
         )
+        user.is_doctor = True
+        user.save()
         return CreateDoctor(ok=True, doctor=doctor)
 
 
