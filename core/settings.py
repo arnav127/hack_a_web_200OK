@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "user",
     "patientrecord",
     "resources",
+    "opd",
 ]
 
 MIDDLEWARE = [
