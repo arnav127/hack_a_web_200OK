@@ -35,7 +35,13 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('JWT', data.tokenAuth.token)
             localStorage.setItem('user', JSON.stringify(data.tokenAuth.user))
             setUser(data.tokenAuth.user)
-            router.push('/hospital/dashboard')
+            if (data.tokenAuth.user.isHospital)
+                router.push('/hospital/dashboard')
+            else if (data.tokenAuth.user.isDoctor) {
+                router.push('/doctor/dashboard')
+            } else {
+                router.push('/patient/dashboard')
+            }
         }
     }
 
