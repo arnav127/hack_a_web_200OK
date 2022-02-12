@@ -8,15 +8,7 @@ from user.schema import (
     PatientAuthorizedHospitalQuery,
     PatientAuthorizedHospitalMutation,
 )
-from patientrecord.schema import (
-    MedicineRecordQuery,
-    DoctorNotesQuery,
-    TestResultQuery,
-    MedicinePrescriptionMutation,
-    MedicineRecordMutation,
-    DoctorNotesMutation,
-    TestResultMutation,
-)
+from patientrecord.schema import PatientRecordQuery, PatientRecordMutation
 
 from resources.schema import HospitalResourceQuery
 from resources.schema import HospitalResourceMutation
@@ -30,9 +22,7 @@ class Query(
     PatientQuery,
     PatientAuthorizedHospitalQuery,
     HospitalQuery,
-    MedicineRecordQuery,
-    DoctorNotesQuery,
-    TestResultQuery,
+    PatientRecordQuery,
     AuthQuery,
     graphene.ObjectType,
 ):
@@ -43,10 +33,7 @@ class Mutation(
     HospitalResourceMutation,
     PatientMutation,
     PatientAuthorizedHospitalMutation,
-    MedicinePrescriptionMutation,
-    MedicineRecordMutation,
-    DoctorNotesMutation,
-    TestResultMutation,
+    PatientRecordMutation,
     AuthMutation,
     graphene.ObjectType,
 ):
