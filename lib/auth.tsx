@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext } from 'react'
 import { useRouter } from 'next/router'
-import { useLoginMutation } from '../graphql/generated'
+import { useLoginMutation, useUserQuery } from '../graphql/generated'
+import { useQuery } from '@apollo/client';
 
 const AuthContext = createContext({});
 
@@ -12,15 +13,15 @@ export const AuthProvider = ({ children }) => {
     const [loginMutation] = useLoginMutation()
 
 
-    /* useEffect(() => {
-*     const loadUser = () => {
-*         const user = JSON.parse(localStorage.getItem('user'))
-*         if (user) {
-*             setUser(user)
-*         }
-*     }
-*     loadUser();
-* }, []) */
+    useEffect(() => {
+        const loadUser = () => {
+            const user = JSON.parse(localStorage.getItem('user'))
+            if (user) {
+                setUser(user)
+            }
+        }
+        loadUser();
+    }, [])
 
     const login = async ({ username, password }) => {
         const { data, loading } = await loginMutation({

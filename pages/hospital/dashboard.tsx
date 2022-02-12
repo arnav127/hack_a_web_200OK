@@ -18,9 +18,7 @@ const Dashboard = () => {
         setIsLoading(false);
     }, [])
 
-    if (isLoading) return ('Loading...');
-
-    return (
+    return isLoading ? 'Loading...' : (
         <Layout title="Dashboard">
             <div className="grid grid-cols-3 gap-4">
                 <div className="flex flex-col justify-between p-4 h-36 text-center text-green-800 rounded-lg shadow-md bg-green-100/50">
