@@ -32,7 +32,9 @@ mutation createDoctorNotes($diagnosis: String, $doctor: String, $notes: String, 
       patient {
         id
       }
-      doctor
+      doctor {
+      id
+}
       diagnosis
       notes
     }
@@ -46,7 +48,9 @@ mutation updateDoctorNotes($id: String!, $diagnosis: String, $doctor: String, $n
       patient {
         id
       }
-      doctor
+      doctor {
+      id
+}
       diagnosis
       notes
     }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import Layout from '../../components/Hospital/Layout'
+import Layout from '../../../components/Hospital/Layout'
 
-import { usePatientQuery, useCreatePatientMutation, useCreatePatientAuthorizedHospitalMutation } from '../../graphql/generated'
+import { usePatientByAadharQuery, useCreatePatientMutation, useCreatePatientAuthorizedHospitalMutation } from '../../../graphql/generated'
 
 const Admit = () => {
     const [success, setSuccess] = useState(false)

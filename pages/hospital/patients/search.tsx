@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
-import Layout from '../../components/Hospital/Layout'
+import Layout from '../../../components/Hospital/Layout'
 
-import { usePatientQuery, useCreatePatientAuthorizedHospitalMutation } from '../../graphql/generated'
+import { usePatientByAadharQuery, useCreatePatientAuthorizedHospitalMutation } from '../../../graphql/generated'
 
 const Admit = () => {
     const [aadhar, setAadhar] = useState('');
 
     const [createPatientAuthorizedHospital] = useCreatePatientAuthorizedHospitalMutation();
 
-    const { data, loading, error } = usePatientQuery({
+    const { data, loading, error } = usePatientByAadharQuery({
         variables: {
             aadhar: aadhar
         },

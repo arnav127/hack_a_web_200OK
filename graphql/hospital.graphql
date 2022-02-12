@@ -57,32 +57,22 @@ query user {
   }
 }
 
-query everything {
+query admittedRecords {
   me {
-    id
-    username
-    email
     hospital {
-      hospitalresource {
-        bedCapacity
-        icuAvailable
-      }
       patientauthorizedhospitalSet {
         patientId {
-          medicinerecordSet {
-            prescriptions {
-              medicine
-              doses
+          id
+          name
+          phone
+          doctorpatientassignedSet {
+            doctor {
+              id
+              name
             }
           }
-          doctornotes {
-            doctor
+          doctornotesSet {
             diagnosis
-            notes
-          }
-          testresult {
-            testName
-            testResult
           }
         }
       }

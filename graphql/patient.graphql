@@ -11,12 +11,29 @@ mutation createPatient($name: String!, $phone: String!, $aadhar: String!) {
   }
 }
 
-query patient($phone: String $aadhar: String) {
+query patientByAadhar($phone: String $aadhar: String) {
   patient(phone: $phone aadhar: $aadhar) {
     id
     name
     phone
     aadhar
-    
+  }
+}
+
+query patientById($id: String) {
+  patient(id: $id) {
+    id
+    name
+    doctorpatientassignedSet {
+      doctor {
+        name
+      }
+      status
+      assignedAt
+    }
+    doctornotesSet {
+      diagnosis
+      notes
+    }
   }
 }
