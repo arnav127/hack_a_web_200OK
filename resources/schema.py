@@ -106,6 +106,7 @@ class UpdateHospitalResource(graphene.Mutation):
         hospital_resource.save()
         return UpdateHospitalResource(ok=True, hospital_resource=hospital_resource)
 
+
 class IncrementHospitalResource(graphene.Mutation):
     class Arguments:
         resource = graphene.String()
@@ -116,13 +117,15 @@ class IncrementHospitalResource(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(cls, root, info, resource):
-        hospital_resource = HospitalResource.objects.get(hospital=info.context.user.hospital)
+        hospital_resource = HospitalResource.objects.get(
+            hospital=info.context.user.hospital
+        )
         resource_name = underscore(resource)
         val = getattr(hospital_resource, resource_name)
         if type(val) is bool:
             setattr(hospital_resource, resource_name, not val)
         else:
-            setattr(hospital_resource, resource_name, val+1)
+            setattr(hospital_resource, resource_name, val + 1)
         hospital_resource.save()
         return IncrementHospitalResource(ok=True, hospital_resource=hospital_resource)
 
@@ -137,16 +140,18 @@ class DecrementHospitalResource(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(cls, root, info, resource):
-        hospital_resource = HospitalResource.objects.get(hospital=info.context.user.hospital)
+        hospital_resource = HospitalResource.objects.get(
+            hospital=info.context.user.hospital
+        )
         resource_name = underscore(resource)
         val = getattr(hospital_resource, resource_name)
-        
+
         if type(val) is bool:
             setattr(hospital_resource, resource_name, not val)
 
         else:
-            if val-1>=0:
-                setattr(hospital_resource, resource_name, val-1)
+            if val - 1 >= 0:
+                setattr(hospital_resource, resource_name, val - 1)
         hospital_resource.save()
         return DecrementHospitalResource(ok=True, hospital_resource=hospital_resource)
 
@@ -156,4 +161,3 @@ class HospitalResourceMutation(graphene.ObjectType):
     update_hospital_resource = UpdateHospitalResource.Field()
     increment_hospital_resource = IncrementHospitalResource.Field()
     decrement_hospital_resource = DecrementHospitalResource.Field()
-

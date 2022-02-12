@@ -3,6 +3,7 @@ import graphene
 from graphene_django import DjangoObjectType
 from opd.models import Doctor
 
+
 class DoctorType(DjangoObjectType):
     class Meta:
         model = Doctor
