@@ -13,7 +13,7 @@ const Layout = ({ title, children }) => {
       </Head>
       <main className="flex flex-col flex-wrap md:flex-row">
         <SideNav title={title} />
-        <section className="h-screen flex-grow overflow-y-auto">
+        <section className="h-screen flex-grow overflow-y-auto bg-gray-100/50">
           <header className="flex h-20 items-center justify-between p-4 text-sm">
             <h1 className="text-2xl font-bold">{title}</h1>
             <button
