@@ -1202,13 +1202,18 @@ export type AllDoctorsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllDoctorsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', hospital?: { __typename?: 'HospitalType', doctorSet: Array<{ __typename?: 'DoctorType', id: string, name: string }> } | null } | null };
 
+export type AssignedPatientsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AssignedPatientsQuery = { __typename?: 'Query', doctorPatientAssigned?: Array<{ __typename?: 'DoctorPatientAssignedType', patient: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', assignedAt: any, status: string }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string }> } } | null> | null };
+
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', tokenAuth?: { __typename?: 'ObtainJSONWebToken', token?: string | null, success?: boolean | null, errors?: any | null, user?: { __typename?: 'UserNode', firstName: string, isHospital: boolean, isDoctor: boolean, hospital?: { __typename?: 'HospitalType', name: string } | null } | null } | null };
+export type LoginMutation = { __typename?: 'Mutation', tokenAuth?: { __typename?: 'ObtainJSONWebToken', token?: string | null, success?: boolean | null, errors?: any | null, user?: { __typename?: 'UserNode', firstName: string, isHospital: boolean, isDoctor: boolean, hospital?: { __typename?: 'HospitalType', name: string } | null, doctor?: { __typename?: 'DoctorType', name: string, hospital: { __typename?: 'HospitalType', name: string } } | null } | null } | null };
 
 export type CreatePatientAuthorizedHospitalMutationVariables = Exact<{
   patientId?: InputMaybe<Scalars['String']>;
@@ -1501,6 +1506,51 @@ export function useAllDoctorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type AllDoctorsQueryHookResult = ReturnType<typeof useAllDoctorsQuery>;
 export type AllDoctorsLazyQueryHookResult = ReturnType<typeof useAllDoctorsLazyQuery>;
 export type AllDoctorsQueryResult = Apollo.QueryResult<AllDoctorsQuery, AllDoctorsQueryVariables>;
+export const AssignedPatientsDocument = gql`
+    query assignedPatients {
+  doctorPatientAssigned {
+    patient {
+      id
+      name
+      phone
+      doctorpatientassignedSet {
+        assignedAt
+        status
+      }
+      doctornotesSet {
+        diagnosis
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAssignedPatientsQuery__
+ *
+ * To run a query within a React component, call `useAssignedPatientsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAssignedPatientsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAssignedPatientsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAssignedPatientsQuery(baseOptions?: Apollo.QueryHookOptions<AssignedPatientsQuery, AssignedPatientsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AssignedPatientsQuery, AssignedPatientsQueryVariables>(AssignedPatientsDocument, options);
+      }
+export function useAssignedPatientsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AssignedPatientsQuery, AssignedPatientsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AssignedPatientsQuery, AssignedPatientsQueryVariables>(AssignedPatientsDocument, options);
+        }
+export type AssignedPatientsQueryHookResult = ReturnType<typeof useAssignedPatientsQuery>;
+export type AssignedPatientsLazyQueryHookResult = ReturnType<typeof useAssignedPatientsLazyQuery>;
+export type AssignedPatientsQueryResult = Apollo.QueryResult<AssignedPatientsQuery, AssignedPatientsQueryVariables>;
 export const LoginDocument = gql`
     mutation login($username: String!, $password: String!) {
   tokenAuth(username: $username, password: $password) {
@@ -1511,6 +1561,12 @@ export const LoginDocument = gql`
       firstName
       hospital {
         name
+      }
+      doctor {
+        name
+        hospital {
+          name
+        }
       }
       isHospital
       isDoctor

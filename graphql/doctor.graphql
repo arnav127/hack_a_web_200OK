@@ -37,3 +37,20 @@ query allDoctors {
     }
   }
 }
+
+query assignedPatients {
+  doctorPatientAssigned {
+    patient {
+      id
+      name
+      phone
+      doctorpatientassignedSet {
+        assignedAt
+        status
+      }
+      doctornotesSet {
+        diagnosis
+      }
+    }
+  }
+}
