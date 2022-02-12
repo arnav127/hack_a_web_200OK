@@ -119,10 +119,9 @@ class IncrementHospitalResource(graphene.Mutation):
         hospital_resource = HospitalResource.objects.get(hospital=info.context.user.hospital)
         resource_name = underscore(resource)
         val = getattr(hospital_resource, resource_name)
-        setattr(hospital_resource, resource, val+1)
+        setattr(hospital_resource, resource_name, val+1)
         print(val, val+1)
         hospital_resource.save()
-        print(hospital_resource.bedAvailable)
         return IncrementHospitalResource(ok=True, hospital_resource=hospital_resource)
 
 class HospitalResourceMutation(graphene.ObjectType):
