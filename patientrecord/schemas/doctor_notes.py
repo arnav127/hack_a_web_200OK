@@ -1,4 +1,3 @@
-
 import graphene
 from graphene_django import DjangoObjectType
 from graphql_jwt.decorators import login_required
@@ -64,4 +63,3 @@ class UpdateDoctorNotes(graphene.Mutation):
 class DoctorNotesMutation(graphene.ObjectType):
     create_doctor_notes = CreateDoctorNotes.Field()
     update_doctor_notes = UpdateDoctorNotes.Field()
-

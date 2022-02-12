@@ -1,8 +1,8 @@
-
 import graphene
 from graphene_django import DjangoObjectType
 from graphql_jwt.decorators import login_required
 from patientrecord.models import MedicinePrescription
+
 
 class MedicinePrescriptionType(DjangoObjectType):
     class Meta:
@@ -52,4 +52,3 @@ class UpdateMedicinePrescription(graphene.Mutation):
 class MedicinePrescriptionMutation(graphene.ObjectType):
     create_medicine_prescription = CreateMedicinePrescription.Field()
     update_medicine_prescription = UpdateMedicinePrescription.Field()
-

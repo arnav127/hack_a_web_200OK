@@ -1,4 +1,3 @@
-
 import graphene
 from graphene_django import DjangoObjectType
 from graphql_jwt.decorators import login_required
@@ -8,7 +7,6 @@ from patientrecord.models import TestResult
 class TestResultType(DjangoObjectType):
     class Meta:
         model = TestResult
-
 
 
 class TestResultQuery(graphene.ObjectType):

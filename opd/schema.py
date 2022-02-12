@@ -25,6 +25,7 @@ class DoctorQuery(graphene.ObjectType):
 class CreateDoctor(graphene.Mutation):
     doctor = graphene.Field(DoctorType)
     ok = graphene.Boolean()
+
     class Arguments:
         username = graphene.String()
         name = graphene.String()
@@ -35,9 +36,14 @@ class CreateDoctor(graphene.Mutation):
     def mutate(cls, root, info, username, name, specialization):
         if not info.context.user.is_hospital:
             return CreateDoctor(ok=False, doctor=None)
-        
+
         user = ExtendUser.objects.get(username=username)
-        doctor = Doctor.objects.create(user=user, name=name, hospital = info.context.user.hospital, specialization=specialization)
+        doctor = Doctor.objects.create(
+            user=user,
+            name=name,
+            hospital=info.context.user.hospital,
+            specialization=specialization,
+        )
         return CreateDoctor(ok=True, doctor=doctor)
 
 
@@ -49,9 +55,10 @@ class DoctorPatientAssignedType(DjangoObjectType):
     class Meta:
         model = DoctorPatientAssigned
 
+
 class DoctorPatientAssignedQuery(graphene.ObjectType):
     all_doctor_patient_assigned = graphene.List(DoctorPatientAssignedType)
-    doctor_patient_assigned = graphene.List(DoctorPatientAssignedType )
+    doctor_patient_assigned = graphene.List(DoctorPatientAssignedType)
 
     def resolve_all_doctor_patient_assigned(root, info):
         return DoctorPatientAssigned.objects.all()
@@ -78,7 +85,9 @@ class CreateDoctorPatientAssigned(graphene.Mutation):
             return CreateDoctorPatientAssigned(ok=False, doctor_patent_assigned=None)
 
         # check if the hospital is authorized to assign the patient to the doctor
-        authorized_hospital_list = PatientAuthorizedHospital.objects.filter(patient_id=patient_id, hospital_id=info.context.user.hospital).first()
+        authorized_hospital_list = PatientAuthorizedHospital.objects.filter(
+            patient_id=patient_id, hospital_id=info.context.user.hospital
+        ).first()
         if not authorized_hospital_list:
             return CreateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
 
@@ -90,7 +99,10 @@ class CreateDoctorPatientAssigned(graphene.Mutation):
             setattr(doctor_patient_assigned, key, value)
         doctor_patient_assigned.save()
 
-        return CreateDoctorPatientAssigned(ok=True, doctor_patient_assigned=doctor_patient_assigned)
+        return CreateDoctorPatientAssigned(
+            ok=True, doctor_patient_assigned=doctor_patient_assigned
+        )
+
 
 class ChangeDoctorPatientAssignedStatus(graphene.Mutation):
     ok = graphene.Boolean()
@@ -100,28 +112,40 @@ class ChangeDoctorPatientAssignedStatus(graphene.Mutation):
         patient_id = graphene.String(required=True)
         doctor_id = graphene.String(required=True)
         new_status = graphene.String(required=True)
-        
 
     @classmethod
     @login_required
     def mutate(cls, root, info, patient_id, doctor_id, new_status):
         if not info.context.user.is_hospital:
-            return ChangeDoctorPatientAssignedStatus(ok=False, doctor_patient_assigned=None)
+            return ChangeDoctorPatientAssignedStatus(
+                ok=False, doctor_patient_assigned=None
+            )
 
         # check if the hospital is authorized to assign the patient to the doctor
-        authorized_hospital_list = PatientAuthorizedHospital.objects.filter(patient_id=patient_id, hospital_id=info.context.user.hospital).first()
+        authorized_hospital_list = PatientAuthorizedHospital.objects.filter(
+            patient_id=patient_id, hospital_id=info.context.user.hospital
+        ).first()
         if not authorized_hospital_list:
-            return ChangeDoctorPatientAssignedStatus(ok=False, doctor_patient_assigned=None)
+            return ChangeDoctorPatientAssignedStatus(
+                ok=False, doctor_patient_assigned=None
+            )
 
-        doctor_patient_assigned = DoctorPatientAssigned.objects.filter(doctor_id=doctor_id, patient_id=patient_id).last()
+        doctor_patient_assigned = DoctorPatientAssigned.objects.filter(
+            doctor_id=doctor_id, patient_id=patient_id
+        ).last()
         if not doctor_patient_assigned:
-            return ChangeDoctorPatientAssignedStatus(ok=False, doctor_patient_assigned=None)
+            return ChangeDoctorPatientAssignedStatus(
+                ok=False, doctor_patient_assigned=None
+            )
 
         # change the status to new status
         doctor_patient_assigned.status = new_status
         doctor_patient_assigned.save()
 
-        return ChangeDoctorPatientAssignedStatus(ok=True, doctor_patient_assigned=doctor_patient_assigned)
+        return ChangeDoctorPatientAssignedStatus(
+            ok=True, doctor_patient_assigned=doctor_patient_assigned
+        )
+
 
 class UpdateDoctorPatientAssigned(graphene.Mutation):
     ok = graphene.Boolean()
@@ -142,17 +166,22 @@ class UpdateDoctorPatientAssigned(graphene.Mutation):
             return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
 
         # check if the hospital is authorized to assign the patient to the doctor
-        authorized_hospital_list = PatientAuthorizedHospital.objects.get(patient_id=doctor_patient_assigned.patient, hospital_id=info.context.user.hospital)
-        
+        authorized_hospital_list = PatientAuthorizedHospital.objects.get(
+            patient_id=doctor_patient_assigned.patient,
+            hospital_id=info.context.user.hospital,
+        )
+
         if not authorized_hospital_list:
             return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
-
 
         # change the status to new status
         doctor_patient_assigned.status = new_status
         doctor_patient_assigned.save()
 
-        return UpdateDoctorPatientAssigned(ok=True, doctor_patient_assigned=doctor_patient_assigned)
+        return UpdateDoctorPatientAssigned(
+            ok=True, doctor_patient_assigned=doctor_patient_assigned
+        )
+
 
 class DoctorPatientAssignedMutation(graphene.ObjectType):
     create_doctor_patient_assigned = CreateDoctorPatientAssigned.Field()
