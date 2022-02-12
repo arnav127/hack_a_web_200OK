@@ -7,25 +7,31 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0003_referredpatients'),
-        ('opd', '0001_initial'),
-        ('patientrecord', '0004_alter_doctornotes_doctor'),
+        ("user", "0003_referredpatients"),
+        ("opd", "0001_initial"),
+        ("patientrecord", "0004_alter_doctornotes_doctor"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='doctornotes',
-            name='doctor',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='opd.doctor'),
+            model_name="doctornotes",
+            name="doctor",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="opd.doctor"
+            ),
         ),
         migrations.AlterField(
-            model_name='doctornotes',
-            name='patient',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='user.patient'),
+            model_name="doctornotes",
+            name="patient",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="user.patient"
+            ),
         ),
         migrations.AlterField(
-            model_name='testresult',
-            name='patient',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='user.patient'),
+            model_name="testresult",
+            name="patient",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="user.patient"
+            ),
         ),
     ]

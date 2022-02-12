@@ -51,8 +51,12 @@ class PatientAuthorizedHospital(models.Model):
 
 class ReferredPatients(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    hospital_referred_by = models.ForeignKey(Hospital, on_delete=models.CASCADE, related_name="referred_out")
-    hospital_referred = models.ForeignKey(Hospital, on_delete=models.CASCADE, related_name="referred_in")
+    hospital_referred_by = models.ForeignKey(
+        Hospital, on_delete=models.CASCADE, related_name="referred_out"
+    )
+    hospital_referred = models.ForeignKey(
+        Hospital, on_delete=models.CASCADE, related_name="referred_in"
+    )
     reason_referred = models.CharField(
         max_length=255, blank=False, verbose_name="Reason Referred"
     )

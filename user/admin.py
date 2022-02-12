@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import ExtendUser, Hospital, Patient, PatientAuthorizedHospital, ReferredPatients
+from .models import (
+    ExtendUser,
+    Hospital,
+    Patient,
+    PatientAuthorizedHospital,
+    ReferredPatients,
+)
 from django.apps import apps
 
 

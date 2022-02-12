@@ -41,4 +41,3 @@ class TestResult(models.Model):
 
     def __str__(self) -> str:
         return f"{self.test_name} Test - {self.patient.name}"
-
