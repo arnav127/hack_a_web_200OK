@@ -16,7 +16,7 @@ class MedicinePrescription(models.Model):
 
 
 class MedicineRecord(models.Model):
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     prescriptions = models.ManyToManyField(MedicinePrescription, blank=False)
 
     def __str__(self) -> str:
