@@ -21,10 +21,11 @@ from patientrecord.schema import (
 from resources.schema import HospitalResourceQuery
 from resources.schema import HospitalResourceMutation
 
-from opd.schema import DoctorQuery
+from opd.schema import DoctorQuery, DoctorPatientAssignedQuery
 
 class Query(
     DoctorQuery,
+    DoctorPatientAssignedQuery,
     HospitalResourceQuery,
     PatientQuery,
     PatientAuthorizedHospitalQuery,
