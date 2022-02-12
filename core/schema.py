@@ -1,13 +1,5 @@
 import graphene
-from user.schema import (
-    AuthMutation,
-    AuthQuery,
-    HospitalQuery,
-    PatientQuery,
-    PatientMutation,
-    PatientAuthorizedHospitalQuery,
-    PatientAuthorizedHospitalMutation,
-)
+from user.schema import UserQuery, UserMutation
 from patientrecord.schema import PatientRecordQuery, PatientRecordMutation
 
 from resources.schema import HospitalResourceQuery
@@ -21,11 +13,7 @@ class Query(
     DoctorQuery,
     DoctorPatientAssignedQuery,
     HospitalResourceQuery,
-    PatientQuery,
-    PatientAuthorizedHospitalQuery,
-    HospitalQuery,
-    PatientRecordQuery,
-    AuthQuery,
+    UserQuery,
     graphene.ObjectType,
 ):
     pass
@@ -35,10 +23,7 @@ class Mutation(
     DoctorMutation,
     DoctorPatientAssignedMutation,
     HospitalResourceMutation,
-    PatientMutation,
-    PatientAuthorizedHospitalMutation,
-    PatientRecordMutation,
-    AuthMutation,
+    UserMutation,
     graphene.ObjectType,
 ):
     pass
