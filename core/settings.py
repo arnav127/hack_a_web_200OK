@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "patientrecord",
     "resources",
     "opd",
+    "mayodata",
 ]
 
 MIDDLEWARE = [
