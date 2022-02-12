@@ -1,12 +1,15 @@
-# Next.js + Tailwind CSS Example
+# Hack A Web frontend
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+## Team 200OK
 
-## Preview
+## Setup
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+To install all the dependencies, run `yarn install`.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+To start the development server, run `yarn dev`, the server will be available at http://localhost:3000.
+
+Create the production build with `yarn build`, and run it with `yarn start`.
+
 
 ## Deploy your own
 
