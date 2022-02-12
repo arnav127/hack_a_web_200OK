@@ -42,10 +42,10 @@ class MedicineRecordQuery(graphene.ObjectType):
 
     @login_required
     def resolve_medicine_records(root, info, patient):
-        return MedicineRecord.objects.filter(patient=patient)
+        return MedicineRecord.objects.filter(patient=patient).order_by("-id")
 
     @login_required
-    def resolve_medicine_records(root, info, patient):
+    def resolve_latest_medicine_records(root, info, patient):
         return MedicineRecord.objects.filter(patient=patient).order_by("-id").first()
 
 
@@ -116,8 +116,8 @@ class CreateMedicineRecord(graphene.Mutation):
 
     @classmethod
     @login_required
-    def mutate(self, root, info, medicine, doses):
-        medr = MedicineRecord.objects.create(medicine=medicine, doses=doses)
+    def mutate(self, root, info, patient_id, prescription_id):
+        medr = MedicineRecord.objects.create(patient_id=patient_id, prescription_id=prescription_id)
         return CreateMedicineRecord(medicine_record=medr)
 
 
