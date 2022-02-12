@@ -1,20 +1,24 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import Layout from '../../components/Hospital/Layout'
 import { useAuth } from '../../lib/auth'
 
 const Dashboard = () => {
+    const [isLoading, setIsLoading] = useState(true)
     const router = useRouter();
-    const { isAuthenticated, isLoading } = useAuth();
 
     useEffect(() => {
-        if (!isAuthenticated) {
-            router.replace('/hospital/login')
+        const loadUser = () => {
+            const isAuthenticated = localStorage.getItem('user');
+            if (!isAuthenticated)
+                router.replace('/hospital/login')
         }
+        loadUser();
+        setIsLoading(false);
     }, [])
 
-    if (isLoading) return 'Loading...'
+    if (isLoading) return ('Loading...');
 
     return (
         <Layout title="Dashboard">

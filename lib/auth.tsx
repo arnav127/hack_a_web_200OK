@@ -11,19 +11,16 @@ export const AuthProvider = ({ children }) => {
 
     const [loginMutation] = useLoginMutation()
 
-    useEffect(() => {
-        /* async function loadUserFromCookies() {
-*     const token = Cookies.get('token')
-*     if (token) {
-*         console.log("Got a token in the cookies, let's see if it is valid")
-*         api.defaults.headers.Authorization = `Bearer ${token}`
-*         const { data: user } = await api.get('users/me')
-*         if (user) setUser(user);
+
+    /* useEffect(() => {
+*     const loadUser = () => {
+*         const user = JSON.parse(localStorage.getItem('user'))
+*         if (user) {
+*             setUser(user)
+*         }
 *     }
-*     setLoading(false)
-* }
-* loadUserFromCookies() */
-    }, [])
+*     loadUser();
+* }, []) */
 
     const login = async ({ username, password }) => {
         const { data, loading } = await loginMutation({
@@ -35,6 +32,7 @@ export const AuthProvider = ({ children }) => {
         if (!loading && data?.tokenAuth?.success) {
             setIsLoading(false);
             localStorage.setItem('JWT', data.tokenAuth.token)
+            localStorage.setItem('user', JSON.stringify(data.tokenAuth.user))
             setUser(data.tokenAuth.user)
             router.push('/hospital/dashboard')
         }
@@ -42,13 +40,14 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('JWT')
+        localStorage.removeItem('user')
         setUser(null)
         router.push('/')
     }
 
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated: !!user, user, login, isLoading, logout }}>
+        <AuthContext.Provider value={{ user, login, isLoading, logout }}>
             {children}
         </AuthContext.Provider>
     )
