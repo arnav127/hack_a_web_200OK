@@ -15,8 +15,9 @@ const Dashboard = () => {
 
     return (
         <Layout title="Patient Records">
+            {console.log(data)}
             {(!loading && !error) && (
-                <table className="items-center bg-transparent w-full border-collapse overflow-x-auto">
+                < table className="items-center bg-transparent w-full border-collapse overflow-x-auto">
                     <thead>
                         <tr>
                             <th className={styles.colHead}>
@@ -75,7 +76,7 @@ const Dashboard = () => {
 
                 </table>)
             }
-        </Layout>
+        </Layout >
     )
 }
 
