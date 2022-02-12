@@ -27,14 +27,27 @@ const Doctor = ({ pid, data }) => {
                 data?.patient?.doctorpatientassignedSet.length > 0 ? (
                     <>
                         <p>
-                            {data?.patient?.doctorpatientassignedSet.at(-1).doctor.name}
+                            Doctor name:  {data?.patient?.doctorpatientassignedSet.at(-1).doctor.name}
                         </p>
-                        <p >
-                            {data?.patient?.doctorpatientassignedSet.at(-1).assignedAt.slice(0, 10)}
+                        <p>
+                            Assigned on: {data?.patient?.doctorpatientassignedSet.at(-1).assignedAt.slice(0, 10)}
                         </p>
-                        <p >
-                            {data?.patient?.doctorpatientassignedSet.at(-1).status}
+                        <p>
+                            Status: {data?.patient?.doctorpatientassignedSet.at(-1).status}
                         </p>
+
+                        <div>
+                            {data?.patient?.doctornotesSet.length > 0 && (
+                                data.patient.doctornotesSet.map(note => {
+                                    return (
+                                        <>
+                                            <p>Diagnosis: {note.diagnosis}</p>
+                                            <p>Notes: {note.notes}</p>
+                                        </>
+                                    )
+                                })
+                            )}
+                        </div>
                     </>
                 ) : (
                     <form
