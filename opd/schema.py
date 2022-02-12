@@ -123,3 +123,38 @@ class ChangeDoctorPatientAssignedStatus(graphene.Mutation):
 
         return ChangeDoctorPatientAssignedStatus(ok=True, doctor_patient_assigned=doctor_patient_assigned)
 
+class UpdateDoctorPatientAssigned(graphene.Mutation):
+    ok = graphene.Boolean()
+    doctor_patient_assigned = graphene.Field(DoctorPatientAssignedType)
+
+    class Arguments:
+        id = graphene.String(required=True)
+        new_status = graphene.String(required=True)
+
+    @classmethod
+    @login_required
+    def mutate(cls, root, info, id, new_status):
+        if not info.context.user.is_hospital:
+            return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
+
+        doctor_patient_assigned = DoctorPatientAssigned.objects.get(pk=id)
+        if not doctor_patient_assigned:
+            return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
+
+        # check if the hospital is authorized to assign the patient to the doctor
+        authorized_hospital_list = PatientAuthorizedHospital.objects.get(patient_id=doctor_patient_assigned.patient, hospital_id=info.context.user.hospital)
+        
+        if not authorized_hospital_list:
+            return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
+
+
+        # change the status to new status
+        doctor_patient_assigned.status = new_status
+        doctor_patient_assigned.save()
+
+        return UpdateDoctorPatientAssigned(ok=True, doctor_patient_assigned=doctor_patient_assigned)
+
+class DoctorPatientAssignedMutation(graphene.ObjectType):
+    create_doctor_patient_assigned = CreateDoctorPatientAssigned.Field()
+    change_doctor_patient_assigned_status = ChangeDoctorPatientAssignedStatus.Field()
+    update_doctor_patient_assigned = UpdateDoctorPatientAssigned.Field()
