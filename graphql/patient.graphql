@@ -1,0 +1,12 @@
+
+
+mutation createPatient($name: String!, $phone: String!, $aadhar: String!) {
+  createPatient(name: $name, phone: $phone, aadhar: $aadhar) {
+    patient {
+      id
+      name
+      phone
+      aadhar
+    }
+  }
+}

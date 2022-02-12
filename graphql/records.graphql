@@ -1,0 +1,94 @@
+
+mutation createTestResult($patient: String, $testName: String, $testResult: String) {
+  createTestResult(patient: $patient, testName: $testName, testResult: $testResult) {
+    testResult {
+      id
+      patient {
+        id
+      }
+      testName
+      testResult
+    }
+  }
+}
+
+mutation updateTestResult($id: String!, $patient: String, $testName: String, $testResult: String) {
+  updateTestResult(id: $id, patient: $patient, testName: $testName, testResult: $testResult) {
+    testResult {
+      id
+      patient {
+        id
+      }
+      testName
+      testResult
+    }
+  }
+}
+
+mutation createDoctorNotes($diagnosis: String, $doctor: String, $notes: String, $patientId: String) {
+  createDoctorNotes(diagnosis: $diagnosis, doctor: $doctor, notes: $notes, patientId: $patientId) {
+    doctorNotes {
+      id
+      patient {
+        id
+      }
+      doctor
+      diagnosis
+      notes
+    }
+  }
+}
+
+mutation updateDoctorNotes($id: String!, $diagnosis: String, $doctor: String, $notes: String, $patientId: String) {
+  updateDoctorNotes(id: $id, diagnosis: $diagnosis, doctor: $doctor, notes: $notes, patientId: $patientId) {
+    doctorNotes {
+      id
+      patient {
+        id
+      }
+      doctor
+      diagnosis
+      notes
+    }
+  }
+}
+
+mutation createMedicineRecord($patientId: String, $prescriptionId: String) {
+  createMedicineRecord(patientId: $patientId, prescriptionId: $prescriptionId) {
+    medicineRecord {
+      id
+      patient {
+        id
+      }
+      prescriptions {
+        medicine
+        doses
+      }
+    }
+  }
+}
+
+mutation updateMedicineRecord($id: String!, $patientId: String, $prescriptionId: String) {
+  updateMedicineRecord(id: $id, patientId: $patientId, prescriptionId: $prescriptionId) {
+    medicineRecord {
+      id
+      patient {
+        id
+      }
+      prescriptions {
+        id
+        medicine
+        doses
+      }
+    }
+  }
+}
+
+mutation createMedicinePrescription($doses: String, $medicine: String) {
+  createMedicinePrescription(doses: $doses, medicine: $medicine) {
+    medp {
+      id
+    }
+  }
+}
+
