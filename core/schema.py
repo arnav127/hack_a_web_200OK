@@ -22,6 +22,7 @@ from resources.schema import HospitalResourceQuery
 from resources.schema import HospitalResourceMutation
 
 from opd.schema import DoctorQuery, DoctorPatientAssignedQuery
+from opd.schema import DoctorMutation
 
 class Query(
     DoctorQuery,
@@ -40,6 +41,7 @@ class Query(
 
 
 class Mutation(
+    DoctorMutation,
     HospitalResourceMutation,
     PatientMutation,
     PatientAuthorizedHospitalMutation,
