@@ -4,13 +4,13 @@ import {
     useAllDoctorsQuery,
     usePatientByIdQuery,
     useCreateDoctorPatientAssignedMutation
-} from '../../../../graphql/generated'
+} from '../../../graphql/generated'
 
-import Layout from '../../../../components/Hospital/Layout'
-import Doctor from '../../../../components/Hospital/Patients/Doctor'
-import PatientRecords from '../../../../components/Hospital/Patients/PatientRecords'
-import TestResults from '../../../../components/Hospital/Patients/TestResults'
-import MedicineRecords from '../../../../components/Hospital/Patients/MedicineRecords'
+import Layout from '../../../components/Hospital/Layout'
+import Doctor from '../../../components/Hospital/Patients/Doctor'
+import PatientRecords from '../../../components/Hospital/Patients/PatientRecords'
+import TestResults from '../../../components/Hospital/Patients/TestResults'
+import MedicineRecords from '../../../components/Hospital/Patients/MedicineRecords'
 
 const PatientRecord = () => {
     const router = useRouter()
