@@ -29,8 +29,8 @@ mutation createDoctorNotes($diagnosis: String, $doctor: String, $notes: String, 
         id
       }
       doctor {
-      id
-}
+        id
+      }
       diagnosis
       notes
     }
@@ -45,47 +45,40 @@ mutation updateDoctorNotes($id: String!, $diagnosis: String, $doctor: String, $n
         id
       }
       doctor {
-      id
-}
+        id
+      }
       diagnosis
       notes
     }
   }
 }
 
-mutation createMedicineRecord($patientId: String, $prescriptionId: String) {
-  createMedicineRecord(patientId: $patientId, prescriptionId: $prescriptionId) {
+mutation createMedicineRecord($patientId: String, $prescription: String) {
+  createMedicineRecord(patientId: $patientId, prescription: $prescription) {
     medicineRecord {
       id
       patient {
         id
       }
-      prescriptions {
-        medicine
-        doses
-      }
+      prescription
     }
   }
 }
 
-mutation updateMedicineRecord($id: String!, $patientId: String, $prescriptionId: String) {
-  updateMedicineRecord(id: $id, patientId: $patientId, prescriptionId: $prescriptionId) {
+mutation updateMedicineRecord($id: String!, $patientId: String, $prescription: String) {
+  updateMedicineRecord(id: $id, patientId: $patientId, prescription: $prescription) {
     medicineRecord {
       id
       patient {
         id
       }
-      prescriptions {
-        id
-        medicine
-        doses
-      }
+      prescription
     }
   }
 }
 
-mutation createMedicinePrescription($doses: String! $medicine: String!) {
-  createMedicinePrescription(doses: $doses medicine: $medicine) {
+mutation createMedicinePrescription($doses: String!, $medicine: String!) {
+  createMedicinePrescription(doses: $doses, medicine: $medicine) {
     medicinePrescription {
       id
       medicine

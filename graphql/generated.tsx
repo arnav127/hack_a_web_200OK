@@ -257,6 +257,7 @@ export type MedicineRecordType = {
   __typename?: 'MedicineRecordType';
   id: Scalars['ID'];
   patient: PatientType;
+  prescription: Scalars['String'];
   prescriptions: Array<MedicinePrescriptionType>;
 };
 
@@ -489,7 +490,7 @@ export type MutationCreateMedicinePrescriptionArgs = {
 
 export type MutationCreateMedicineRecordArgs = {
   patientId?: InputMaybe<Scalars['String']>;
-  prescriptionId?: InputMaybe<Scalars['String']>;
+  prescription?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -663,7 +664,7 @@ export type MutationUpdateMedicinePrescriptionArgs = {
 export type MutationUpdateMedicineRecordArgs = {
   id: Scalars['String'];
   patientId?: InputMaybe<Scalars['String']>;
-  prescriptionId?: InputMaybe<Scalars['String']>;
+  prescription?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1275,7 +1276,7 @@ export type PatientByIdQueryVariables = Exact<{
 }>;
 
 
-export type PatientByIdQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', id: string, status: string, assignedAt: any, doctor: { __typename?: 'DoctorType', name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, notes: string }>, medicinerecordSet: Array<{ __typename?: 'MedicineRecordType', id: string, prescriptions: Array<{ __typename?: 'MedicinePrescriptionType', id: string, medicine: string, doses: string }> }>, testresultSet: Array<{ __typename?: 'TestResultType', id: string, testName: string, testResult: string, media: string }> } | null };
+export type PatientByIdQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', id: string, status: string, assignedAt: any, doctor: { __typename?: 'DoctorType', name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, notes: string }>, medicinerecordSet: Array<{ __typename?: 'MedicineRecordType', id: string, prescription: string }>, testresultSet: Array<{ __typename?: 'TestResultType', id: string, testName: string, testResult: string, media: string }> } | null };
 
 export type CreateTestResultMutationVariables = Exact<{
   media?: InputMaybe<Scalars['String']>;
@@ -1320,20 +1321,20 @@ export type UpdateDoctorNotesMutation = { __typename?: 'Mutation', updateDoctorN
 
 export type CreateMedicineRecordMutationVariables = Exact<{
   patientId?: InputMaybe<Scalars['String']>;
-  prescriptionId?: InputMaybe<Scalars['String']>;
+  prescription?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type CreateMedicineRecordMutation = { __typename?: 'Mutation', createMedicineRecord?: { __typename?: 'CreateMedicineRecord', medicineRecord?: { __typename?: 'MedicineRecordType', id: string, patient: { __typename?: 'PatientType', id: string }, prescriptions: Array<{ __typename?: 'MedicinePrescriptionType', medicine: string, doses: string }> } | null } | null };
+export type CreateMedicineRecordMutation = { __typename?: 'Mutation', createMedicineRecord?: { __typename?: 'CreateMedicineRecord', medicineRecord?: { __typename?: 'MedicineRecordType', id: string, prescription: string, patient: { __typename?: 'PatientType', id: string } } | null } | null };
 
 export type UpdateMedicineRecordMutationVariables = Exact<{
   id: Scalars['String'];
   patientId?: InputMaybe<Scalars['String']>;
-  prescriptionId?: InputMaybe<Scalars['String']>;
+  prescription?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type UpdateMedicineRecordMutation = { __typename?: 'Mutation', updateMedicineRecord?: { __typename?: 'UpdateMedicineRecord', medicineRecord?: { __typename?: 'MedicineRecordType', id: string, patient: { __typename?: 'PatientType', id: string }, prescriptions: Array<{ __typename?: 'MedicinePrescriptionType', id: string, medicine: string, doses: string }> } | null } | null };
+export type UpdateMedicineRecordMutation = { __typename?: 'Mutation', updateMedicineRecord?: { __typename?: 'UpdateMedicineRecord', medicineRecord?: { __typename?: 'MedicineRecordType', id: string, prescription: string, patient: { __typename?: 'PatientType', id: string } } | null } | null };
 
 export type CreateMedicinePrescriptionMutationVariables = Exact<{
   doses: Scalars['String'];
@@ -1932,11 +1933,7 @@ export const PatientByIdDocument = gql`
     }
     medicinerecordSet {
       id
-      prescriptions {
-        id
-        medicine
-        doses
-      }
+      prescription
     }
     testresultSet {
       id
@@ -2173,17 +2170,14 @@ export type UpdateDoctorNotesMutationHookResult = ReturnType<typeof useUpdateDoc
 export type UpdateDoctorNotesMutationResult = Apollo.MutationResult<UpdateDoctorNotesMutation>;
 export type UpdateDoctorNotesMutationOptions = Apollo.BaseMutationOptions<UpdateDoctorNotesMutation, UpdateDoctorNotesMutationVariables>;
 export const CreateMedicineRecordDocument = gql`
-    mutation createMedicineRecord($patientId: String, $prescriptionId: String) {
-  createMedicineRecord(patientId: $patientId, prescriptionId: $prescriptionId) {
+    mutation createMedicineRecord($patientId: String, $prescription: String) {
+  createMedicineRecord(patientId: $patientId, prescription: $prescription) {
     medicineRecord {
       id
       patient {
         id
       }
-      prescriptions {
-        medicine
-        doses
-      }
+      prescription
     }
   }
 }
@@ -2204,7 +2198,7 @@ export type CreateMedicineRecordMutationFn = Apollo.MutationFunction<CreateMedic
  * const [createMedicineRecordMutation, { data, loading, error }] = useCreateMedicineRecordMutation({
  *   variables: {
  *      patientId: // value for 'patientId'
- *      prescriptionId: // value for 'prescriptionId'
+ *      prescription: // value for 'prescription'
  *   },
  * });
  */
@@ -2216,22 +2210,18 @@ export type CreateMedicineRecordMutationHookResult = ReturnType<typeof useCreate
 export type CreateMedicineRecordMutationResult = Apollo.MutationResult<CreateMedicineRecordMutation>;
 export type CreateMedicineRecordMutationOptions = Apollo.BaseMutationOptions<CreateMedicineRecordMutation, CreateMedicineRecordMutationVariables>;
 export const UpdateMedicineRecordDocument = gql`
-    mutation updateMedicineRecord($id: String!, $patientId: String, $prescriptionId: String) {
+    mutation updateMedicineRecord($id: String!, $patientId: String, $prescription: String) {
   updateMedicineRecord(
     id: $id
     patientId: $patientId
-    prescriptionId: $prescriptionId
+    prescription: $prescription
   ) {
     medicineRecord {
       id
       patient {
         id
       }
-      prescriptions {
-        id
-        medicine
-        doses
-      }
+      prescription
     }
   }
 }
@@ -2253,7 +2243,7 @@ export type UpdateMedicineRecordMutationFn = Apollo.MutationFunction<UpdateMedic
  *   variables: {
  *      id: // value for 'id'
  *      patientId: // value for 'patientId'
- *      prescriptionId: // value for 'prescriptionId'
+ *      prescription: // value for 'prescription'
  *   },
  * });
  */
