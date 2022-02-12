@@ -44,7 +44,7 @@ class UpdateMedicineRecord(graphene.Mutation):
     class Arguments:
         id = graphene.String(required=True)
         patient_id = graphene.String()
-        prescription_id = graphene.String()
+        prescriptions = graphene.String()
 
     medicine_record = graphene.Field(MedicineRecordType)
 
