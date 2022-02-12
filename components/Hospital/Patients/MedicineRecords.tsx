@@ -1,4 +1,7 @@
+import { useAuth } from '../../../lib/auth'
+
 const MedicineRecords = ({ pid, data }) => {
+    const { user } = useAuth()
     return (
         <div>
             <h2>Medicine Records</h2>
@@ -20,6 +23,7 @@ const MedicineRecords = ({ pid, data }) => {
                     })}
                 </>
             }
+            {user?.isDoctor && "This is a doctor"}
         </div>
     )
 }
