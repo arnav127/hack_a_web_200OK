@@ -65,11 +65,10 @@ class PatientQuery(graphene.ObjectType):
     patients_all = graphene.List(PatientType)
 
     def resolve_patient(root, info, **kwargs):
-        print(kwargs["phone"])
-        if kwargs["phone"]:
+        if kwargs.get("phone"):
             return Patient.objects.get(phone=kwargs["phone"])
 
-        if kwargs["aadhar"]:
+        if kwargs.get("aadhar"):
             return Patient.objects.get(aadhar=kwargs["aadhar"])
         return None
 
