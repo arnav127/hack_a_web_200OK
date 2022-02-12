@@ -38,7 +38,7 @@ const SideNav = () => {
           </span>
           <br />
           <span className="ml-2 text-sm font-semibold">
-            {user?.hospital?.name}
+            {user?.hospital?.name || user?.doctor?.name}
           </span>
         </h2>
       </div>
