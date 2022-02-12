@@ -5,13 +5,11 @@ from patientrecord.schema import PatientRecordQuery, PatientRecordMutation
 from resources.schema import HospitalResourceQuery
 from resources.schema import HospitalResourceMutation
 
-from opd.schema import DoctorQuery, DoctorPatientAssignedQuery
-from opd.schema import DoctorMutation, DoctorPatientAssignedMutation
+from opd.schema import OpdQuery, OpdMutation
 
 
 class Query(
-    DoctorQuery,
-    DoctorPatientAssignedQuery,
+    OpdQuery,
     HospitalResourceQuery,
     UserQuery,
     graphene.ObjectType,
@@ -20,8 +18,7 @@ class Query(
 
 
 class Mutation(
-    DoctorMutation,
-    DoctorPatientAssignedMutation,
+    OpdMutation,
     HospitalResourceMutation,
     UserMutation,
     graphene.ObjectType,
