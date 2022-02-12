@@ -49,6 +49,13 @@ class PatientAuthorizedHospital(models.Model):
         return f"{self.patient_id.name} - {self.hospital_id.name}"
 
 
-# medicines
-# test result
-# doctor notes
+class ReferredPatients(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    hospital_referred_by = models.ForeignKey(Hospital, on_delete=models.CASCADE, related_name="referred_out")
+    hospital_referred = models.ForeignKey(Hospital, on_delete=models.CASCADE, related_name="referred_in")
+    reason_referred = models.CharField(
+        max_length=255, blank=False, verbose_name="Reason Referred"
+    )
+
+    def __str__(self) -> str:
+        return f"{self.patient.name} - by {self.hospital_referred_by.name} to {self.hospital_referred.name} for {self.reason_referred}"
