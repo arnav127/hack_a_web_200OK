@@ -13,19 +13,27 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+import environ
+from os import path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_ROOT = path.join(BASE_DIR, 'staticfiles')
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+STATICFILES_DIRS = (
+    path.join(BASE_DIR, 'static'),
+)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^=jxgjt_er3ucm*q_=j((*!2q6s)61ho&8ngo1tmrp4d#^d7a!"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+env = environ.Env()
+environ.Env.read_env()
+
+SECRET_KEY = env.str('DJANGO_SECRET_KEY')
+
+
+DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
@@ -86,23 +94,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-import configparser
-
-config = configparser.ConfigParser()
-config_file = os.path.join(BASE_DIR, "config.ini")
-config.read(config_file)
-
-database_config = config["database"]
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "hackthewebdb",
-        "USER": database_config["user"],
-        "PASSWORD": database_config["password"],
-        "HOST": database_config["host"],
-        "PORT": database_config["port"],
-    }
-}
+DATABASES = {'default': env.db('DATABASE_URL')}
 
 
 # Password validation
@@ -197,3 +189,5 @@ GRAPHQL_AUTH = {
 }
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
