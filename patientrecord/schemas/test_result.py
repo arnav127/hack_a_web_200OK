@@ -2,6 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphql_jwt.decorators import login_required
 from patientrecord.models import TestResult
+from user.models import Patient
 
 
 class TestResultType(DjangoObjectType):
@@ -19,7 +20,7 @@ class TestResultQuery(graphene.ObjectType):
 
 class CreateTestResult(graphene.Mutation):
     class Arguments:
-        patient = graphene.String()
+        patient_id = graphene.String()
         test_name = graphene.String()
         test_result = graphene.String()
         media = graphene.String()
@@ -28,8 +29,9 @@ class CreateTestResult(graphene.Mutation):
 
     @classmethod
     @login_required
-    def mutate(self, root, info, patient, test_name, test_result, **kwargs):
+    def mutate(self, root, info, patient_id, test_name, test_result, **kwargs):
         media = kwargs.get("media", "")
+        patient = Patient.objects.get(id=patient_id)
         test_result = TestResult.objects.create(
             patient=patient, test_name=test_name, test_result=test_result, media=media
         )
