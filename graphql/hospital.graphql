@@ -70,6 +70,8 @@ query admittedRecords {
               id
               name
             }
+            assignedAt
+            status
           }
           doctornotesSet {
             diagnosis

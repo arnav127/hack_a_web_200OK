@@ -24,7 +24,9 @@ query patientById($id: String) {
   patient(id: $id) {
     id
     name
+    phone
     doctorpatientassignedSet {
+    id
       doctor {
         name
       }

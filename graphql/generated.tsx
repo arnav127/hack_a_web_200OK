@@ -1194,6 +1194,11 @@ export type UpdateDoctorPatientAssignedMutationVariables = Exact<{
 
 export type UpdateDoctorPatientAssignedMutation = { __typename?: 'Mutation', updateDoctorPatientAssigned?: { __typename?: 'UpdateDoctorPatientAssigned', ok?: boolean | null, doctorPatientAssigned?: { __typename?: 'DoctorPatientAssignedType', id: string, status: string } | null } | null };
 
+export type AllDoctorsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllDoctorsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', hospital?: { __typename?: 'HospitalType', doctorSet: Array<{ __typename?: 'DoctorType', id: string, name: string }> } | null } | null };
+
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
@@ -1238,7 +1243,7 @@ export type UserQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', 
 export type AdmittedRecordsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AdmittedRecordsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', hospital?: { __typename?: 'HospitalType', patientauthorizedhospitalSet: Array<{ __typename?: 'PatientAuthorizedHospitalType', patientId: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', doctor: { __typename?: 'DoctorType', id: string, name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string }> } }> } | null } | null };
+export type AdmittedRecordsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', hospital?: { __typename?: 'HospitalType', patientauthorizedhospitalSet: Array<{ __typename?: 'PatientAuthorizedHospitalType', patientId: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', assignedAt: any, status: string, doctor: { __typename?: 'DoctorType', id: string, name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string }> } }> } | null } | null };
 
 export type CreatePatientMutationVariables = Exact<{
   name: Scalars['String'];
@@ -1262,7 +1267,7 @@ export type PatientByIdQueryVariables = Exact<{
 }>;
 
 
-export type PatientByIdQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', status: string, assignedAt: any, doctor: { __typename?: 'DoctorType', name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, notes: string }> } | null };
+export type PatientByIdQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', id: string, status: string, assignedAt: any, doctor: { __typename?: 'DoctorType', name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, notes: string }> } | null };
 
 export type CreateTestResultMutationVariables = Exact<{
   patient?: InputMaybe<Scalars['String']>;
@@ -1453,6 +1458,45 @@ export function useUpdateDoctorPatientAssignedMutation(baseOptions?: Apollo.Muta
 export type UpdateDoctorPatientAssignedMutationHookResult = ReturnType<typeof useUpdateDoctorPatientAssignedMutation>;
 export type UpdateDoctorPatientAssignedMutationResult = Apollo.MutationResult<UpdateDoctorPatientAssignedMutation>;
 export type UpdateDoctorPatientAssignedMutationOptions = Apollo.BaseMutationOptions<UpdateDoctorPatientAssignedMutation, UpdateDoctorPatientAssignedMutationVariables>;
+export const AllDoctorsDocument = gql`
+    query allDoctors {
+  me {
+    hospital {
+      doctorSet {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllDoctorsQuery__
+ *
+ * To run a query within a React component, call `useAllDoctorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllDoctorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllDoctorsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllDoctorsQuery(baseOptions?: Apollo.QueryHookOptions<AllDoctorsQuery, AllDoctorsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllDoctorsQuery, AllDoctorsQueryVariables>(AllDoctorsDocument, options);
+      }
+export function useAllDoctorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllDoctorsQuery, AllDoctorsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllDoctorsQuery, AllDoctorsQueryVariables>(AllDoctorsDocument, options);
+        }
+export type AllDoctorsQueryHookResult = ReturnType<typeof useAllDoctorsQuery>;
+export type AllDoctorsLazyQueryHookResult = ReturnType<typeof useAllDoctorsLazyQuery>;
+export type AllDoctorsQueryResult = Apollo.QueryResult<AllDoctorsQuery, AllDoctorsQueryVariables>;
 export const LoginDocument = gql`
     mutation login($username: String!, $password: String!) {
   tokenAuth(username: $username, password: $password) {
@@ -1688,6 +1732,8 @@ export const AdmittedRecordsDocument = gql`
               id
               name
             }
+            assignedAt
+            status
           }
           doctornotesSet {
             diagnosis
@@ -1809,7 +1855,9 @@ export const PatientByIdDocument = gql`
   patient(id: $id) {
     id
     name
+    phone
     doctorpatientassignedSet {
+      id
       doctor {
         name
       }
