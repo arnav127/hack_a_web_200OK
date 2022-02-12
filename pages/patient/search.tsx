@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link'
 import Layout from '../../components/Hospital/Layout'
 
-import { usePatientQuery } from '../../graphql/generated'
+import { usePatientQuery, useCreatePatientAuthorizedHospitalMutation } from '../../graphql/generated'
 
 const Admit = () => {
     const [aadhar, setAadhar] = useState('');
+
+    const [createPatientAuthorizedHospital] = useCreatePatientAuthorizedHospitalMutation();
 
     const { data, loading, error } = usePatientQuery({
         variables: {
@@ -53,9 +55,15 @@ const Admit = () => {
                             <p>{data.patient.phone}</p>
                         </div>
 
-                        <Link href="/patient/admit">
-                            Admit?
-                        </Link>
+                        <button
+                            className="w-36 rounded-lg bg-gray-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                            onClick={() => {
+                                createPatientAuthorizedHospital({
+                                    variables: { patientId: data.patient.id }
+                                })
+                            }}>
+                            Admit patient?
+                        </button>
                     </>
                 )}
             </div>

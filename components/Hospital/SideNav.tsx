@@ -3,18 +3,19 @@ import { useRouter } from 'next/router'
 
 import { useAuth } from '../../lib/auth'
 
-const NavLink = ({ icon, link, title }) => {
+const NavLink = ({ icon, href, title }) => {
     const router = useRouter()
     return (
-        <div
-            className={`-mx-4 flex items-center gap-2 py-2 px-4 text-sm ${router.pathname == '${link}' &&
-                'border-r-2 border-gray-800 bg-gray-100'
-                }`}
-        >
-            {icon}
-            <span>{title}</span>
-        </div>
-
+        <Link href={href}>
+            <a
+                className={`-mx-4 flex items-center gap-2 py-2 px-4 text-sm ${router.pathname == '${href}' &&
+                    'border-r-2 border-gray-800 bg-gray-100'
+                    }`}
+            >
+                {icon}
+                <span>{title}</span>
+            </a>
+        </Link>
     )
 }
 
@@ -40,7 +41,7 @@ const SideNav = () => {
                 <h3 className="py-2 text-xs font-semibold uppercase tracking-wide">
                     General
                 </h3>
-                <NavLink title='Dashboard' link='/hospital/dashboard' icon={
+                <NavLink title='Dashboard' href='/hospital/dashboard' icon={
                     <svg
                         className="h-6 w-6"
                         fill="none"
@@ -56,62 +57,19 @@ const SideNav = () => {
                         />
                     </svg>
                 } />
-                <div className="flex items-center gap-2 py-2 text-sm">
-                    <svg
-                        className="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"
-                        />
-                    </svg>
-                    <span>IPD</span>
-                </div>
-                <div className="flex items-center gap-2 py-2 text-sm">
-                    <svg
-                        className="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                        />
-                    </svg>
-                    <span>OPD</span>
-                </div>
             </div>
             <div>
                 <h3 className="text-xs font-semibold uppercase tracking-wide">
-                    General
+                    Patient
                 </h3>
-                <div className="flex items-center gap-2 py-2 text-sm">
-                    <svg
-                        className="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                        />
-                    </svg>
-                    <span>Dashboard</span>
-                </div>
+                <NavLink title='Search Patient' href='/patient/search' icon={
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>} />
+                <NavLink title='Admit Patient' href='/patient/admit' icon={
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>} />
             </div>
         </nav>
     )

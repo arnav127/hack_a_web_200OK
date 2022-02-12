@@ -1,30 +1,43 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react'
 import Layout from '../../components/Hospital/Layout'
 
-import { usePatientQuery } from '../../graphql/generated'
+import { usePatientQuery, useCreatePatientMutation } from '../../graphql/generated'
 
 const Admit = () => {
-    const [aadhar, setAadhar] = useState('');
-    const { data, loading, error } = usePatientQuery({
-        variables: {
-            aadhar: aadhar
-        },
-        skip: (!aadhar)
-    });
+    const [success, setSuccess] = useState(false)
+    const [createPatient] = useCreatePatientMutation();
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
-        setAadhar(formData.get('aadhar'))
+        const { data } = await createPatient({
+            variables: {
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                aadhar: formData.get('aadhar'),
+            },
+
+        });
+        console.log(data)
+        if (!!data) setSuccess(true);
     }
 
     return (
-        <Layout title="Admit Patient">
+        <Layout title="Admit New Patient" >
             <div className="container mx-auto">
                 <form
                     className="flex w-96 max-w-[24rem] flex-col gap-4 rounded-lg bg-gray-100/50 p-8"
                     onSubmit={handleSubmit}
                 >
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        className="rounded-lg border border-transparent py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-600"
+                        placeholder="Enter patient name"
+                        required
+                    />
                     <input
                         type="text"
                         id="aadhar"
@@ -33,23 +46,12 @@ const Admit = () => {
                         placeholder="Enter Aadhaar Number"
                         required
                     />
-                    <button
-                        type="submit"
-                        className="w-full rounded-lg bg-gray-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
-                    >
-                        Submit
-                    </button>
-                </form>
-                <form
-                    className="flex w-full flex-col gap-4 rounded-lg bg-gray-100/50 p-8"
-                    onSubmit={handleSubmit}
-                >
                     <input
-                        type="text"
-                        id="aathar"
-                        name="aadhar"
+                        type="tel"
+                        id="phone"
+                        name="phone"
                         className="rounded-lg border border-transparent py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-600"
-                        placeholder="Enter Aadhaar Number"
+                        placeholder="Enter patient phone number"
                         required
                     />
                     <button
@@ -59,9 +61,11 @@ const Admit = () => {
                         Submit
                     </button>
                 </form>
+                {success && "Patient created successfully!"}
             </div>
-        </Layout>
+        </Layout >
     )
+
 };
 
 export default Admit
