@@ -1,13 +1,9 @@
-
-mutation createTestResult($patient: String, $testName: String, $testResult: String) {
-  createTestResult(patient: $patient, testName: $testName, testResult: $testResult) {
+mutation createTestResult($media: String, $patientId: String, $testName: String, $testResult: String) {
+  createTestResult(media: $media, patientId: $patientId, testName: $testName, testResult: $testResult) {
     testResult {
       id
-      patient {
-        id
-      }
+      media
       testName
-      testResult
     }
   }
 }

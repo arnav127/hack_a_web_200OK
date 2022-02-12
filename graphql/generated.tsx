@@ -513,7 +513,8 @@ export type MutationCreateReferredPatientArgs = {
 
 
 export type MutationCreateTestResultArgs = {
-  patient?: InputMaybe<Scalars['String']>;
+  media?: InputMaybe<Scalars['String']>;
+  patientId?: InputMaybe<Scalars['String']>;
   testName?: InputMaybe<Scalars['String']>;
   testResult?: InputMaybe<Scalars['String']>;
 };
@@ -676,6 +677,7 @@ export type MutationUpdatePatientArgs = {
 
 export type MutationUpdateTestResultArgs = {
   id: Scalars['String'];
+  media?: InputMaybe<Scalars['String']>;
   patient?: InputMaybe<Scalars['String']>;
   testName?: InputMaybe<Scalars['String']>;
   testResult?: InputMaybe<Scalars['String']>;
@@ -1009,6 +1011,7 @@ export type SwapEmails = {
 export type TestResultType = {
   __typename?: 'TestResultType';
   id: Scalars['ID'];
+  media: Scalars['String'];
   patient: PatientType;
   testName: Scalars['String'];
   testResult: Scalars['String'];
@@ -1270,13 +1273,14 @@ export type PatientByIdQueryVariables = Exact<{
 export type PatientByIdQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', id: string, status: string, assignedAt: any, doctor: { __typename?: 'DoctorType', name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, notes: string }> } | null };
 
 export type CreateTestResultMutationVariables = Exact<{
-  patient?: InputMaybe<Scalars['String']>;
+  media?: InputMaybe<Scalars['String']>;
+  patientId?: InputMaybe<Scalars['String']>;
   testName?: InputMaybe<Scalars['String']>;
   testResult?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type CreateTestResultMutation = { __typename?: 'Mutation', createTestResult?: { __typename?: 'CreateTestResult', testResult?: { __typename?: 'TestResultType', id: string, testName: string, testResult: string, patient: { __typename?: 'PatientType', id: string } } | null } | null };
+export type CreateTestResultMutation = { __typename?: 'Mutation', createTestResult?: { __typename?: 'CreateTestResult', testResult?: { __typename?: 'TestResultType', id: string, media: string, testName: string } | null } | null };
 
 export type UpdateTestResultMutationVariables = Exact<{
   id: Scalars['String'];
@@ -1900,19 +1904,17 @@ export type PatientByIdQueryHookResult = ReturnType<typeof usePatientByIdQuery>;
 export type PatientByIdLazyQueryHookResult = ReturnType<typeof usePatientByIdLazyQuery>;
 export type PatientByIdQueryResult = Apollo.QueryResult<PatientByIdQuery, PatientByIdQueryVariables>;
 export const CreateTestResultDocument = gql`
-    mutation createTestResult($patient: String, $testName: String, $testResult: String) {
+    mutation createTestResult($media: String, $patientId: String, $testName: String, $testResult: String) {
   createTestResult(
-    patient: $patient
+    media: $media
+    patientId: $patientId
     testName: $testName
     testResult: $testResult
   ) {
     testResult {
       id
-      patient {
-        id
-      }
+      media
       testName
-      testResult
     }
   }
 }
@@ -1932,7 +1934,8 @@ export type CreateTestResultMutationFn = Apollo.MutationFunction<CreateTestResul
  * @example
  * const [createTestResultMutation, { data, loading, error }] = useCreateTestResultMutation({
  *   variables: {
- *      patient: // value for 'patient'
+ *      media: // value for 'media'
+ *      patientId: // value for 'patientId'
  *      testName: // value for 'testName'
  *      testResult: // value for 'testResult'
  *   },

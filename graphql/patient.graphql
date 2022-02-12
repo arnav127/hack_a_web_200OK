@@ -39,3 +39,4 @@ query patientById($id: String) {
     }
   }
 }
+
