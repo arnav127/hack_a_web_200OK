@@ -1,7 +1,7 @@
 import graphene
 
 from graphene_django import DjangoObjectType
-from back.resources.models import HospitalResource
+from resources.models import HospitalResource
 from user.models import Hospital, Patient, PatientAuthorizedHospital
 from graphql_jwt.decorators import login_required
 
