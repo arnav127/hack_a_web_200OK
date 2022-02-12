@@ -43,7 +43,6 @@ class CreatePatient(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, name, phone, aadhar):
-        HospitalResource.bed_available -= 1
         patient = Patient.objects.create(name=name, phone=phone, aadhar=aadhar)
         return CreatePatient(patient=patient)
 
