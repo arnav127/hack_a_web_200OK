@@ -39,11 +39,7 @@ query patientById($id: String) {
     }
     medicinerecordSet {
       id
-      prescriptions {
-        id
-        medicine
-        doses
-      }
+      prescription
     }
     testresultSet {
       id

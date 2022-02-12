@@ -1,27 +1,67 @@
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useState } from 'react'
 import Link from 'next/link'
 
 import Layout from '../../components/Hospital/Layout'
-import { useAuth } from '../../lib/auth'
+
+import { useAssignedPatientsQuery } from '../../graphql/generated'
 
 const Dashboard = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
+  const { data, loading, error } = useAssignedPatientsQuery()
+  const styles = {
+    colHead:
+      'px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left',
+    rowHead:
+      'border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700',
+    td: 'border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4',
+  }
 
-  useEffect(() => {
-    const loadUser = () => {
-      const isAuthenticated = localStorage.getItem('user')
-      if (!isAuthenticated) router.replace('/hospital/login')
-    }
-    loadUser()
-    setIsLoading(false)
-  }, [])
+  console.log(data)
+  return (
+    <Layout title="Dashboard">
+      <table className="w-full border-collapse items-center overflow-x-auto bg-transparent">
+        <thead>
+          <tr>
+            <th className={styles.colHead}>Name</th>
+            <th className={styles.colHead}>Phone</th>
+            <th className={styles.colHead}>Diagnosis</th>
+            <th className={styles.colHead}>Admitted On</th>
+            <th className={styles.colHead}>Status</th>
+          </tr>
+        </thead>
 
-  return isLoading ? (
-    'Loading...'
-  ) : (
-    <Layout title="Dashboard">Doctor dashboard</Layout>
+        <tbody>
+          {data?.doctorPatientAssigned.map((patient) => {
+            return (
+              <Link href={`/doctor/patients/${patient.patient.id}`}>
+                <tr key={patient.patient.id}>
+                  <th className={styles.rowHead}>{patient.patient.name}</th>
+                  <td className={styles.td}>{patient.patient.phone}</td>
+                  <td className={styles.td}>
+                    {patient?.patient.doctornotesSet.length > 0
+                      ? patient?.patient?.doctornotesSet.map(
+                          (diagnosis) => diagnosis.diagnosis
+                        )
+                      : '-'}
+                  </td>
+                  <td className={styles.td}>
+                    {patient?.patient?.doctorpatientassignedSet.length > 0
+                      ? patient?.patient?.doctorpatientassignedSet
+                          .at(-1)
+                          .assignedAt.slice(0, 10)
+                      : '-'}
+                  </td>
+                  <td className={styles.td}>
+                    {patient?.patient?.doctorpatientassignedSet.length > 0
+                      ? patient?.patient?.doctorpatientassignedSet.at(-1).status
+                      : '-'}
+                  </td>
+                </tr>
+              </Link>
+            )
+          })}
+        </tbody>
+      </table>
+    </Layout>
   )
 }
 

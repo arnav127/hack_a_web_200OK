@@ -1,5 +1,6 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from '../../../lib/fileUpload';
+import Link from 'next/link'
 
 import {
     useCreateTestResultMutation
@@ -70,8 +71,19 @@ const PatientRecords = ({ pid, data }) => {
     return (
         <div>
             <h2>Patient Records</h2>
+            {data?.patient?.testresultSet && data.patient.testresultSet.map(result => {
+                return (
+                    <div>
+                        {result.testName}
+                        {result.testResult}
+                        {result.media && (
+                            <Link href={result.media}><a>Download</a></Link>
+                        )}
+                    </div>
+                )
+            })}
             <form
-                className="flex w-96 max-w-[24rem] flex-col gap-4 rounded-lg bg-sky-200/50 p-8"
+                className="flex gap-4"
                 onSubmit={handleSubmit}
             >
                 <input
