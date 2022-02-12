@@ -68,6 +68,7 @@ class UpdatePatient(graphene.Mutation):
 
 class DischargePatient(graphene.Mutation):
     ok = graphene.Boolean()
+
     class Arguments:
         patient = graphene.String()
 
@@ -76,7 +77,11 @@ class DischargePatient(graphene.Mutation):
     def mutate(self, root, info, patient):
         hospital = info.context.user.hospital
         # 1. Mark last doctor authorized as done
-        doctorPatientAssigned = DoctorPatientAssigned.objects.filter(patient=patient).order_by("-assigned_at").first()
+        doctorPatientAssigned = (
+            DoctorPatientAssigned.objects.filter(patient=patient)
+            .order_by("-assigned_at")
+            .first()
+        )
         print(doctorPatientAssigned)
         doctorPatientAssigned.status = "DONE"
         doctorPatientAssigned.save()
@@ -85,11 +90,15 @@ class DischargePatient(graphene.Mutation):
         hospitalResource.bed_available += 1
         hospitalResource.save()
         # 3. Remove hospital from authorized hospitals
-        PatientAuthorizedHospital.objects.get(hospital_id=hospital, patient_id=patient).delete()
+        PatientAuthorizedHospital.objects.get(
+            hospital_id=hospital, patient_id=patient
+        ).delete()
         return DischargePatient(ok=True)
-        
+
+
 class ReferPatient(graphene.Mutation):
     ok = graphene.Boolean()
+
     class Arguments:
         patient = graphene.String()
 
@@ -98,7 +107,11 @@ class ReferPatient(graphene.Mutation):
     def mutate(self, root, info, patient):
         hospital = info.context.user.hospital
         # 1. Mark last doctor authorized as done
-        doctorPatientAssigned = DoctorPatientAssigned.objects.filter(patient=patient).order_by("-assigned_at").first()
+        doctorPatientAssigned = (
+            DoctorPatientAssigned.objects.filter(patient=patient)
+            .order_by("-assigned_at")
+            .first()
+        )
         doctorPatientAssigned.status = "REFERRED"
         doctorPatientAssigned.save()
         # 2. Increase bed capacity by 1
@@ -106,9 +119,11 @@ class ReferPatient(graphene.Mutation):
         hospitalResource.bedAvailability += 1
         hospitalResource.save()
         # 3. Remove hospital from authorized hospitals
-        PatientAuthorizedHospital.objects.get(hospital_id=hospital, patient_id=patient).delete()
+        PatientAuthorizedHospital.objects.get(
+            hospital_id=hospital, patient_id=patient
+        ).delete()
         return ReferPatient(ok=True)
-        
+
 
 class PatientMutation(graphene.ObjectType):
     create_patient = CreatePatient.Field()
