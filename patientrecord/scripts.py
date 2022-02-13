@@ -1,6 +1,7 @@
 from user.models import Patient
 from patientrecord.models import TestResult, DoctorNotes, MedicineRecord
 from fpdf import FPDF
+import time
 
 def pdf_testresult(pdf, records):
     pdf.add_page()
@@ -55,4 +56,9 @@ def create_pdf(pat_id):
     mr = MedicineRecord.objects.filter(patient=patient)
     pdf = pdf_medicinerecords(pdf, mr)
 
-    return pdf.output(f'file-{pat_id}.pdf', 'S')
+    filename = f'file-{pat_id}-{time.time()}.pdf'
+
+    pdf.output(filename,'F')
+
+    return filename
+
