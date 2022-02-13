@@ -18,6 +18,7 @@ class Query(
     UserQuery,
     graphene.ObjectType,
 ):
+    """All graphql queries"""
     pass
 
 
@@ -28,6 +29,7 @@ class Mutation(
     UserMutation,
     graphene.ObjectType,
 ):
+    """All graphql mutations"""
     pass
 
 

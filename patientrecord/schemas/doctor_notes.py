@@ -37,13 +37,13 @@ class CreateDoctorNotes(graphene.Mutation):
     @login_required
     def mutate(self, root, info, patient_id, doctor, **kwargs):
         pred_dis = ""
+        diagnosis = kwargs.get("diagnosis", "")
+        notes = kwargs.get("notes", "")
         if len(notes)>0:
             symptoms = notes.split(",")
             symptoms = [symptom.strip() for symptom in symptoms]
             pred_dis = predict_disease(symptoms)
 
-        diagnosis = kwargs.get("diagnosis", "")
-        notes = kwargs.get("notes", "")
 
         doctor_get = Doctor.objects.get(id=doctor)
         doctor_notes = DoctorNotes.objects.create(

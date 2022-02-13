@@ -1,0 +1,3 @@
+# Resources App
+
+This app contains the info about the resources of the hospital. We can monitor the resources of the hospital and also add new resources. Currently, we are measuring number and availability of beds, ventilator and ICU. We are also keeping track of various pathological and diagnostic tests that can be done in the hospital. These tests include - blood, urine, x-ray, ultrasound, mri, ecg, eeg, ekg, catscan, mammogram, colonoscopy etc.

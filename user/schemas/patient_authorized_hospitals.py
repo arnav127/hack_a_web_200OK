@@ -2,7 +2,7 @@ import graphene
 
 from graphene_django import DjangoObjectType
 from resources.models import HospitalResource
-from user.models import Hospital, Patient, PatientAuthorizedHospital
+from user.models import Hospital, Patient, PatientAuthorizedHospital, ReferredPatients
 from graphql_jwt.decorators import login_required
 
 
@@ -32,11 +32,14 @@ class CreatePatientAuthorizedHospital(graphene.Mutation):
         hospital = info.context.user.hospital
         hospitalResource = HospitalResource.objects.get(hospital=hospital)
         hospitalResource.bed_available -= 1
-
+        hospitalResource.save()
         patient = Patient.objects.get(pk=patient_id)
+        PatientAuthorizedHospital.objects.filter(patient_id=patient).delete()
         pah = PatientAuthorizedHospital.objects.create(
             patient_id=patient, hospital_id=hospital
         )
+        # delete entry from referred patients
+        ReferredPatients.objects.filter(patient=patient_id).delete()
         return CreatePatientAuthorizedHospital(ok=True, patient_authorized_hospital=pah)
 
 
