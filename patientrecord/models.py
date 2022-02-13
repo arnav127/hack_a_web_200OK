@@ -30,8 +30,8 @@ class MedicineRecord(models.Model):
 class DoctorNotes(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    diagnosis = models.TextField(verbose_name="Diagnosis")
-    notes = models.TextField(verbose_name="Doctor Notes")
+    diagnosis = models.TextField(blank=True, verbose_name="Diagnosis")
+    notes = models.TextField(blank=True, verbose_name="Doctor Notes")
     predicted_disease = models.CharField(
         max_length=255, blank=True, verbose_name="Predicted Disease"
     )
