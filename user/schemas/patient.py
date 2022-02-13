@@ -83,14 +83,14 @@ class DischargePatient(graphene.Mutation):
     def mutate(self, root, info, patient):
         hospital = info.context.user.hospital
         # 1. Mark last doctor authorized as done
-        doctorPatientAssigned = (
-            DoctorPatientAssigned.objects.filter(patient=patient)
-            .order_by("-assigned_at")
-            .first()
-        )
-        print(doctorPatientAssigned)
-        doctorPatientAssigned.status = "DONE"
-        doctorPatientAssigned.save()
+        # doctorPatientAssigned = (
+        #     DoctorPatientAssigned.objects.filter(patient=patient)
+        #     .order_by("-assigned_at")
+        #     .first()
+        # )
+        
+        # doctorPatientAssigned.status = "DONE"
+        # doctorPatientAssigned.save()
         # 2. Increase bed capacity by 1
         hospitalResource = HospitalResource.objects.get(hospital=hospital)
         hospitalResource.bed_available += 1
@@ -113,13 +113,13 @@ class ReferPatient(graphene.Mutation):
     def mutate(self, root, info, patient):
         hospital = info.context.user.hospital
         # 1. Mark last doctor authorized as done
-        doctorPatientAssigned = (
-            DoctorPatientAssigned.objects.filter(patient=patient)
-            .order_by("-assigned_at")
-            .first()
-        )
-        doctorPatientAssigned.status = "REFERRED"
-        doctorPatientAssigned.save()
+        # doctorPatientAssigned = (
+        #     DoctorPatientAssigned.objects.filter(patient=patient)
+        #     .order_by("-assigned_at")
+        #     .first()
+        # )
+        # doctorPatientAssigned.status = "REFERRED"
+        # doctorPatientAssigned.save()
         # 2. Increase bed capacity by 1
         hospitalResource = HospitalResource.objects.get(hospital=hospital)
         hospitalResource.bedAvailability += 1
