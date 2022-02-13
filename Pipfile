@@ -15,6 +15,7 @@ inflection = "*"
 numpy = "*"
 scikit-learn = "*"
 pandas = "*"
+fpdf = "*"
 
 [dev-packages]
 sqlalchemy = "*"
