@@ -16,22 +16,22 @@ class DiseaseInfoQuery(graphene.ObjectType):
 
     def resolve_disease_info(self, info, name):
         """
-        If you want to get info of multiple diseases at once, you can send
-        multiple values separated by comma. 
-        For eg: for `malaria` and `cold` you can make the query like
+            If you want to get info of multiple diseases at once, you can send
+            multiple values separated by comma.
+            For eg: for `malaria` and `cold` you can make the query like
+            ```
+        query cs{
+            diseaseCommaInfo(name: "cold, malaria"){
+                id
+                name
+                link
+            }
+            }
         ```
-    query cs{
-        diseaseCommaInfo(name: "cold, malaria"){
-            id
-            name
-            link
-        }
-        }
-    ```
         """
         diseases = name.split(",")
         diseases = [disease.strip() for disease in diseases]
-        print("diseases = ",diseases)
+        print("diseases = ", diseases)
         dis = []
         for disease in diseases:
             dis.extend(DiseaseInfo.objects.filter(name__icontains=disease))

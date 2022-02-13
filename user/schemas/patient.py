@@ -14,7 +14,10 @@ class PatientType(DjangoObjectType):
 
 class PatientQuery(graphene.ObjectType):
     patient = graphene.Field(
-        PatientType, phone=graphene.String(), aadhar=graphene.String(), id=graphene.String()
+        PatientType,
+        phone=graphene.String(),
+        aadhar=graphene.String(),
+        id=graphene.String(),
     )
     patients_all = graphene.List(PatientType)
 
