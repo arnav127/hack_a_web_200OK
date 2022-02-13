@@ -20,7 +20,7 @@ class DoctorPatientAssignedQuery(graphene.ObjectType):
 
     def resolve_doctor_patient_assigned(root, info):
         if info.context.user.is_doctor:
-            return DoctorPatientAssigned.objects.filter(doctor=info.context.user.doctor)
+            return DoctorPatientAssigned.objects.filter(doctor=info.context.user.doctor).exclude(status__in=["DONE", "REFERRED"])
         return None
 
 
@@ -36,15 +36,15 @@ class CreateDoctorPatientAssigned(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(cls, root, info, doctor_id, patient_id, **kwargs):
-        if not info.context.user.is_hospital:
-            return CreateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
+        # if not info.context.user.is_hospital:
+        #     return CreateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
 
         # check if the hospital is authorized to assign the patient to the doctor
-        authorized_hospital_list = PatientAuthorizedHospital.objects.filter(
-            patient_id=patient_id, hospital_id=info.context.user.hospital
-        ).first()
-        if not authorized_hospital_list:
-            return CreateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
+        # authorized_hospital_list = PatientAuthorizedHospital.objects.filter(
+        #     patient_id=patient_id, hospital_id=info.context.user.hospital
+        # ).first()
+        # if not authorized_hospital_list:
+        #     return CreateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
 
         doctor = Doctor.objects.get(pk=doctor_id)
         patient = Patient.objects.get(pk=patient_id)
@@ -113,21 +113,18 @@ class UpdateDoctorPatientAssigned(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(cls, root, info, id, new_status):
-        if not info.context.user.is_hospital:
-            return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
-
         doctor_patient_assigned = DoctorPatientAssigned.objects.get(pk=id)
         if not doctor_patient_assigned:
             return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
 
         # check if the hospital is authorized to assign the patient to the doctor
-        authorized_hospital_list = PatientAuthorizedHospital.objects.get(
-            patient_id=doctor_patient_assigned.patient,
-            hospital_id=info.context.user.hospital,
-        )
+        # authorized_hospital_list = PatientAuthorizedHospital.objects.get(
+        #     patient_id=doctor_patient_assigned.patient,
+        #     hospital_id=info.context.user.hospital,
+        # )
 
-        if not authorized_hospital_list:
-            return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
+        # if not authorized_hospital_list:
+        #     return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
 
         # change the status to new status
         doctor_patient_assigned.status = new_status
