@@ -4,8 +4,12 @@ import Layout from '../../../components/Hospital/Layout'
 
 import { usePatientByAadharQuery, useCreatePatientAuthorizedHospitalMutation } from '../../../graphql/generated'
 
+import { useAuth } from '../../../lib/auth'
+
 const Admit = () => {
-    const [aadhar, setAadhar] = useState('');
+    const { user } = useAuth();
+    const [aadhar, setAadhar] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     const [createPatientAuthorizedHospital] = useCreatePatientAuthorizedHospitalMutation();
 
@@ -13,7 +17,7 @@ const Admit = () => {
         variables: {
             aadhar: aadhar
         },
-        skip: (!aadhar)
+        skip: (!aadhar),
     });
 
     const handleSubmit = (e) => {
@@ -45,42 +49,73 @@ const Admit = () => {
                     </button>
                 </form>
 
-                {data ? (
-                    <>
-                        <h2>Record found!</h2>
+                {aadhar && (
+                    data?.patient ? (
+                        <>
+                            <h2>Record found!</h2>
+                            <div className="rounded-lg bg-gray-100/50 p-8">
+                                <h3>{data.patient.name}</h3>
+                                <p>{data.patient.aadhar}</p>
+                                <p>{data.patient.phone}</p>
+                            </div>
 
-                        <div className="rounded-lg bg-gray-100/50 p-8">
-                            <h3>{data.patient.name}</h3>
-                            <p>{data.patient.aadhar}</p>
-                            <p>{data.patient.phone}</p>
-                        </div>
+                            {data?.patient?.patientauthorizedhospitalSet.length > 0 ? (
+                                <>
+                                    {console.log(user)}
+                                    {data?.patient?.patientauthorizedhospitalSet.at(-1).hospitalId.id === user?.hospital?.id ?
+                                        (
+                                            <Link
+                                                href={`/hospital/patients/${data?.patient?.id}`}
+                                            >
+                                                <a className="py-2 px-4 w-48 font-semibold text-center text-white bg-gray-600 rounded-lg shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200" >
 
-                        <button
-                            className="py-2 px-4 w-48 font-semibold text-center text-white bg-gray-600 rounded-lg shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
-                            onClick={() => {
-                                createPatientAuthorizedHospital({
-                                    variables: { patientId: data.patient.id }
-                                })
-                            }}>
-                            Admit patient?
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        <p>Record not found!</p>
-                        <Link href="/patient/create">
-                            <a
-                                className="py-2 px-4 font-semibold text-center text-white bg-gray-600 rounded-lg shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
-                            >
-                                Create new patient?
-                            </a>
-                        </Link>
-                    </>
+                                                    View details
+                                                </a>
+                                            </Link>
+                                        )
+                                        : (
+                                            <p>Patient admitted in {data?.patient?.patientauthorizedhospitalSet.at(-1).hospitalId.name}</p>
+                                        )
+                                    }</>
+                            )
+                                : (
+                                    <>
+                                        <button
+                                            className="py-2 px-4 w-48 font-semibold text-center text-white bg-gray-600 rounded-lg shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                                            onClick={() => {
+                                                const { error, loading } = createPatientAuthorizedHospital({
+                                                    variables: { patientId: data.patient.id }
+                                                })
+                                                if (!error && !loading) {
+                                                    setSuccess("Patient admitted successfully");
+                                                    return;
+                                                }
+                                                setSuccess("Error")
+                                            }}>
+                                            Admit patient?
+                                        </button>
+                                        {success && <p className="mt-2">{success}</p>}
+                                    </>
+                                )
+                            }
+
+                        </>
+                    ) : (
+                        <>
+                            <p className="my-2">Record not found!</p>
+                            <Link href="/hospital/patients/create">
+                                <a
+                                    className="py-2 px-4 font-semibold text-center text-white bg-gray-600 rounded-lg shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                                >
+                                    Create new patient?
+                                </a>
+                            </Link>
+                        </>
+                    )
                 )}
             </div>
-        </Layout>
+        </Layout >
     )
-
 };
 
 export default Admit

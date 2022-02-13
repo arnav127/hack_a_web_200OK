@@ -17,6 +17,12 @@ query patientByAadhar($phone: String $aadhar: String) {
     name
     phone
     aadhar
+    patientauthorizedhospitalSet {
+      hospitalId {
+      id
+        name
+      }
+    }
   }
 }
 
