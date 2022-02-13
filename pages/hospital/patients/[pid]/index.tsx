@@ -50,7 +50,7 @@ const PatientRecord = () => {
                         }}>
                             Discharge patient
                         </button>
-                        <Link href="/hospital/patients/refer">
+                        <Link href={`/hospital/patients/${pid}/refer`}>
                             <a className="flex-1 p-4 w-48 h-32 bg-white rounded-lg shadow inline-flex justify-center items-center ">Refer patient</a>
                         </Link>
                     </div>

@@ -21,7 +21,7 @@ const MedicineRecords = ({ pid, data }) => {
     return (
         <div className="p-4">
             {data?.patient?.medicinerecordSet.length > 0 &&
-                <ul className="list-disc">
+                <ul className="my-4 list-disc">
                     {data.patient.medicinerecordSet.map(record => {
                         return (
                             <li key={record.id}>
