@@ -61,7 +61,22 @@ query assignedPatients {
       }
       doctornotesSet {
         diagnosis
+        predictedDisease
       }
     }
+  }
+}
+
+query diseaseInfo($name:String) {
+  diseaseInfo(name: $name ){
+    id
+    name
+    link
+    symptoms
+    causes
+    riskFactor
+    treatment
+    medication
+    prevention
   }
 }

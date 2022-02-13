@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('user')
         setUser(null)
         router.push('/')
+        router.reload()
     }
 
 

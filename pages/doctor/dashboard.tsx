@@ -22,7 +22,7 @@ const Dashboard = () => {
     <Layout title="Dashboard">
       <p>Hello, Dr. {user?.doctor?.name}</p>
       <h2>View assigned patients</h2>
-      <table className="overflow-x-auto items-center w-full bg-transparent border-collapse">
+      <table className="w-full border-collapse items-center overflow-x-auto bg-transparent">
         <thead>
           <tr>
             <th className={styles.colHead}>Name</th>
@@ -33,37 +33,43 @@ const Dashboard = () => {
           </tr>
         </thead>
 
-        <tbody>
-          {data?.doctorPatientAssigned.map((patient) => {
-            return (
-              <Link href={`/doctor/patients/${patient.patient.id}`}>
-                <tr key={patient.patient.id}>
-                  <th className={styles.rowHead}>{patient.patient.name}</th>
-                  <td className={styles.td}>{patient.patient.phone}</td>
-                  <td className={styles.td}>
-                    {patient?.patient.doctornotesSet.length > 0
-                      ? patient?.patient?.doctornotesSet.map(
-                          (diagnosis) => diagnosis.diagnosis
-                        )
-                      : '-'}
-                  </td>
-                  <td className={styles.td}>
-                    {patient?.patient?.doctorpatientassignedSet.length > 0
-                      ? patient?.patient?.doctorpatientassignedSet
-                          .at(-1)
-                          .assignedAt.slice(0, 10)
-                      : '-'}
-                  </td>
-                  <td className={styles.td}>
-                    {patient?.patient?.doctorpatientassignedSet.length > 0
-                      ? patient?.patient?.doctorpatientassignedSet.at(-1).status
-                      : '-'}
-                  </td>
-                </tr>
-              </Link>
-            )
-          })}
-        </tbody>
+        {!loading && !error ? (
+          <tbody>
+            {data?.doctorPatientAssigned?.length > 0 &&
+              data?.doctorPatientAssigned.map((patient) => {
+                return (
+                  <Link href={`/doctor/patients/${patient.patient.id}`}>
+                    <tr key={patient.patient.id}>
+                      <th className={styles.rowHead}>{patient.patient.name}</th>
+                      <td className={styles.td}>{patient.patient.phone}</td>
+                      <td className={styles.td}>
+                        {patient?.patient.doctornotesSet.length > 0
+                          ? patient?.patient?.doctornotesSet.map(
+                              (diagnosis) => diagnosis.diagnosis
+                            )
+                          : '-'}
+                      </td>
+                      <td className={styles.td}>
+                        {patient?.patient?.doctorpatientassignedSet.length > 0
+                          ? patient?.patient?.doctorpatientassignedSet
+                              .at(-1)
+                              .assignedAt.slice(0, 10)
+                          : '-'}
+                      </td>
+                      <td className={styles.td}>
+                        {patient?.patient?.doctorpatientassignedSet.length > 0
+                          ? patient?.patient?.doctorpatientassignedSet.at(-1)
+                              .status
+                          : '-'}
+                      </td>
+                    </tr>
+                  </Link>
+                )
+              })}
+          </tbody>
+        ) : (
+          'Loading...'
+        )}
       </table>
     </Layout>
   )

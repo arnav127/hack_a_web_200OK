@@ -16,7 +16,7 @@ const Dashboard = () => {
   useEffect(() => {
     const loadUser = () => {
       const isAuthenticated = localStorage.getItem('user')
-      if (!isAuthenticated) router.replace('/hospital/login')
+      if (!isAuthenticated) router.replace('/login')
     }
     loadUser()
     setIsLoading(false)

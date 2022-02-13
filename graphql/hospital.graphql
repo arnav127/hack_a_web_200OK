@@ -85,6 +85,7 @@ query admittedRecords {
           }
           doctornotesSet {
             diagnosis
+            predictedDisease
           }
         }
       }
@@ -122,6 +123,7 @@ query currentHospitalResources {
 
 query allHospitals  {
   allHospitals {
+  id
   name
   address
   phone
@@ -130,4 +132,37 @@ query allHospitals  {
   hospitalresource {
     ...hospitalResources
   }}
+}
+
+query ReferredInPatients {
+  referredInPatients {
+    id
+    patient {
+      name
+    }
+    hospitalReferredBy {
+      name
+    }
+    hospitalReferred {
+      name
+    }
+    reasonReferred
+  }
+}
+
+
+query ReferredOutPatients {
+  referredOutPatients {
+    id
+    patient {
+      name
+    }
+    hospitalReferredBy {
+      name
+    }
+    hospitalReferred {
+      name
+    }
+    reasonReferred
+  }
 }

@@ -1,22 +1,26 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState } from "react"
 import { useRouter } from 'next/router'
 import {
     useAllDoctorsQuery,
     usePatientByIdQuery,
+    useDischargePatientMutation,
     useCreateDoctorPatientAssignedMutation
-} from '../../../graphql/generated'
+} from '../../../../graphql/generated'
 
-import Layout from '../../../components/Doctor/Layout'
-import Doctor from '../../../components/Hospital/Patients/Doctor'
-import PatientRecords from '../../../components/Hospital/Patients/PatientRecords'
-import MedicineRecords from '../../../components/Hospital/Patients/MedicineRecords'
+import Layout from '../../../../components/Hospital/Layout'
+import Doctor from '../../../../components/Hospital/Patients/Doctor'
+import PatientRecords from '../../../../components/Hospital/Patients/PatientRecords'
+import MedicineRecords from '../../../../components/Hospital/Patients/MedicineRecords'
 
 const PatientRecord = () => {
-    const [openTab, setOpenTab] = useState(1)
     const router = useRouter()
+    const [status, setStatus] = useState(null)
     const { pid } = router.query
 
+    const [dischargePatient] = useDischargePatientMutation();
+
+    const [openTab, setOpenTab] = useState(1);
 
     const { data, loading, error } = usePatientByIdQuery({
         variables: {
@@ -35,7 +39,25 @@ const PatientRecord = () => {
                         <p>Phone: {data.patient.phone}</p>
                     </div>
 
-
+                    <div className="flex flex-wrap gap-8 mt-8">
+                        <Link href={`${process.env.NEXT_PUBLIC_BACKEND_BASEURI}/download?patient_id=${pid}`}>
+                            <a className="flex-1 p-4 w-48 h-32 bg-white rounded-lg shadow inline-flex justify-center items-center ">Download Report</a>
+                        </Link>
+                        <button className="flex-1 p-4 w-48 h-32 bg-white rounded-lg shadow inline-flex justify-center items-center " onClick={() => {
+                            dischargePatient({
+                                variables: {
+                                    patient: pid
+                                }
+                            })
+                            router.push('/hospital/dashboard')
+                        }}>
+                            Discharge patient
+                        </button>
+                        <Link href={`/hospital/patients/${pid}/refer`}>
+                            <a className="flex-1 p-4 w-48 h-32 bg-white rounded-lg shadow inline-flex justify-center items-center ">Refer patient</a>
+                        </Link>
+                    </div>
+                    {status && <p>{status}</p>}
                     <div className="bg-white rounded-lg shadow-md">
                         <div className="w-full">
                             <ul className="flex justify-between items-center text-sm font-semibold uppercase">
@@ -57,9 +79,9 @@ const PatientRecord = () => {
                         </div>
                     </div>
                 </div>
-
-            )}
-        </Layout>
+            )
+            }
+        </Layout >
     )
 }
 

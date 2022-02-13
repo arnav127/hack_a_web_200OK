@@ -42,6 +42,7 @@ query patientById($id: String) {
     doctornotesSet {
       diagnosis
       notes
+      predictedDisease
     }
     medicinerecordSet {
       id
@@ -53,5 +54,17 @@ query patientById($id: String) {
       testResult
       media
     }
+  }
+}
+
+mutation dischargePatient($patient: String) {
+  dischargePatient(patient: $patient) {
+    ok
+  }
+}
+
+mutation createReferredPatient($patient: String, $hospitalReferred: String, $reason: String) {
+  createReferredPatient(patient: $patient, hospitalReferred: $hospitalReferred, reason: $reason) {
+    ok
   }
 }
