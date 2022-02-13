@@ -87,7 +87,7 @@ const Doctor = ({ pid, data }) => {
                                     type="submit"
                                     className="py-1 px-2 font-semibold text-center text-white rounded-lg shadow-md transition duration-200 ease-in bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
                                 >
-                                    Submit
+                                    Update
                                 </button>
                             </form>
                         </div>

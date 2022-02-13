@@ -19,18 +19,17 @@ const MedicineRecords = ({ pid, data }) => {
         })
     }
     return (
-        <div>
-            <h2>Medicine Records</h2>
+        <div className="p-4">
             {data?.patient?.medicinerecordSet.length > 0 &&
-                <>
+                <ul className="list-disc">
                     {data.patient.medicinerecordSet.map(record => {
                         return (
-                            <div key={record.id}>
+                            <li key={record.id}>
                                 {record.prescription}
-                            </div>
+                            </li>
                         )
                     })}
-                </>
+                </ul>
             }
             {user?.isDoctor && (<form
                 className="flex gap-4"

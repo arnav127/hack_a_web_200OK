@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import {
     useAllDoctorsQuery,
     usePatientByIdQuery,
+    useDischargePatientMutation,
     useCreateDoctorPatientAssignedMutation
 } from '../../../graphql/generated'
 
@@ -14,7 +15,10 @@ import MedicineRecords from '../../../components/Hospital/Patients/MedicineRecor
 
 const PatientRecord = () => {
     const router = useRouter()
+    const [status, setStatus] = useState(null)
     const { pid } = router.query
+
+    const [dischargePatient] = useDischargePatientMutation();
 
     const [openTab, setOpenTab] = useState(1);
 
@@ -35,11 +39,27 @@ const PatientRecord = () => {
                         <p>Phone: {data.patient.phone}</p>
                     </div>
 
+                    <div className="flex flex-wrap gap-8 mt-8">
+                        <button className="flex-1 p-4 w-48 h-32 bg-white rounded-lg shadow inline-flex justify-center items-center " onClick={() => {
+                            dischargePatient({
+                                variables: {
+                                    patient: pid
+                                }
+                            })
+                            router.push('/hospital/dashboard')
+                        }}>
+                            Discharge patient
+                        </button>
+                        <Link href="/hospital/patients/refer">
+                            <a className="flex-1 p-4 w-48 h-32 bg-white rounded-lg shadow inline-flex justify-center items-center ">Refer patient</a>
+                        </Link>
+                    </div>
+                    {status && <p>{status}</p>}
                     <div className="bg-white rounded-lg shadow-md">
                         <div className="w-full">
-                            <ul className="flex justify-between text-sm font-semibold uppercase">
-                                <li className={`${openTab === 1 ? "border-gray-200" : "border-transparent"} border-b-4 flex-1 py-4 px-2 text-center cursor-pointer`} onClick={() => setOpenTab(1)}>Doctor Details</li>
-                                <li className={`${openTab === 2 ? "border-gray-200" : "border-transparent"} border-b-4 flex-1 py-4 px-2 text-center cursor-pointer`} onClick={() => setOpenTab(2)}>Patient Records</li>
+                            <ul className="flex justify-between items-center text-sm font-semibold uppercase">
+                                <li className={`${openTab === 1 ? "border-gray-200" : "border-transparent"} border-b-4 flex-1 py-4 px-2 text-center cursor-pointer`} onClick={() => setOpenTab(1)}>Doctor Notes</li>
+                                <li className={`${openTab === 2 ? "border-gray-200" : "border-transparent"} border-b-4 flex-1 py-4 px-2 text-center cursor-pointer`} onClick={() => setOpenTab(2)}>Test Results</li>
                                 <li className={`${openTab === 3 ? "border-gray-200" : "border-transparent"} border-b-4 flex-1 py-4 px-2 text-center cursor-pointer`} onClick={() => setOpenTab(3)}>Patient Prescriptions</li>
                             </ul>
                         </div>
@@ -55,9 +75,7 @@ const PatientRecord = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             )
             }
         </Layout >

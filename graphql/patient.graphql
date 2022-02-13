@@ -55,3 +55,15 @@ query patientById($id: String) {
     }
   }
 }
+
+mutation dischargePatient($patient: String) {
+  dischargePatient(patient: $patient) {
+    ok
+  }
+}
+
+mutation referPatient($patient: String) {
+  referPatient(patient: $patient) {
+    ok
+  }
+}

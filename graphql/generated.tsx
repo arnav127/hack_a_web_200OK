@@ -1291,6 +1291,20 @@ export type PatientByIdQueryVariables = Exact<{
 
 export type PatientByIdQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', id: string, status: string, assignedAt: any, doctor: { __typename?: 'DoctorType', name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, notes: string }>, medicinerecordSet: Array<{ __typename?: 'MedicineRecordType', id: string, prescription: string }>, testresultSet: Array<{ __typename?: 'TestResultType', id: string, testName: string, testResult: string, media: string }> } | null };
 
+export type DischargePatientMutationVariables = Exact<{
+  patient?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DischargePatientMutation = { __typename?: 'Mutation', dischargePatient?: { __typename?: 'DischargePatient', ok?: boolean | null } | null };
+
+export type ReferPatientMutationVariables = Exact<{
+  patient?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ReferPatientMutation = { __typename?: 'Mutation', referPatient?: { __typename?: 'ReferPatient', ok?: boolean | null } | null };
+
 export type CreateTestResultMutationVariables = Exact<{
   media?: InputMaybe<Scalars['String']>;
   patientId?: InputMaybe<Scalars['String']>;
@@ -2100,6 +2114,72 @@ export function usePatientByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type PatientByIdQueryHookResult = ReturnType<typeof usePatientByIdQuery>;
 export type PatientByIdLazyQueryHookResult = ReturnType<typeof usePatientByIdLazyQuery>;
 export type PatientByIdQueryResult = Apollo.QueryResult<PatientByIdQuery, PatientByIdQueryVariables>;
+export const DischargePatientDocument = gql`
+    mutation dischargePatient($patient: String) {
+  dischargePatient(patient: $patient) {
+    ok
+  }
+}
+    `;
+export type DischargePatientMutationFn = Apollo.MutationFunction<DischargePatientMutation, DischargePatientMutationVariables>;
+
+/**
+ * __useDischargePatientMutation__
+ *
+ * To run a mutation, you first call `useDischargePatientMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDischargePatientMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [dischargePatientMutation, { data, loading, error }] = useDischargePatientMutation({
+ *   variables: {
+ *      patient: // value for 'patient'
+ *   },
+ * });
+ */
+export function useDischargePatientMutation(baseOptions?: Apollo.MutationHookOptions<DischargePatientMutation, DischargePatientMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DischargePatientMutation, DischargePatientMutationVariables>(DischargePatientDocument, options);
+      }
+export type DischargePatientMutationHookResult = ReturnType<typeof useDischargePatientMutation>;
+export type DischargePatientMutationResult = Apollo.MutationResult<DischargePatientMutation>;
+export type DischargePatientMutationOptions = Apollo.BaseMutationOptions<DischargePatientMutation, DischargePatientMutationVariables>;
+export const ReferPatientDocument = gql`
+    mutation referPatient($patient: String) {
+  referPatient(patient: $patient) {
+    ok
+  }
+}
+    `;
+export type ReferPatientMutationFn = Apollo.MutationFunction<ReferPatientMutation, ReferPatientMutationVariables>;
+
+/**
+ * __useReferPatientMutation__
+ *
+ * To run a mutation, you first call `useReferPatientMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReferPatientMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [referPatientMutation, { data, loading, error }] = useReferPatientMutation({
+ *   variables: {
+ *      patient: // value for 'patient'
+ *   },
+ * });
+ */
+export function useReferPatientMutation(baseOptions?: Apollo.MutationHookOptions<ReferPatientMutation, ReferPatientMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ReferPatientMutation, ReferPatientMutationVariables>(ReferPatientDocument, options);
+      }
+export type ReferPatientMutationHookResult = ReturnType<typeof useReferPatientMutation>;
+export type ReferPatientMutationResult = Apollo.MutationResult<ReferPatientMutation>;
+export type ReferPatientMutationOptions = Apollo.BaseMutationOptions<ReferPatientMutation, ReferPatientMutationVariables>;
 export const CreateTestResultDocument = gql`
     mutation createTestResult($media: String, $patientId: String, $testName: String, $testResult: String) {
   createTestResult(
