@@ -1262,6 +1262,13 @@ export type AssignedPatientsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AssignedPatientsQuery = { __typename?: 'Query', doctorPatientAssigned?: Array<{ __typename?: 'DoctorPatientAssignedType', patient: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', assignedAt: any, status: string }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, predictedDisease: string }> } } | null> | null };
 
+export type DiseaseInfoQueryVariables = Exact<{
+  name?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DiseaseInfoQuery = { __typename?: 'Query', diseaseInfo?: Array<{ __typename?: 'DiseaseInfoType', id: string, name: string, link: string, symptoms: string, causes: string, riskFactor: string, treatment: string, medication: string, prevention: string } | null> | null };
+
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
@@ -1677,6 +1684,49 @@ export function useAssignedPatientsLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type AssignedPatientsQueryHookResult = ReturnType<typeof useAssignedPatientsQuery>;
 export type AssignedPatientsLazyQueryHookResult = ReturnType<typeof useAssignedPatientsLazyQuery>;
 export type AssignedPatientsQueryResult = Apollo.QueryResult<AssignedPatientsQuery, AssignedPatientsQueryVariables>;
+export const DiseaseInfoDocument = gql`
+    query diseaseInfo($name: String) {
+  diseaseInfo(name: $name) {
+    id
+    name
+    link
+    symptoms
+    causes
+    riskFactor
+    treatment
+    medication
+    prevention
+  }
+}
+    `;
+
+/**
+ * __useDiseaseInfoQuery__
+ *
+ * To run a query within a React component, call `useDiseaseInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDiseaseInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDiseaseInfoQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useDiseaseInfoQuery(baseOptions?: Apollo.QueryHookOptions<DiseaseInfoQuery, DiseaseInfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DiseaseInfoQuery, DiseaseInfoQueryVariables>(DiseaseInfoDocument, options);
+      }
+export function useDiseaseInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DiseaseInfoQuery, DiseaseInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DiseaseInfoQuery, DiseaseInfoQueryVariables>(DiseaseInfoDocument, options);
+        }
+export type DiseaseInfoQueryHookResult = ReturnType<typeof useDiseaseInfoQuery>;
+export type DiseaseInfoLazyQueryHookResult = ReturnType<typeof useDiseaseInfoLazyQuery>;
+export type DiseaseInfoQueryResult = Apollo.QueryResult<DiseaseInfoQuery, DiseaseInfoQueryVariables>;
 export const LoginDocument = gql`
     mutation login($username: String!, $password: String!) {
   tokenAuth(username: $username, password: $password) {
