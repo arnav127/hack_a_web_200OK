@@ -1215,7 +1215,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', tokenAuth?: { __typename?: 'ObtainJSONWebToken', token?: string | null, success?: boolean | null, errors?: any | null, user?: { __typename?: 'UserNode', firstName: string, isHospital: boolean, isDoctor: boolean, hospital?: { __typename?: 'HospitalType', name: string } | null, doctor?: { __typename?: 'DoctorType', id: string, name: string, hospital: { __typename?: 'HospitalType', name: string } } | null } | null } | null };
+export type LoginMutation = { __typename?: 'Mutation', tokenAuth?: { __typename?: 'ObtainJSONWebToken', token?: string | null, success?: boolean | null, errors?: any | null, user?: { __typename?: 'UserNode', firstName: string, isHospital: boolean, isDoctor: boolean, hospital?: { __typename?: 'HospitalType', id: string, name: string } | null, doctor?: { __typename?: 'DoctorType', id: string, name: string, hospital: { __typename?: 'HospitalType', name: string } } | null } | null } | null };
 
 export type CreatePatientAuthorizedHospitalMutationVariables = Exact<{
   patientId?: InputMaybe<Scalars['String']>;
@@ -1282,7 +1282,7 @@ export type PatientByAadharQueryVariables = Exact<{
 }>;
 
 
-export type PatientByAadharQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, aadhar: string } | null };
+export type PatientByAadharQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, aadhar: string, patientauthorizedhospitalSet: Array<{ __typename?: 'PatientAuthorizedHospitalType', hospitalId: { __typename?: 'HospitalType', id: string, name: string } }> } | null };
 
 export type PatientByIdQueryVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -1606,6 +1606,7 @@ export const LoginDocument = gql`
     user {
       firstName
       hospital {
+        id
         name
       }
       doctor {
@@ -2002,6 +2003,12 @@ export const PatientByAadharDocument = gql`
     name
     phone
     aadhar
+    patientauthorizedhospitalSet {
+      hospitalId {
+        id
+        name
+      }
+    }
   }
 }
     `;
