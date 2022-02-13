@@ -53,7 +53,7 @@ class CreateReferredPatient(graphene.Mutation):
             patient=pat,
             hospital_referred=hos_r,
             hospital_referred_by=info.context.user.hospital,
-            reason=reason,
+            reason_referred=reason,
         )
         return CreateReferredPatient(referred_patient=referred_patient, ok=True)
 
