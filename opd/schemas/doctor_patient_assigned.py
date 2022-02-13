@@ -113,9 +113,6 @@ class UpdateDoctorPatientAssigned(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(cls, root, info, id, new_status):
-        if not info.context.user.is_hospital:
-            return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
-
         doctor_patient_assigned = DoctorPatientAssigned.objects.get(pk=id)
         if not doctor_patient_assigned:
             return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
