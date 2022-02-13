@@ -36,7 +36,7 @@ function HeroHome() {
                 In the staff interface the hospital can get info about the patient, register and accept new patients. It can also assign doctors to the patients. Finally the Hospital can also refer the patients to other hospital, discharge them and alsosee the patients referref to them and the patients they referred </p>
               
               <p className="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150">
-                In the Doctor interface, doctors can view the details about the patients, including their old records, their test results and medicine prescribed. They can also add their notes corresponding to the patients. The symptoms that are added are automatically analysed by a machine learning model to predict and suggest the probable patients to the doctor to help them.   
+                In the Doctor interface, doctors can view the details about the patients, including their old records, their test results and medicine prescribed. They can also add their notes corresponding to the patients. The symptoms that are added are automatically analysed by a machine learning model to predict and suggest the probable disease to the doctor to help them.   
               </p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
                 
