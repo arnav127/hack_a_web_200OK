@@ -2,7 +2,7 @@ from venv import create
 import graphene
 
 from graphene_django import DjangoObjectType
-from back.opd.models import DoctorPatientAssigned
+from opd.models import DoctorPatientAssigned
 from user.models import Hospital, PatientAuthorizedHospital, ReferredPatients, Patient
 from graphql_jwt.decorators import login_required
 
