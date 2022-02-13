@@ -2,6 +2,7 @@ from venv import create
 import graphene
 
 from graphene_django import DjangoObjectType
+from back.opd.models import DoctorPatientAssigned
 from user.models import Hospital, PatientAuthorizedHospital, ReferredPatients, Patient
 from graphql_jwt.decorators import login_required
 
@@ -57,6 +58,7 @@ class CreateReferredPatient(graphene.Mutation):
         )
         PatientAuthorizedHospital.objects.filter(hospital_id=info.context.user.hospital, patient_id=pat).delete()
         PatientAuthorizedHospital.objects.create(hospital_id=info.context.user.hospital, patient_id=pat)
+        DoctorPatientAssigned.objects.filter(patient=pat).delete()
         return CreateReferredPatient(referred_patient=referred_patient, ok=True)
 
 
