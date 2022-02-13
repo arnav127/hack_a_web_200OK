@@ -62,8 +62,8 @@ mutation dischargePatient($patient: String) {
   }
 }
 
-mutation referPatient($patient: String) {
-  referPatient(patient: $patient) {
+mutation createReferredPatient($patient: String, $hospitalReferred: String, $reason: String) {
+  createReferredPatient(patient: $patient, hospitalReferred: $hospitalReferred, reason: $reason) {
     ok
   }
 }

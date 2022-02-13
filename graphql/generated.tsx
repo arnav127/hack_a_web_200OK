@@ -1265,7 +1265,7 @@ export type CurrentHospitalResourcesQuery = { __typename?: 'Query', currentHospi
 export type AllHospitalsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllHospitalsQuery = { __typename?: 'Query', allHospitals?: Array<{ __typename?: 'HospitalType', name: string, address: string, phone: string, longitude?: number | null, latitude?: number | null, hospitalresource?: { __typename?: 'HospitalResourceType', id: string, bedCapacity: number, bedAvailable: number, ventilatorCapacity: number, ventilatorAvailable: number, icuCapacity: number, icuAvailable: number, bloodTest: boolean, urineTest: boolean, xray: boolean, ultrasound: boolean, mri: boolean, ecg: boolean, eeg: boolean, ekg: boolean, catscan: boolean, mammogram: boolean, colonoscopy: boolean } | null } | null> | null };
+export type AllHospitalsQuery = { __typename?: 'Query', allHospitals?: Array<{ __typename?: 'HospitalType', id: string, name: string, address: string, phone: string, longitude?: number | null, latitude?: number | null, hospitalresource?: { __typename?: 'HospitalResourceType', id: string, bedCapacity: number, bedAvailable: number, ventilatorCapacity: number, ventilatorAvailable: number, icuCapacity: number, icuAvailable: number, bloodTest: boolean, urineTest: boolean, xray: boolean, ultrasound: boolean, mri: boolean, ecg: boolean, eeg: boolean, ekg: boolean, catscan: boolean, mammogram: boolean, colonoscopy: boolean } | null } | null> | null };
 
 export type CreatePatientMutationVariables = Exact<{
   name: Scalars['String'];
@@ -1298,12 +1298,14 @@ export type DischargePatientMutationVariables = Exact<{
 
 export type DischargePatientMutation = { __typename?: 'Mutation', dischargePatient?: { __typename?: 'DischargePatient', ok?: boolean | null } | null };
 
-export type ReferPatientMutationVariables = Exact<{
+export type CreateReferredPatientMutationVariables = Exact<{
   patient?: InputMaybe<Scalars['String']>;
+  hospitalReferred?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type ReferPatientMutation = { __typename?: 'Mutation', referPatient?: { __typename?: 'ReferPatient', ok?: boolean | null } | null };
+export type CreateReferredPatientMutation = { __typename?: 'Mutation', createReferredPatient?: { __typename?: 'CreateReferredPatient', ok?: boolean | null } | null };
 
 export type CreateTestResultMutationVariables = Exact<{
   media?: InputMaybe<Scalars['String']>;
@@ -1932,6 +1934,7 @@ export type CurrentHospitalResourcesQueryResult = Apollo.QueryResult<CurrentHosp
 export const AllHospitalsDocument = gql`
     query allHospitals {
   allHospitals {
+    id
     name
     address
     phone
@@ -2147,39 +2150,45 @@ export function useDischargePatientMutation(baseOptions?: Apollo.MutationHookOpt
 export type DischargePatientMutationHookResult = ReturnType<typeof useDischargePatientMutation>;
 export type DischargePatientMutationResult = Apollo.MutationResult<DischargePatientMutation>;
 export type DischargePatientMutationOptions = Apollo.BaseMutationOptions<DischargePatientMutation, DischargePatientMutationVariables>;
-export const ReferPatientDocument = gql`
-    mutation referPatient($patient: String) {
-  referPatient(patient: $patient) {
+export const CreateReferredPatientDocument = gql`
+    mutation createReferredPatient($patient: String, $hospitalReferred: String, $reason: String) {
+  createReferredPatient(
+    patient: $patient
+    hospitalReferred: $hospitalReferred
+    reason: $reason
+  ) {
     ok
   }
 }
     `;
-export type ReferPatientMutationFn = Apollo.MutationFunction<ReferPatientMutation, ReferPatientMutationVariables>;
+export type CreateReferredPatientMutationFn = Apollo.MutationFunction<CreateReferredPatientMutation, CreateReferredPatientMutationVariables>;
 
 /**
- * __useReferPatientMutation__
+ * __useCreateReferredPatientMutation__
  *
- * To run a mutation, you first call `useReferPatientMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useReferPatientMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateReferredPatientMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateReferredPatientMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [referPatientMutation, { data, loading, error }] = useReferPatientMutation({
+ * const [createReferredPatientMutation, { data, loading, error }] = useCreateReferredPatientMutation({
  *   variables: {
  *      patient: // value for 'patient'
+ *      hospitalReferred: // value for 'hospitalReferred'
+ *      reason: // value for 'reason'
  *   },
  * });
  */
-export function useReferPatientMutation(baseOptions?: Apollo.MutationHookOptions<ReferPatientMutation, ReferPatientMutationVariables>) {
+export function useCreateReferredPatientMutation(baseOptions?: Apollo.MutationHookOptions<CreateReferredPatientMutation, CreateReferredPatientMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ReferPatientMutation, ReferPatientMutationVariables>(ReferPatientDocument, options);
+        return Apollo.useMutation<CreateReferredPatientMutation, CreateReferredPatientMutationVariables>(CreateReferredPatientDocument, options);
       }
-export type ReferPatientMutationHookResult = ReturnType<typeof useReferPatientMutation>;
-export type ReferPatientMutationResult = Apollo.MutationResult<ReferPatientMutation>;
-export type ReferPatientMutationOptions = Apollo.BaseMutationOptions<ReferPatientMutation, ReferPatientMutationVariables>;
+export type CreateReferredPatientMutationHookResult = ReturnType<typeof useCreateReferredPatientMutation>;
+export type CreateReferredPatientMutationResult = Apollo.MutationResult<CreateReferredPatientMutation>;
+export type CreateReferredPatientMutationOptions = Apollo.BaseMutationOptions<CreateReferredPatientMutation, CreateReferredPatientMutationVariables>;
 export const CreateTestResultDocument = gql`
     mutation createTestResult($media: String, $patientId: String, $testName: String, $testResult: String) {
   createTestResult(
