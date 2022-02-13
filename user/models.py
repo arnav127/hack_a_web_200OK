@@ -4,6 +4,9 @@ from django.contrib.postgres.fields import ArrayField
 
 
 class ExtendUser(AbstractUser):
+    """
+    The user used to log in through username and password
+    """
     email = models.EmailField(blank=False, max_length=255, verbose_name="email")
 
     USERNAME_FIELD = "username"
@@ -17,6 +20,9 @@ class ExtendUser(AbstractUser):
 
 
 class Hospital(models.Model):
+    """
+    Hospital stores the details about the hospital and it is created by the super
+    """
     user = models.OneToOneField(ExtendUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, blank=False, verbose_name="Hospital Name")
     address = models.CharField(
@@ -31,6 +37,9 @@ class Hospital(models.Model):
 
 
 class Patient(models.Model):
+    """
+    The patient modelstores the details about the patient profile,that is their name aadhaar and phone number. In the future the auth can be shifted tohardware keys to provide and extra layer of authentication
+    """
     name = models.CharField(max_length=255, blank=False, verbose_name="Patient Name")
     phone = models.CharField(max_length=255, blank=True, verbose_name="Patient Phone")
     aadhar = models.CharField(
@@ -42,6 +51,9 @@ class Patient(models.Model):
 
 
 class PatientAuthorizedHospital(models.Model):
+    """
+    When a patient is admitted to the hospital a new entryis created in this model signifying that the hospital now has access to the records of the patient and when the patient is discharged this is removed
+    """
     patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE)
     hospital_id = models.ForeignKey(Hospital, on_delete=models.CASCADE)
 
@@ -50,6 +62,9 @@ class PatientAuthorizedHospital(models.Model):
 
 
 class ReferredPatients(models.Model):
+    """
+    When a hospital refers the patient to another hospital, a new record is created to show that the patient is now referred to this hospital
+    """
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     hospital_referred_by = models.ForeignKey(
         Hospital, on_delete=models.CASCADE, related_name="referred_out"
