@@ -40,6 +40,9 @@ const PatientRecord = () => {
                     </div>
 
                     <div className="flex flex-wrap gap-8 mt-8">
+                        <Link href={`${process.env.NEXT_PUBLIC_BACKEND_BASEURI}/download?patient_id=${pid}`}>
+                            <a className="flex-1 p-4 w-48 h-32 bg-white rounded-lg shadow inline-flex justify-center items-center ">Download Report</a>
+                        </Link>
                         <button className="flex-1 p-4 w-48 h-32 bg-white rounded-lg shadow inline-flex justify-center items-center " onClick={() => {
                             dischargePatient({
                                 variables: {
