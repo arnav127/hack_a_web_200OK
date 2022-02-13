@@ -15,8 +15,8 @@ import csv
 from mayodata.models import DiseaseInfo
 
 
-filepath = 'D:/workspace/hawhack/backd/dataset/df_diseases.csv'
-with open(filepath, encoding='utf8') as f:
+filepath = "D:/workspace/hawhack/backd/dataset/df_diseases.csv"
+with open(filepath, encoding="utf8") as f:
     reader = csv.reader(f)
     for row in reader:
         _, created = DiseaseInfo.objects.get_or_create(
@@ -28,5 +28,5 @@ with open(filepath, encoding='utf8') as f:
             overview=row[6],
             treatment=row[7],
             medication=row[8],
-            prevention=row[9]
+            prevention=row[9],
         )

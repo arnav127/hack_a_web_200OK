@@ -27,15 +27,15 @@ class MedicineRecordQuery(graphene.ObjectType):
 class CreateMedicineRecord(graphene.Mutation):
     class Arguments:
         patient_id = graphene.String()
-        prescriptions = graphene.String()
+        prescription = graphene.String()
 
     medicine_record = graphene.Field(MedicineRecordType)
 
     @classmethod
     @login_required
-    def mutate(self, root, info, patient_id, prescriptions):
+    def mutate(self, root, info, patient_id, prescription):
         medr = MedicineRecord.objects.create(
-            patient_id=patient_id, prescriptions=prescriptions
+            patient_id=patient_id, prescription=prescription
         )
         return CreateMedicineRecord(medicine_record=medr)
 
@@ -44,7 +44,7 @@ class UpdateMedicineRecord(graphene.Mutation):
     class Arguments:
         id = graphene.String(required=True)
         patient_id = graphene.String()
-        prescriptions = graphene.String()
+        prescription = graphene.String()
 
     medicine_record = graphene.Field(MedicineRecordType)
 

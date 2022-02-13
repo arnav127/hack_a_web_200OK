@@ -15,10 +15,16 @@ inflection = "*"
 gunicorn = "*"
 django-environ = "*"
 whitenoise = "*"
+numpy = "*"
+scikit-learn = "*"
+pandas = "*"
 
 [dev-packages]
-pandas = "*"
 sqlalchemy = "*"
+black = "*"
 
 [requires]
 python_version = "3.10"
+
+[scripts]
+format = "black ."
