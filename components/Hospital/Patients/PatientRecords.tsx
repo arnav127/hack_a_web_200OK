@@ -9,7 +9,7 @@ import {
 
 const PatientRecords = ({ pid, data }) => {
     const [createTestResultMutation] = useCreateTestResultMutation();
-
+    console.log(storage)
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
@@ -33,6 +33,7 @@ const PatientRecords = ({ pid, data }) => {
                     }
                 },
                 (error) => {
+                    console.log(error)
                     switch (error.code) {
                         case 'storage/unauthorized':
                             break;
@@ -44,7 +45,7 @@ const PatientRecords = ({ pid, data }) => {
                 },
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then((res) => {
-                        console.log(res)
+                        console.log("Hereeee", res)
                         createTestResultMutation({
                             variables: {
                                 media: res,

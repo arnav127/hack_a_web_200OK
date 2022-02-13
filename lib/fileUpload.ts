@@ -10,6 +10,8 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_APPID,
 };
 
+console.log(firebaseConfig)
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
