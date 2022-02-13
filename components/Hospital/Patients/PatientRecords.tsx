@@ -3,7 +3,8 @@ import { storage } from '../../../lib/fileUpload';
 import Link from 'next/link'
 
 import {
-    useCreateTestResultMutation
+    useCreateTestResultMutation,
+    PatientByIdDocument
 } from '../../../graphql/generated'
 
 
@@ -51,7 +52,8 @@ const PatientRecords = ({ pid, data }) => {
                                 patientId: pid,
                                 testName: formData.get('testName'),
                                 testResult: formData.get('testResult'),
-                            }
+                            },
+                            refetchQueries: [PatientByIdDocument]
                         })
                     })
                 });
@@ -62,7 +64,8 @@ const PatientRecords = ({ pid, data }) => {
                     patientId: pid,
                     testName: formData.get('testName'),
                     testResult: formData.get('testResult'),
-                }
+                },
+                refetchQueries: [PatientByIdDocument]
             })
 
         }

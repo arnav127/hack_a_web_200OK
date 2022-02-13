@@ -1,6 +1,6 @@
 import { useAuth } from '../../../lib/auth'
 
-import { useCreateMedicineRecordMutation } from '../../../graphql/generated'
+import { useCreateMedicineRecordMutation, PatientByIdDocument } from '../../../graphql/generated'
 
 const MedicineRecords = ({ pid, data }) => {
     const { user } = useAuth()
@@ -13,8 +13,9 @@ const MedicineRecords = ({ pid, data }) => {
         createMedicineRecord({
             variables: {
                 patientId: pid,
-                prescriptions: formData.get('prescriptions'),
-            }
+                prescription: formData.get('prescription'),
+            },
+            refetchQueries: [PatientByIdDocument]
         })
     }
     return (
@@ -37,8 +38,8 @@ const MedicineRecords = ({ pid, data }) => {
             >
                 <input
                     type="text"
-                    id="prescriptions"
-                    name="prescriptions"
+                    id="prescription"
+                    name="prescription"
                     className="rounded-lg border border-transparent py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
                     placeholder="Prescription Name"
                     required
