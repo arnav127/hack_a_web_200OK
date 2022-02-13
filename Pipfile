@@ -16,6 +16,10 @@ numpy = "*"
 scikit-learn = "*"
 pandas = "*"
 fpdf = "*"
+gunicorn = "*"
+whitenoise = "*"
+django-environ = "*"
+
 
 [dev-packages]
 sqlalchemy = "*"
