@@ -20,7 +20,7 @@ class DoctorPatientAssignedQuery(graphene.ObjectType):
 
     def resolve_doctor_patient_assigned(root, info):
         if info.context.user.is_doctor:
-            return DoctorPatientAssigned.objects.filter(doctor=info.context.user.doctor)
+            return DoctorPatientAssigned.objects.filter(doctor=info.context.user.doctor).exclude(status__in=["DONE", "REFERRED"])
         return None
 
 
