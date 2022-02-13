@@ -3,9 +3,12 @@ import Link from 'next/link'
 
 import Layout from '../../components/Doctor/Layout'
 
+import { useAuth } from '../../lib/auth'
+
 import { useAssignedPatientsQuery } from '../../graphql/generated'
 
 const Dashboard = () => {
+  const { user } = useAuth()
   const { data, loading, error } = useAssignedPatientsQuery()
   const styles = {
     colHead:
@@ -15,9 +18,10 @@ const Dashboard = () => {
     td: 'border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4',
   }
 
-  console.log('Data', data)
   return (
     <Layout title="Dashboard">
+      <p>Hello, Dr. {user?.doctor?.name}</p>
+      <h2>View assigned patients</h2>
       <table className="w-full border-collapse items-center overflow-x-auto bg-transparent">
         <thead>
           <tr>
