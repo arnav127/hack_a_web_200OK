@@ -1,6 +1,8 @@
 import graphene
 from graphene_django import DjangoObjectType
 from graphql_jwt.decorators import login_required
+from mlai.predict_disease import predict_disease
+from opd.models import Doctor
 from patientrecord.models import DoctorNotes
 
 
@@ -34,8 +36,15 @@ class CreateDoctorNotes(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, patient_id, doctor, diagnosis, notes):
+        pred_dis = ""
+        if len(notes)>0:
+            symptoms = notes.split(",")
+            symptoms = [symptom.strip() for symptom in symptoms]
+            pred_dis = predict_disease(symptoms)
+
+        doctor_get = Doctor.objects.get(id=doctor)
         doctor_notes = DoctorNotes.objects.create(
-            patient_id=patient_id, doctor=doctor, diagnosis=diagnosis, notes=notes
+            patient_id=patient_id, doctor=doctor_get, diagnosis=diagnosis, notes=notes, predicted_disease=pred_dis
         )
         return CreateDoctorNotes(doctor_notes=doctor_notes)
 
@@ -56,6 +65,13 @@ class UpdateDoctorNotes(graphene.Mutation):
         doctor_notes = DoctorNotes.objects.get(pk=id)
         for k, v in kwargs.items():
             setattr(doctor_notes, k, v)
+
+        if len(doctor_notes.notes)>0:
+            symptoms = doctor_notes.notes.split(",")
+            symptoms = [symptom.strip() for symptom in symptoms]
+            pred_dis = predict_disease(symptoms)
+            doctor_notes.predicted_disease = pred_dis
+
         doctor_notes.save()
         return UpdateDoctorNotes(doctor_notes=doctor_notes)
 
