@@ -21,5 +21,3 @@ def predict_disease(user_symptoms):
             test_input[np.where(symptoms == symptom)[0][0]] = 1
     return model.predict([test_input])
 
-
-print(predict_disease(["cough", "fever", "distress respiratory", "night sweat"]))
