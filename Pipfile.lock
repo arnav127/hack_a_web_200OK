@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "83e57516b75066418c4a5b1f44cd8c82f1b08a2dda5a848fe12c8fc43292b42f"
+            "sha256": "ec922d422badbecef7d931913d78fe418ada0720b667020641d132a506152438"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -46,6 +46,14 @@
             ],
             "index": "pypi",
             "version": "==3.11.0"
+        },
+        "django-environ": {
+            "hashes": [
+                "sha256:42593bee519a527602a467c7b682aee1a051c2597f98c45f4f4f44169ecdb6e5",
+                "sha256:6f0bc902b43891656b20486938cba0861dc62892784a44919170719572a534cb"
+            ],
+            "index": "pypi",
+            "version": "==0.8.1"
         },
         "django-filter": {
             "hashes": [
@@ -109,6 +117,14 @@
                 "sha256:ac514cb86db9a43014d7e73511d521137ac12cf0101b2eaa5f0a3da2e10d913d"
             ],
             "version": "==2.0.1"
+        },
+        "gunicorn": {
+            "hashes": [
+                "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e",
+                "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"
+            ],
+            "index": "pypi",
+            "version": "==20.1.0"
         },
         "inflection": {
             "hashes": [
@@ -297,6 +313,14 @@
             "markers": "python_version < '3.11' and python_version >= '3.8'",
             "version": "==1.8.0"
         },
+        "setuptools": {
+            "hashes": [
+                "sha256:43a5575eea6d3459789316e1596a3d2a0d215260cacf4189508112f35c9a145b",
+                "sha256:66b8598da112b8dc8cd941d54cf63ef91d3b50657b374457eda5851f3ff6a899"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==60.8.2"
+        },
         "singledispatch": {
             "hashes": [
                 "sha256:bc77afa97c8a22596d6d4fc20f1b7bdd2b86edc2a65a4262bdd7cc3cc19aa989",
@@ -335,6 +359,14 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==3.1.0"
+        },
+        "whitenoise": {
+            "hashes": [
+                "sha256:08c42bc535f9777eea1a599289d9433f081921f97887eaf6f559446b2a080374",
+                "sha256:5a4aff543ee860fbe40d743e556adf92ccd41b7df45697cae074afdf657056b9"
+            ],
+            "index": "pypi",
+            "version": "==6.0.0"
         }
     },
     "develop": {
