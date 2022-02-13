@@ -1,11 +1,12 @@
 import Layout from '../components/Layout'
+import HeroHome from '../components/Hero/HeroHome';
 
 export default function Home() {
-    return (
-        <Layout title="Home">
-            <div className="mt-16">
-                This is the Landing Page
-            </div>
-        </Layout >
-    )
+  return (
+    <div className="flex flex-col min-h-screen overflow-hidden">
+      <main className="flex-grow">
+        <HeroHome />
+      </main>
+    </div>
+  );
 }
