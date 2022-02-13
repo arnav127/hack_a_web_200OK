@@ -3,13 +3,13 @@ import { storage } from '../../../lib/fileUpload';
 import Link from 'next/link'
 
 import {
-    useCreateTestResultMutation
+    useCreateTestResultMutation,
+    PatientByIdDocument
 } from '../../../graphql/generated'
 
 
 const PatientRecords = ({ pid, data }) => {
     const [createTestResultMutation] = useCreateTestResultMutation();
-    console.log(storage)
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
@@ -33,7 +33,6 @@ const PatientRecords = ({ pid, data }) => {
                     }
                 },
                 (error) => {
-                    console.log(error)
                     switch (error.code) {
                         case 'storage/unauthorized':
                             break;
@@ -52,7 +51,8 @@ const PatientRecords = ({ pid, data }) => {
                                 patientId: pid,
                                 testName: formData.get('testName'),
                                 testResult: formData.get('testResult'),
-                            }
+                            },
+                            refetchQueries: [PatientByIdDocument]
                         })
                     })
                 });
@@ -63,7 +63,8 @@ const PatientRecords = ({ pid, data }) => {
                     patientId: pid,
                     testName: formData.get('testName'),
                     testResult: formData.get('testResult'),
-                }
+                },
+                refetchQueries: [PatientByIdDocument]
             })
 
         }
@@ -91,7 +92,7 @@ const PatientRecords = ({ pid, data }) => {
                     type="text"
                     id="testName"
                     name="testName"
-                    className="rounded-lg border border-transparent py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
+                    className="py-2 px-4 placeholder-gray-400 text-gray-700 rounded-lg border border-transparent shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
                     placeholder="Test Name"
                     required
                 />
@@ -99,14 +100,14 @@ const PatientRecords = ({ pid, data }) => {
                     type="text"
                     id="testResult"
                     name="testResult"
-                    className="rounded-lg border border-transparent py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
+                    className="py-2 px-4 placeholder-gray-400 text-gray-700 rounded-lg border border-transparent shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
                     placeholder="Test Result"
                     required
                 />
                 <input type="file" name="media" id='media' />
                 <button
                     type="submit"
-                    className="w-full rounded-lg bg-sky-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                    className="py-2 px-4 w-full font-semibold text-center text-white rounded-lg shadow-md transition duration-200 ease-in bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
                 >
                     Upload
                 </button>

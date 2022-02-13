@@ -1,6 +1,6 @@
 import { useAuth } from '../../../lib/auth'
 
-import { useCreateMedicineRecordMutation } from '../../../graphql/generated'
+import { useCreateMedicineRecordMutation, PatientByIdDocument } from '../../../graphql/generated'
 
 const MedicineRecords = ({ pid, data }) => {
     const { user } = useAuth()
@@ -13,8 +13,9 @@ const MedicineRecords = ({ pid, data }) => {
         createMedicineRecord({
             variables: {
                 patientId: pid,
-                prescriptions: formData.get('prescriptions'),
-            }
+                prescription: formData.get('prescription'),
+            },
+            refetchQueries: [PatientByIdDocument]
         })
     }
     return (
@@ -37,15 +38,15 @@ const MedicineRecords = ({ pid, data }) => {
             >
                 <input
                     type="text"
-                    id="prescriptions"
-                    name="prescriptions"
-                    className="rounded-lg border border-transparent py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
+                    id="prescription"
+                    name="prescription"
+                    className="py-2 px-4 placeholder-gray-400 text-gray-700 rounded-lg border border-transparent shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
                     placeholder="Prescription Name"
                     required
                 />
                 <button
                     type="submit"
-                    className="rounded-lg bg-sky-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                    className="py-2 px-4 font-semibold text-center text-white rounded-lg shadow-md transition duration-200 ease-in bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
                 >
                     Create prescription
                 </button>

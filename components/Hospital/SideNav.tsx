@@ -24,9 +24,9 @@ const SideNav = () => {
   const { user } = useAuth()
   return (
     <nav className="min-h-screen border-r-2 border-gray-100 bg-gray-100/50 px-4 md:w-72">
-      <div className="flex h-20 items-center">
+      <div className="flex items-center h-20">
         <svg
-          className="h-8 w-8"
+          className="w-8 h-8"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
         >
@@ -44,7 +44,7 @@ const SideNav = () => {
       </div>
 
       <div>
-        <h3 className="py-2 text-xs font-semibold uppercase tracking-wide">
+        <h3 className="mt-2 text-xs font-semibold uppercase tracking-wide">
           General
         </h3>
         <NavLink
@@ -52,7 +52,7 @@ const SideNav = () => {
           href="/hospital/dashboard"
           icon={
             <svg
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -69,9 +69,29 @@ const SideNav = () => {
         />
       </div>
       <div>
-        <h3 className="text-xs font-semibold uppercase tracking-wide">
+        <h3 className="mt-2 text-xs font-semibold uppercase tracking-wide">
           Patients
         </h3>
+        <NavLink
+          title="Admit New Patient"
+          href="/hospital/patients/create"
+          icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+              />
+            </svg>
+          }
+        />
         <NavLink
           title="Search Patient"
           href="/hospital/patients/search"
@@ -93,28 +113,53 @@ const SideNav = () => {
           }
         />
         <NavLink
-          title="Admit New Patient"
-          href="/hospital/patients/create"
+          title="Admitted Patients"
+          href="/hospital/patients/view"
           icon={
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
-              viewBox="0 0 24 24"
               stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+          }
+        />
+      </div>
+      <div>
+        <h3 className="mt-2 text-xs font-semibold uppercase tracking-wide">
+          Hospital
+        </h3>
+        <NavLink
+          title="Nearby Hospitals"
+          href="/hospital/nearby"
+          icon={
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"
               />
             </svg>
           }
         />
         <NavLink
-          title="View All Patients"
-          href="/hospital/patients/view"
+          title="On Call Doctors"
+          href="/hospital/doctors"
           icon={
             <svg
               className="h-6 w-6"

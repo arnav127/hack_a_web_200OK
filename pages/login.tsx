@@ -25,14 +25,14 @@ const Login = () => {
             </Head>
 
             <main className="h-screen bg-sky-50">
-                <div className="flex h-full items-center justify-center">
+                <div className="flex justify-center items-center h-full">
                     <form
                         className="flex w-96 max-w-[24rem] flex-col gap-4 rounded-lg bg-sky-200/50 p-8"
                         onSubmit={handleSubmit}
                     >
-                        <div className="flex items-center justify-center gap-4 text-2xl font-bold text-sky-600">
+                        <div className="flex gap-4 justify-center items-center text-2xl font-bold text-sky-600">
                             <svg
-                                className="h-12 w-12"
+                                className="w-12 h-12"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -51,7 +51,7 @@ const Login = () => {
                             type="username"
                             id="username"
                             name="username"
-                            className="rounded-lg border border-transparent py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
+                            className="py-2 px-4 placeholder-gray-400 text-gray-700 rounded-lg border border-transparent shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
                             placeholder="Username"
                             required
                         />
@@ -59,7 +59,7 @@ const Login = () => {
                             type="password"
                             id="password"
                             name="password"
-                            className="rounded-lg border border-transparent py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
+                            className="py-2 px-4 placeholder-gray-400 text-gray-700 rounded-lg border border-transparent shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
                             placeholder="Password"
                             required
                         />
@@ -68,7 +68,7 @@ const Login = () => {
                         )}
                         <button
                             type="submit"
-                            className="w-full rounded-lg bg-sky-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                            className="py-2 px-4 w-full font-semibold text-center text-white rounded-lg shadow-md transition duration-200 ease-in bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
                         >
                             Login
                         </button>

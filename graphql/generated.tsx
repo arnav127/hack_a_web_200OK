@@ -178,6 +178,7 @@ export type DoctorNotesType = {
   id: Scalars['ID'];
   notes: Scalars['String'];
   patient: PatientType;
+  predictedDisease: Scalars['String'];
 };
 
 export type DoctorPatientAssignedType = {
@@ -1201,7 +1202,7 @@ export type UpdateDoctorPatientAssignedMutation = { __typename?: 'Mutation', upd
 export type AllDoctorsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllDoctorsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', hospital?: { __typename?: 'HospitalType', doctorSet: Array<{ __typename?: 'DoctorType', id: string, name: string }> } | null } | null };
+export type AllDoctorsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', doctor?: { __typename?: 'DoctorType', name: string, hospital: { __typename?: 'HospitalType', doctorSet: Array<{ __typename?: 'DoctorType', id: string, name: string, specialization: string }> } } | null, hospital?: { __typename?: 'HospitalType', doctorSet: Array<{ __typename?: 'DoctorType', id: string, name: string, specialization: string }> } | null } | null };
 
 export type AssignedPatientsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1214,7 +1215,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', tokenAuth?: { __typename?: 'ObtainJSONWebToken', token?: string | null, success?: boolean | null, errors?: any | null, user?: { __typename?: 'UserNode', firstName: string, isHospital: boolean, isDoctor: boolean, hospital?: { __typename?: 'HospitalType', name: string } | null, doctor?: { __typename?: 'DoctorType', name: string, hospital: { __typename?: 'HospitalType', name: string } } | null } | null } | null };
+export type LoginMutation = { __typename?: 'Mutation', tokenAuth?: { __typename?: 'ObtainJSONWebToken', token?: string | null, success?: boolean | null, errors?: any | null, user?: { __typename?: 'UserNode', firstName: string, isHospital: boolean, isDoctor: boolean, hospital?: { __typename?: 'HospitalType', id: string, name: string } | null, doctor?: { __typename?: 'DoctorType', id: string, name: string, hospital: { __typename?: 'HospitalType', name: string } } | null } | null } | null };
 
 export type CreatePatientAuthorizedHospitalMutationVariables = Exact<{
   patientId?: InputMaybe<Scalars['String']>;
@@ -1254,6 +1255,18 @@ export type AdmittedRecordsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AdmittedRecordsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', hospital?: { __typename?: 'HospitalType', patientauthorizedhospitalSet: Array<{ __typename?: 'PatientAuthorizedHospitalType', patientId: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', assignedAt: any, status: string, doctor: { __typename?: 'DoctorType', id: string, name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string }> } }> } | null } | null };
 
+export type HospitalResourcesFragment = { __typename?: 'HospitalResourceType', id: string, bedCapacity: number, bedAvailable: number, ventilatorCapacity: number, ventilatorAvailable: number, icuCapacity: number, icuAvailable: number, bloodTest: boolean, urineTest: boolean, xray: boolean, ultrasound: boolean, mri: boolean, ecg: boolean, eeg: boolean, ekg: boolean, catscan: boolean, mammogram: boolean, colonoscopy: boolean };
+
+export type CurrentHospitalResourcesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentHospitalResourcesQuery = { __typename?: 'Query', currentHospitalResource?: { __typename?: 'HospitalResourceType', id: string, bedCapacity: number, bedAvailable: number, ventilatorCapacity: number, ventilatorAvailable: number, icuCapacity: number, icuAvailable: number, bloodTest: boolean, urineTest: boolean, xray: boolean, ultrasound: boolean, mri: boolean, ecg: boolean, eeg: boolean, ekg: boolean, catscan: boolean, mammogram: boolean, colonoscopy: boolean } | null };
+
+export type AllHospitalsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllHospitalsQuery = { __typename?: 'Query', allHospitals?: Array<{ __typename?: 'HospitalType', name: string, address: string, phone: string, longitude?: number | null, latitude?: number | null, hospitalresource?: { __typename?: 'HospitalResourceType', id: string, bedCapacity: number, bedAvailable: number, ventilatorCapacity: number, ventilatorAvailable: number, icuCapacity: number, icuAvailable: number, bloodTest: boolean, urineTest: boolean, xray: boolean, ultrasound: boolean, mri: boolean, ecg: boolean, eeg: boolean, ekg: boolean, catscan: boolean, mammogram: boolean, colonoscopy: boolean } | null } | null> | null };
+
 export type CreatePatientMutationVariables = Exact<{
   name: Scalars['String'];
   phone: Scalars['String'];
@@ -1269,7 +1282,7 @@ export type PatientByAadharQueryVariables = Exact<{
 }>;
 
 
-export type PatientByAadharQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, aadhar: string } | null };
+export type PatientByAadharQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, aadhar: string, patientauthorizedhospitalSet: Array<{ __typename?: 'PatientAuthorizedHospitalType', hospitalId: { __typename?: 'HospitalType', id: string, name: string } }> } | null };
 
 export type PatientByIdQueryVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -1344,7 +1357,28 @@ export type CreateMedicinePrescriptionMutationVariables = Exact<{
 
 export type CreateMedicinePrescriptionMutation = { __typename?: 'Mutation', createMedicinePrescription?: { __typename?: 'CreateMedicinePrescription', medicinePrescription?: { __typename?: 'MedicinePrescriptionType', id: string, medicine: string, doses: string } | null } | null };
 
-
+export const HospitalResourcesFragmentDoc = gql`
+    fragment hospitalResources on HospitalResourceType {
+  id
+  bedCapacity
+  bedAvailable
+  ventilatorCapacity
+  ventilatorAvailable
+  icuCapacity
+  icuAvailable
+  bloodTest
+  urineTest
+  xray
+  ultrasound
+  mri
+  ecg
+  eeg
+  ekg
+  catscan
+  mammogram
+  colonoscopy
+}
+    `;
 export const CreateDoctorPatientAssignedDocument = gql`
     mutation createDoctorPatientAssigned($doctorId: String!, $patientId: String!, $status: String) {
   createDoctorPatientAssigned(
@@ -1471,10 +1505,21 @@ export type UpdateDoctorPatientAssignedMutationOptions = Apollo.BaseMutationOpti
 export const AllDoctorsDocument = gql`
     query allDoctors {
   me {
+    doctor {
+      name
+      hospital {
+        doctorSet {
+          id
+          name
+          specialization
+        }
+      }
+    }
     hospital {
       doctorSet {
         id
         name
+        specialization
       }
     }
   }
@@ -1561,9 +1606,11 @@ export const LoginDocument = gql`
     user {
       firstName
       hospital {
+        id
         name
       }
       doctor {
+        id
         name
         hospital {
           name
@@ -1834,6 +1881,81 @@ export function useAdmittedRecordsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type AdmittedRecordsQueryHookResult = ReturnType<typeof useAdmittedRecordsQuery>;
 export type AdmittedRecordsLazyQueryHookResult = ReturnType<typeof useAdmittedRecordsLazyQuery>;
 export type AdmittedRecordsQueryResult = Apollo.QueryResult<AdmittedRecordsQuery, AdmittedRecordsQueryVariables>;
+export const CurrentHospitalResourcesDocument = gql`
+    query currentHospitalResources {
+  currentHospitalResource {
+    ...hospitalResources
+  }
+}
+    ${HospitalResourcesFragmentDoc}`;
+
+/**
+ * __useCurrentHospitalResourcesQuery__
+ *
+ * To run a query within a React component, call `useCurrentHospitalResourcesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentHospitalResourcesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentHospitalResourcesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentHospitalResourcesQuery(baseOptions?: Apollo.QueryHookOptions<CurrentHospitalResourcesQuery, CurrentHospitalResourcesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrentHospitalResourcesQuery, CurrentHospitalResourcesQueryVariables>(CurrentHospitalResourcesDocument, options);
+      }
+export function useCurrentHospitalResourcesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentHospitalResourcesQuery, CurrentHospitalResourcesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrentHospitalResourcesQuery, CurrentHospitalResourcesQueryVariables>(CurrentHospitalResourcesDocument, options);
+        }
+export type CurrentHospitalResourcesQueryHookResult = ReturnType<typeof useCurrentHospitalResourcesQuery>;
+export type CurrentHospitalResourcesLazyQueryHookResult = ReturnType<typeof useCurrentHospitalResourcesLazyQuery>;
+export type CurrentHospitalResourcesQueryResult = Apollo.QueryResult<CurrentHospitalResourcesQuery, CurrentHospitalResourcesQueryVariables>;
+export const AllHospitalsDocument = gql`
+    query allHospitals {
+  allHospitals {
+    name
+    address
+    phone
+    longitude
+    latitude
+    hospitalresource {
+      ...hospitalResources
+    }
+  }
+}
+    ${HospitalResourcesFragmentDoc}`;
+
+/**
+ * __useAllHospitalsQuery__
+ *
+ * To run a query within a React component, call `useAllHospitalsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllHospitalsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllHospitalsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllHospitalsQuery(baseOptions?: Apollo.QueryHookOptions<AllHospitalsQuery, AllHospitalsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllHospitalsQuery, AllHospitalsQueryVariables>(AllHospitalsDocument, options);
+      }
+export function useAllHospitalsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllHospitalsQuery, AllHospitalsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllHospitalsQuery, AllHospitalsQueryVariables>(AllHospitalsDocument, options);
+        }
+export type AllHospitalsQueryHookResult = ReturnType<typeof useAllHospitalsQuery>;
+export type AllHospitalsLazyQueryHookResult = ReturnType<typeof useAllHospitalsLazyQuery>;
+export type AllHospitalsQueryResult = Apollo.QueryResult<AllHospitalsQuery, AllHospitalsQueryVariables>;
 export const CreatePatientDocument = gql`
     mutation createPatient($name: String!, $phone: String!, $aadhar: String!) {
   createPatient(name: $name, phone: $phone, aadhar: $aadhar) {
@@ -1881,6 +2003,12 @@ export const PatientByAadharDocument = gql`
     name
     phone
     aadhar
+    patientauthorizedhospitalSet {
+      hospitalId {
+        id
+        name
+      }
+    }
   }
 }
     `;

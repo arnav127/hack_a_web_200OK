@@ -6,9 +6,11 @@ mutation login($username: String!, $password: String!) {
     user {
       firstName
       hospital {
+        id
         name
       }
       doctor {
+        id
         name
         hospital {
           name
@@ -88,4 +90,44 @@ query admittedRecords {
       }
     }
   }
+}
+
+fragment hospitalResources on HospitalResourceType {
+  id
+    bedCapacity
+    bedAvailable
+    ventilatorCapacity
+    ventilatorAvailable
+    icuCapacity
+    icuAvailable
+    bloodTest
+    urineTest
+    xray
+    ultrasound
+    mri
+    ecg
+    eeg
+    ekg
+    catscan
+    mammogram
+    colonoscopy
+}
+
+query currentHospitalResources {
+  currentHospitalResource {
+    ...hospitalResources
+  }
+}
+
+
+query allHospitals  {
+  allHospitals {
+  name
+  address
+  phone
+  longitude
+  latitude
+  hospitalresource {
+    ...hospitalResources
+  }}
 }
