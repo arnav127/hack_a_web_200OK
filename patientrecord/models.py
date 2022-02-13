@@ -45,7 +45,7 @@ class TestResult(models.Model):
     test_name = models.CharField(max_length=255, verbose_name="Test Name")
     test_result = models.TextField(verbose_name="Test Result")
 
-    media = models.TextField(default="")
+    media = models.TextField(blank=True, default="")
 
     def __str__(self) -> str:
         return f"{self.test_name} Test - {self.patient.name}"
