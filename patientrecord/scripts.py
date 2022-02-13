@@ -14,7 +14,7 @@ def pdf_testresult(pdf, records):
     pdf.line(10, 38, 150, 38)
     for line in records:
         pdf.cell(200, 8, f"{line.test_name.ljust(30)} {line.test_result.rjust(20)}", 0, 1)
-        pdf.cell(200,8, f"Link: {line.media.ljust(200)}")
+        pdf.cell(200,8, f"Link: {line.media.ljust(200)}", 0, 1)
 
     return pdf
 
