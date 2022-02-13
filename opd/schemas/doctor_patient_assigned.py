@@ -118,13 +118,13 @@ class UpdateDoctorPatientAssigned(graphene.Mutation):
             return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
 
         # check if the hospital is authorized to assign the patient to the doctor
-        authorized_hospital_list = PatientAuthorizedHospital.objects.get(
-            patient_id=doctor_patient_assigned.patient,
-            hospital_id=info.context.user.hospital,
-        )
+        # authorized_hospital_list = PatientAuthorizedHospital.objects.get(
+        #     patient_id=doctor_patient_assigned.patient,
+        #     hospital_id=info.context.user.hospital,
+        # )
 
-        if not authorized_hospital_list:
-            return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
+        # if not authorized_hospital_list:
+        #     return UpdateDoctorPatientAssigned(ok=False, doctor_patient_assigned=None)
 
         # change the status to new status
         doctor_patient_assigned.status = new_status
