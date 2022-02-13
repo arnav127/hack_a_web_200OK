@@ -132,3 +132,36 @@ query allHospitals  {
     ...hospitalResources
   }}
 }
+
+query ReferredInPatients {
+  referredInPatients {
+    id
+    patient {
+      name
+    }
+    hospitalReferredBy {
+      name
+    }
+    hospitalReferred {
+      name
+    }
+    reasonReferred
+  }
+}
+
+
+query ReferredOutPatients {
+  referredOutPatients {
+    id
+    patient {
+      name
+    }
+    hospitalReferredBy {
+      name
+    }
+    hospitalReferred {
+      name
+    }
+    reasonReferred
+  }
+}
