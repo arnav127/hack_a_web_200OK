@@ -23,7 +23,7 @@ const NavLink = ({ icon, href, title }) => {
 const SideNav = () => {
   const { user } = useAuth()
   return (
-    <nav className="min-h-screen border-r-2 border-gray-100 bg-gray-100/50 px-4 md:w-72">
+    <nav className="min-h-screen border-r-2 border-gray-100 bg-gray-100/50 px-4 md:w-64">
       <div className="flex h-20 items-center">
         <svg
           className="h-8 w-8"
