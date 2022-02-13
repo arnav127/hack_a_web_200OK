@@ -18,7 +18,7 @@ const Layout = ({ title, children }) => {
         ) : (
           <HospitalSideNav title={title} />
         )}
-        <section className="h-screen flex-grow overflow-y-auto bg-gray-100/50">
+        <section className="h-screen flex-1 overflow-y-auto bg-gray-100/50">
           <header className="flex h-20 items-center justify-between p-4 text-sm">
             <h1 className="text-2xl font-bold">{title}</h1>
             <button
