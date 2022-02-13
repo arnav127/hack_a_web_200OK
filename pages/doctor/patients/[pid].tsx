@@ -6,7 +6,7 @@ import {
     useCreateDoctorPatientAssignedMutation
 } from '../../../graphql/generated'
 
-import Layout from '../../../components/Hospital/Layout'
+import Layout from '../../../components/Doctor/Layout'
 import Doctor from '../../../components/Hospital/Patients/Doctor'
 import PatientRecords from '../../../components/Hospital/Patients/PatientRecords'
 import MedicineRecords from '../../../components/Hospital/Patients/MedicineRecords'
