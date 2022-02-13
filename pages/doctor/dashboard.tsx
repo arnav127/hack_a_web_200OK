@@ -22,7 +22,7 @@ const Dashboard = () => {
     <Layout title="Dashboard">
       <p>Hello, Dr. {user?.doctor?.name}</p>
       <h2>View assigned patients</h2>
-      <table className="overflow-x-auto items-center w-full bg-transparent border-collapse">
+      <table className="w-full border-collapse items-center overflow-x-auto bg-transparent">
         <thead>
           <tr>
             <th className={styles.colHead}>Name</th>
