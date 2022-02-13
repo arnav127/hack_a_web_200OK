@@ -14,9 +14,9 @@ psycopg2 = "*"
 inflection = "*"
 numpy = "*"
 scikit-learn = "*"
+pandas = "*"
 
 [dev-packages]
-pandas = "*"
 sqlalchemy = "*"
 black = "*"
 
