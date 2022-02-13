@@ -32,7 +32,9 @@ class CreatePatientAuthorizedHospital(graphene.Mutation):
         hospital = info.context.user.hospital
         hospitalResource = HospitalResource.objects.get(hospital=hospital)
         hospitalResource.bed_available -= 1
+        hospitalResource.save()
         patient = Patient.objects.get(pk=patient_id)
+        PatientAuthorizedHospital.objects.filter(patient_id=patient).delete()
         pah = PatientAuthorizedHospital.objects.create(
             patient_id=patient, hospital_id=hospital
         )
