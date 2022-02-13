@@ -33,6 +33,7 @@ mutation createDoctorNotes($diagnosis: String, $doctor: String, $notes: String, 
       }
       diagnosis
       notes
+      predictedDisease
     }
   }
 }

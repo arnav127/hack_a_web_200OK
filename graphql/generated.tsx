@@ -1260,7 +1260,7 @@ export type AllDoctorsQuery = { __typename?: 'Query', me?: { __typename?: 'UserN
 export type AssignedPatientsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AssignedPatientsQuery = { __typename?: 'Query', doctorPatientAssigned?: Array<{ __typename?: 'DoctorPatientAssignedType', patient: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', assignedAt: any, status: string }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string }> } } | null> | null };
+export type AssignedPatientsQuery = { __typename?: 'Query', doctorPatientAssigned?: Array<{ __typename?: 'DoctorPatientAssignedType', patient: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', assignedAt: any, status: string }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, predictedDisease: string }> } } | null> | null };
 
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -1306,7 +1306,7 @@ export type UserQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', 
 export type AdmittedRecordsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AdmittedRecordsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', hospital?: { __typename?: 'HospitalType', patientauthorizedhospitalSet: Array<{ __typename?: 'PatientAuthorizedHospitalType', patientId: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', assignedAt: any, status: string, doctor: { __typename?: 'DoctorType', id: string, name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string }> } }> } | null } | null };
+export type AdmittedRecordsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', hospital?: { __typename?: 'HospitalType', patientauthorizedhospitalSet: Array<{ __typename?: 'PatientAuthorizedHospitalType', patientId: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', assignedAt: any, status: string, doctor: { __typename?: 'DoctorType', id: string, name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, predictedDisease: string }> } }> } | null } | null };
 
 export type HospitalResourcesFragment = { __typename?: 'HospitalResourceType', id: string, bedCapacity: number, bedAvailable: number, ventilatorCapacity: number, ventilatorAvailable: number, icuCapacity: number, icuAvailable: number, bloodTest: boolean, urineTest: boolean, xray: boolean, ultrasound: boolean, mri: boolean, ecg: boolean, eeg: boolean, ekg: boolean, catscan: boolean, mammogram: boolean, colonoscopy: boolean };
 
@@ -1352,7 +1352,7 @@ export type PatientByIdQueryVariables = Exact<{
 }>;
 
 
-export type PatientByIdQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', id: string, status: string, assignedAt: any, doctor: { __typename?: 'DoctorType', name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, notes: string }>, medicinerecordSet: Array<{ __typename?: 'MedicineRecordType', id: string, prescription: string }>, testresultSet: Array<{ __typename?: 'TestResultType', id: string, testName: string, testResult: string, media: string }> } | null };
+export type PatientByIdQuery = { __typename?: 'Query', patient?: { __typename?: 'PatientType', id: string, name: string, phone: string, doctorpatientassignedSet: Array<{ __typename?: 'DoctorPatientAssignedType', id: string, status: string, assignedAt: any, doctor: { __typename?: 'DoctorType', name: string } }>, doctornotesSet: Array<{ __typename?: 'DoctorNotesType', diagnosis: string, notes: string, predictedDisease: string }>, medicinerecordSet: Array<{ __typename?: 'MedicineRecordType', id: string, prescription: string }>, testresultSet: Array<{ __typename?: 'TestResultType', id: string, testName: string, testResult: string, media: string }> } | null };
 
 export type DischargePatientMutationVariables = Exact<{
   patient?: InputMaybe<Scalars['String']>;
@@ -1398,7 +1398,7 @@ export type CreateDoctorNotesMutationVariables = Exact<{
 }>;
 
 
-export type CreateDoctorNotesMutation = { __typename?: 'Mutation', createDoctorNotes?: { __typename?: 'CreateDoctorNotes', doctorNotes?: { __typename?: 'DoctorNotesType', id: string, diagnosis: string, notes: string, patient: { __typename?: 'PatientType', id: string }, doctor: { __typename?: 'DoctorType', id: string } } | null } | null };
+export type CreateDoctorNotesMutation = { __typename?: 'Mutation', createDoctorNotes?: { __typename?: 'CreateDoctorNotes', doctorNotes?: { __typename?: 'DoctorNotesType', id: string, diagnosis: string, notes: string, predictedDisease: string, patient: { __typename?: 'PatientType', id: string }, doctor: { __typename?: 'DoctorType', id: string } } | null } | null };
 
 export type UpdateDoctorNotesMutationVariables = Exact<{
   id: Scalars['String'];
@@ -1644,6 +1644,7 @@ export const AssignedPatientsDocument = gql`
       }
       doctornotesSet {
         diagnosis
+        predictedDisease
       }
     }
   }
@@ -1926,6 +1927,7 @@ export const AdmittedRecordsDocument = gql`
           }
           doctornotesSet {
             diagnosis
+            predictedDisease
           }
         }
       }
@@ -2226,6 +2228,7 @@ export const PatientByIdDocument = gql`
     doctornotesSet {
       diagnosis
       notes
+      predictedDisease
     }
     medicinerecordSet {
       id
@@ -2451,6 +2454,7 @@ export const CreateDoctorNotesDocument = gql`
       }
       diagnosis
       notes
+      predictedDisease
     }
   }
 }

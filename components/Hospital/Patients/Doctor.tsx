@@ -100,6 +100,7 @@ const Doctor = ({ pid, data }) => {
                                         <div>
                                             <p>Diagnosis: {note.diagnosis}</p>
                                             <p>Notes: {note.notes}</p>
+                                            <p>Predicted disease: {note.predictedDisease}</p>
                                         </div>
                                     )
                                 })
