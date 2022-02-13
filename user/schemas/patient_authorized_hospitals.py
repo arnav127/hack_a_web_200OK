@@ -39,7 +39,7 @@ class CreatePatientAuthorizedHospital(graphene.Mutation):
             patient_id=patient, hospital_id=hospital
         )
         # delete entry from referred patients
-        ReferredPatients.objects.get(patient=patient_id).delete()
+        ReferredPatients.objects.filter(patient=patient_id).delete()
         return CreatePatientAuthorizedHospital(ok=True, patient_authorized_hospital=pah)
 
 
