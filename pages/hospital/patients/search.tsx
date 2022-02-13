@@ -26,20 +26,20 @@ const Admit = () => {
         <Layout title="Search Patient" >
             <div className="container mx-auto">
                 <form
-                    className="my-8 flex gap-4 rounded-lg"
+                    className="flex gap-4 my-8 rounded-lg"
                     onSubmit={handleSubmit}
                 >
                     <input
                         type="text"
                         id="aadhar"
                         name="aadhar"
-                        className="rounded-lg border py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-600"
+                        className="py-2 px-4 placeholder-gray-400 text-gray-700 rounded-lg border shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-gray-600"
                         placeholder="Enter Aadhaar Number"
                         required
                     />
                     <button
                         type="submit"
-                        className="w-36 rounded-lg bg-gray-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                        className="py-2 px-4 w-36 font-semibold text-center text-white bg-gray-600 rounded-lg shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
                     >
                         Submit
                     </button>
@@ -56,7 +56,7 @@ const Admit = () => {
                         </div>
 
                         <button
-                            className="w-48 rounded-lg bg-gray-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                            className="py-2 px-4 w-48 font-semibold text-center text-white bg-gray-600 rounded-lg shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
                             onClick={() => {
                                 createPatientAuthorizedHospital({
                                     variables: { patientId: data.patient.id }
@@ -70,7 +70,7 @@ const Admit = () => {
                         <p>Record not found!</p>
                         <Link href="/patient/create">
                             <a
-                                className="rounded-lg bg-gray-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                                className="py-2 px-4 font-semibold text-center text-white bg-gray-600 rounded-lg shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
                             >
                                 Create new patient?
                             </a>

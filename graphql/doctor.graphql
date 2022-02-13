@@ -39,6 +39,13 @@ query allDoctors {
         }
       }
     }
+    hospital {
+      doctorSet {
+        id
+        name
+        specialization
+      }
+    }
   }
 }
 

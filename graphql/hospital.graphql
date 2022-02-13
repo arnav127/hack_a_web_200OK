@@ -91,9 +91,8 @@ query admittedRecords {
   }
 }
 
-query currentHospitalResources {
-  currentHospitalResource {
-    id
+fragment hospitalResources on HospitalResourceType {
+  id
     bedCapacity
     bedAvailable
     ventilatorCapacity
@@ -111,5 +110,23 @@ query currentHospitalResources {
     catscan
     mammogram
     colonoscopy
+}
+
+query currentHospitalResources {
+  currentHospitalResource {
+    ...hospitalResources
   }
+}
+
+
+query allHospitals  {
+  allHospitals {
+  name
+  address
+  phone
+  longitude
+  latitude
+  hospitalresource {
+    ...hospitalResources
+  }}
 }
