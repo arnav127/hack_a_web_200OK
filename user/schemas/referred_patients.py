@@ -55,7 +55,8 @@ class CreateReferredPatient(graphene.Mutation):
             hospital_referred_by=info.context.user.hospital,
             reason_referred=reason,
         )
-        PatientAuthorizedHospital.objects.filter(hospital_id=info.context.user.hospital, patient=pat).delete()
+        PatientAuthorizedHospital.objects.filter(hospital_id=info.context.user.hospital, patient_id=pat).delete()
+        PatientAuthorizedHospital.objects.create(hospital_id=info.context.user.hospital, patient_id=pat)
         return CreateReferredPatient(referred_patient=referred_patient, ok=True)
 
 
