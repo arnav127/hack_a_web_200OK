@@ -2,6 +2,7 @@ import {
     useAllDoctorsQuery,
     PatientByIdDocument,
     useCreateDoctorPatientAssignedMutation,
+    useCreateDoctorNotesMutation,
     useUpdateDoctorPatientAssignedMutation
 } from '../../../graphql/generated'
 
@@ -11,6 +12,7 @@ const Doctor = ({ pid, data }) => {
     const { user } = useAuth();
     const [createDoctorPatientAssigned] = useCreateDoctorPatientAssignedMutation();
     const [updateDoctorPatientAssigned] = useUpdateDoctorPatientAssignedMutation();
+    const [createDoctorNotes] = useCreateDoctorNotesMutation();
 
     const { data: doctors } = useAllDoctorsQuery();
 
@@ -21,6 +23,19 @@ const Doctor = ({ pid, data }) => {
             variables: {
                 id: data?.patient?.doctorpatientassignedSet.at(-1).id,
                 newStatus: formData.get('newStatus')
+            },
+            refetchQueries: [PatientByIdDocument]
+        })
+    }
+    const handleCreateNotes = (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget)
+        createDoctorNotes({
+            variables: {
+                notes: formData.get('notes'),
+                diagnosis: formData.get('diagnosis'),
+                doctor: user?.doctor?.id,
+                patientId: pid
             },
             refetchQueries: [PatientByIdDocument]
         })
@@ -88,6 +103,35 @@ const Doctor = ({ pid, data }) => {
                                     )
                                 })
                             )}
+                            {user?.isDoctor && (
+                                <form
+                                    className="flex gap-4"
+                                    onSubmit={handleCreateNotes}
+                                >
+                                    <input
+                                        type="text"
+                                        id="diagnosis"
+                                        name="diagnosis"
+                                        className="rounded-lg border border-transparent py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
+                                        placeholder="Enter diagnosis"
+                                        required
+                                    />
+                                    <input
+                                        type="text"
+                                        id="notes"
+                                        name="notes"
+                                        className="rounded-lg border border-transparent py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-sky-600"
+                                        placeholder="Enter notes"
+                                        required
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="w-full rounded-lg bg-sky-600 py-2 px-4 text-center font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-sky-200"
+                                    >
+                                        Submit
+                                    </button>
+                                </form>
+                            )}
                         </div>
                     </>
                 ) : (
@@ -108,7 +152,7 @@ const Doctor = ({ pid, data }) => {
                     </form>
                 )
             }
-        </div>
+        </div >
 
     )
 }

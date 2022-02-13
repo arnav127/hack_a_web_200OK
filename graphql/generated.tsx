@@ -1215,7 +1215,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', tokenAuth?: { __typename?: 'ObtainJSONWebToken', token?: string | null, success?: boolean | null, errors?: any | null, user?: { __typename?: 'UserNode', firstName: string, isHospital: boolean, isDoctor: boolean, hospital?: { __typename?: 'HospitalType', name: string } | null, doctor?: { __typename?: 'DoctorType', name: string, hospital: { __typename?: 'HospitalType', name: string } } | null } | null } | null };
+export type LoginMutation = { __typename?: 'Mutation', tokenAuth?: { __typename?: 'ObtainJSONWebToken', token?: string | null, success?: boolean | null, errors?: any | null, user?: { __typename?: 'UserNode', firstName: string, isHospital: boolean, isDoctor: boolean, hospital?: { __typename?: 'HospitalType', name: string } | null, doctor?: { __typename?: 'DoctorType', id: string, name: string, hospital: { __typename?: 'HospitalType', name: string } } | null } | null } | null };
 
 export type CreatePatientAuthorizedHospitalMutationVariables = Exact<{
   patientId?: InputMaybe<Scalars['String']>;
@@ -1569,6 +1569,7 @@ export const LoginDocument = gql`
         name
       }
       doctor {
+        id
         name
         hospital {
           name

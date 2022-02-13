@@ -9,6 +9,7 @@ mutation login($username: String!, $password: String!) {
         name
       }
       doctor {
+        id
         name
         hospital {
           name
