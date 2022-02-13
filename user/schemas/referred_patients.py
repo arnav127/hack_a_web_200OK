@@ -2,9 +2,8 @@ from venv import create
 import graphene
 
 from graphene_django import DjangoObjectType
-from resources.models import HospitalResource
 from opd.models import DoctorPatientAssigned
-from user.models import ReferredPatients
+from user.models import Hospital, PatientAuthorizedHospital, ReferredPatients, Patient
 from graphql_jwt.decorators import login_required
 
 
@@ -49,12 +48,22 @@ class CreateReferredPatient(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, patient, hospital_referred, reason):
+        pat = Patient.objects.get(pk=patient)
+        hos_r = Hospital.objects.get(pk=hospital_referred)
         referred_patient = ReferredPatients.objects.create(
-            patient=patient,
-            hospital_referred=hospital_referred,
+            patient=pat,
+            hospital_referred=hos_r,
             hospital_referred_by=info.context.user.hospital,
-            reason=reason,
+            reason_referred=reason,
         )
+        PatientAuthorizedHospital.objects.filter(hospital_id=info.context.user.hospital, patient_id=pat).delete()
+        PatientAuthorizedHospital.objects.create(hospital_id=info.context.user.hospital, patient_id=pat)
+        DoctorPatientAssigned.objects.filter(patient=pat).delete()
+        # ideally we will set that the patient is referred now
+        # dpa = DoctorPatientAssigned.objects.filter(patient=pat).last()
+        # dpa.status = "REFERRED"
+        # dpa.save()
+
         return CreateReferredPatient(referred_patient=referred_patient, ok=True)
 
 
