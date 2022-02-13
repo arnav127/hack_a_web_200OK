@@ -2,9 +2,7 @@ from venv import create
 import graphene
 
 from graphene_django import DjangoObjectType
-from resources.models import HospitalResource
-from opd.models import DoctorPatientAssigned
-from user.models import ReferredPatients
+from user.models import Hospital, ReferredPatients, Patient
 from graphql_jwt.decorators import login_required
 
 
@@ -49,9 +47,11 @@ class CreateReferredPatient(graphene.Mutation):
     @classmethod
     @login_required
     def mutate(self, root, info, patient, hospital_referred, reason):
+        pat = Patient.objects.get(pk=patient)
+        hos_r = Hospital.objects.get(pk=hospital_referred)
         referred_patient = ReferredPatients.objects.create(
-            patient=patient,
-            hospital_referred=hospital_referred,
+            patient=pat,
+            hospital_referred=hos_r,
             hospital_referred_by=info.context.user.hospital,
             reason=reason,
         )
