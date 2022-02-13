@@ -90,3 +90,26 @@ query admittedRecords {
     }
   }
 }
+
+query currentHospitalResources {
+  currentHospitalResource {
+    id
+    bedCapacity
+    bedAvailable
+    ventilatorCapacity
+    ventilatorAvailable
+    icuCapacity
+    icuAvailable
+    bloodTest
+    urineTest
+    xray
+    ultrasound
+    mri
+    ecg
+    eeg
+    ekg
+    catscan
+    mammogram
+    colonoscopy
+  }
+}
