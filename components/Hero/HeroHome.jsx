@@ -24,10 +24,10 @@ function HeroHome() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
-        <div className="pt-32 pb-12 md:pt-40 md:pb-20">
+        <div className="pt-32 pb-12 md:pt-20 md:pb-20">
 
           <div className="text-center pb-12 md:pb-16">
-            <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out"> <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">D O C C O</span></h1>
+            <h1 className="text-5xl md:text-8xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out"> <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400 transition drop-shadow-sm hover:drop-shadow-xl">D O C C O</span></h1>
             <div className="max-w-3xl mx-auto">
               <p className="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150">Docco is a patient management system that helps hospitals transfer and manage all the records of the patients. It provides two interfaces, one for hospital staff and one for doctors. 
               
@@ -77,7 +77,7 @@ function HeroHome() {
                 </svg>
               </div>
               <Link href="/login">
-              <a className="absolute top-full flex items-center transform -translate-y-1/2 bg-white rounded-full font-medium group p-4 shadow-lg" aria-controls="modal">
+              <a className="absolute top-full flex items-center transform -translate-y-1/2 bg-white rounded-full font-medium group px-12 py-4 shadow-lg transition hover:shadow-2xl" aria-controls="modal">
                 <div className="max-w-3xl mx-auto">
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400"> L O G I N</span>
                 </div>
