@@ -10,7 +10,6 @@ import {
 
 const PatientRecords = ({ pid, data }) => {
     const [createTestResultMutation] = useCreateTestResultMutation();
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
@@ -45,7 +44,7 @@ const PatientRecords = ({ pid, data }) => {
                 },
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then((res) => {
-                        console.log(res)
+                        console.log("Hereeee", res)
                         createTestResultMutation({
                             variables: {
                                 media: res,
