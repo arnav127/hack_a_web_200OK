@@ -12,12 +12,10 @@ graphene = "*"
 django-cors-headers = "*"
 psycopg2 = "*"
 inflection = "*"
-gunicorn = "*"
-django-environ = "*"
-whitenoise = "*"
 numpy = "*"
 scikit-learn = "*"
 pandas = "*"
+fpdf = "*"
 
 [dev-packages]
 sqlalchemy = "*"
