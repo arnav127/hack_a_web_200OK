@@ -9,6 +9,7 @@ from opd.schema import OpdQuery, OpdMutation
 
 from mayodata.schema import DiseaseInfoQuery
 
+
 class Query(
     DiseaseInfoQuery,
     OpdQuery,

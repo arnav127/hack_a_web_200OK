@@ -19,7 +19,9 @@ class MedicinePrescription(models.Model):
 class MedicineRecord(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     prescriptions = models.ManyToManyField(MedicinePrescription, blank=True)
-    prescription = models.CharField(max_length=255, blank=False, verbose_name="Prescription Names")
+    prescription = models.CharField(
+        max_length=255, blank=False, verbose_name="Prescription Names"
+    )
 
     def __str__(self) -> str:
         return f"MedRec - {self.patient.name}"
@@ -30,7 +32,9 @@ class DoctorNotes(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     diagnosis = models.TextField(verbose_name="Diagnosis")
     notes = models.TextField(verbose_name="Doctor Notes")
-    predicted_disease = models.CharField(max_length=255, blank=True, verbose_name="Predicted Disease")
+    predicted_disease = models.CharField(
+        max_length=255, blank=True, verbose_name="Predicted Disease"
+    )
 
     def __str__(self) -> str:
         return f"Notes - {self.patient.name} - {self.doctor.name}"

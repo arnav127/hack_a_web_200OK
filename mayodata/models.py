@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class DiseaseInfo(models.Model):
     name = models.CharField(max_length=255, blank=False, verbose_name="Disease Name")
     link = models.TextField(verbose_name="More info Link")
