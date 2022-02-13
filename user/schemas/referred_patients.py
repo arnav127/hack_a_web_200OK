@@ -59,6 +59,11 @@ class CreateReferredPatient(graphene.Mutation):
         PatientAuthorizedHospital.objects.filter(hospital_id=info.context.user.hospital, patient_id=pat).delete()
         PatientAuthorizedHospital.objects.create(hospital_id=info.context.user.hospital, patient_id=pat)
         DoctorPatientAssigned.objects.filter(patient=pat).delete()
+        # ideally we will set that the patient is referred now
+        # dpa = DoctorPatientAssigned.objects.filter(patient=pat).last()
+        # dpa.status = "REFERRED"
+        # dpa.save()
+
         return CreateReferredPatient(referred_patient=referred_patient, ok=True)
 
 
