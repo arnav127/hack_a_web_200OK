@@ -29,10 +29,14 @@ mutation updateDoctorPatientAssigned($id: String!, $newStatus: String!) {
 
 query allDoctors {
   me {
-    hospital {
-      doctorSet {
-        id
-        name
+    doctor {
+      name
+      hospital {
+        doctorSet {
+          id
+          name
+          specialization
+        }
       }
     }
   }

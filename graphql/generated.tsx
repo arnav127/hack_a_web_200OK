@@ -178,6 +178,7 @@ export type DoctorNotesType = {
   id: Scalars['ID'];
   notes: Scalars['String'];
   patient: PatientType;
+  predictedDisease: Scalars['String'];
 };
 
 export type DoctorPatientAssignedType = {
@@ -1201,7 +1202,7 @@ export type UpdateDoctorPatientAssignedMutation = { __typename?: 'Mutation', upd
 export type AllDoctorsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllDoctorsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', hospital?: { __typename?: 'HospitalType', doctorSet: Array<{ __typename?: 'DoctorType', id: string, name: string }> } | null } | null };
+export type AllDoctorsQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', doctor?: { __typename?: 'DoctorType', name: string, hospital: { __typename?: 'HospitalType', doctorSet: Array<{ __typename?: 'DoctorType', id: string, name: string, specialization: string }> } } | null } | null };
 
 export type AssignedPatientsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1471,10 +1472,14 @@ export type UpdateDoctorPatientAssignedMutationOptions = Apollo.BaseMutationOpti
 export const AllDoctorsDocument = gql`
     query allDoctors {
   me {
-    hospital {
-      doctorSet {
-        id
-        name
+    doctor {
+      name
+      hospital {
+        doctorSet {
+          id
+          name
+          specialization
+        }
       }
     }
   }
