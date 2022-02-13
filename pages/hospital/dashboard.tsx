@@ -49,34 +49,34 @@ const Dashboard = () => {
                             </p>
                         </div>
                     </div>
-                    <hr className="border border-gray-100 mt-8" />
+                    <hr className="mt-8 border border-gray-100" />
                 </>
             }
             <div className="flex flex-wrap gap-8 my-8">
                 <Link href="/hospital/patients/create">
-                    <a className="p-4 inline-flex items-center justify-center text-xl h-32 bg-white rounded-lg shadow flex-1">
+                    <a className="inline-flex flex-1 justify-center items-center p-4 h-32 text-xl bg-white rounded-lg shadow">
                         Admit New Patient
                     </a>
                 </Link>
                 <Link href="/hospital/patients/search">
-                    <a className="p-4 inline-flex items-center justify-center text-xl h-32 bg-white rounded-lg shadow flex-1">
+                    <a className="inline-flex flex-1 justify-center items-center p-4 h-32 text-xl bg-white rounded-lg shadow">
                         Search Patients
                     </a>
                 </Link>
                 <Link href="/hospital/patients/view">
-                    <a className="p-4 inline-flex items-center justify-center text-xl h-32 bg-white rounded-lg shadow flex-1">
+                    <a className="inline-flex flex-1 justify-center items-center p-4 h-32 text-xl bg-white rounded-lg shadow">
                         View Admitted Patients
                     </a>
                 </Link>
             </div>
             <div className="flex flex-wrap gap-8 my-8">
                 <Link href="/hospital/nearby">
-                    <a className="p-4 inline-flex items-center justify-center text-xl h-32 bg-white rounded-lg shadow flex-1">
+                    <a className="inline-flex flex-1 justify-center items-center p-4 h-32 text-xl bg-white rounded-lg shadow">
                         View Nearby Hospitals
                     </a>
                 </Link>
                 <Link href="/hospital/doctors">
-                    <a className="p-4 inline-flex items-center justify-center text-xl h-32 bg-white rounded-lg shadow flex-1">
+                    <a className="inline-flex flex-1 justify-center items-center p-4 h-32 text-xl bg-white rounded-lg shadow">
                         On Call Doctors
                     </a>
                 </Link>

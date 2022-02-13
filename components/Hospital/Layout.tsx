@@ -19,14 +19,14 @@ const Layout = ({ title, children }) => {
           <HospitalSideNav title={title} />
         )}
         <section className="h-screen flex-1 overflow-y-auto bg-gray-100/50">
-          <header className="flex h-20 items-center justify-between p-4 text-sm">
+          <header className="flex justify-between items-center p-4 h-20 text-sm">
             <h1 className="text-2xl font-bold">{title}</h1>
             <button
-              className="inline-flex items-center gap-2 rounded-lg py-2 px-3 font-semibold hover:bg-gray-100"
+              className="inline-flex gap-2 items-center py-2 px-3 font-semibold rounded-lg hover:bg-gray-100"
               onClick={logout}
             >
               <svg
-                className="h-6 w-6"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

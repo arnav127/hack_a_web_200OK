@@ -16,7 +16,7 @@ const Dashboard = () => {
     return (
         <Layout title="Patient Records">
             {(!loading && !error) && (
-                <table className="items-center bg-transparent w-full border-collapse overflow-x-auto">
+                <table className="overflow-x-auto items-center w-full bg-transparent border-collapse">
                     <thead>
                         <tr>
                             <th className={styles.colHead}>

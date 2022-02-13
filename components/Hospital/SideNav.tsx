@@ -24,9 +24,9 @@ const SideNav = () => {
   const { user } = useAuth()
   return (
     <nav className="min-h-screen border-r-2 border-gray-100 bg-gray-100/50 px-4 md:w-72">
-      <div className="flex h-20 items-center">
+      <div className="flex items-center h-20">
         <svg
-          className="h-8 w-8"
+          className="w-8 h-8"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
         >
@@ -44,7 +44,7 @@ const SideNav = () => {
       </div>
 
       <div>
-        <h3 className="py-2 text-xs font-semibold uppercase tracking-wide">
+        <h3 className="py-2 text-xs font-semibold tracking-wide uppercase">
           General
         </h3>
         <NavLink
@@ -52,7 +52,7 @@ const SideNav = () => {
           href="/hospital/dashboard"
           icon={
             <svg
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -69,7 +69,7 @@ const SideNav = () => {
         />
       </div>
       <div>
-        <h3 className="text-xs font-semibold uppercase tracking-wide">
+        <h3 className="text-xs font-semibold tracking-wide uppercase">
           Patients
         </h3>
         <NavLink
@@ -78,7 +78,7 @@ const SideNav = () => {
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -98,7 +98,7 @@ const SideNav = () => {
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -117,7 +117,7 @@ const SideNav = () => {
           href="/hospital/patients/view"
           icon={
             <svg
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

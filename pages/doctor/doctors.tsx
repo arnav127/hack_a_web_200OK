@@ -19,13 +19,13 @@ const Dashboard = () => {
         {data?.me?.doctor?.hospital?.doctorSet.length > 0 &&
           data?.me?.doctor?.hospital?.doctorSet.map((doctor) => {
             return (
-              <div className="w-64 rounded-lg bg-white p-4 shadow">
+              <div className="p-4 w-64 bg-white rounded-lg shadow">
                 <p>
-                  <span className="block text-sm font-semibold uppercase leading-tight">
+                  <span className="block text-sm font-semibold leading-tight uppercase">
                     Name
                   </span>
                   Dr. {doctor.name} <br />
-                  <span className="mt-4 block text-sm font-semibold uppercase leading-tight">
+                  <span className="block mt-4 text-sm font-semibold leading-tight uppercase">
                     Specialization
                   </span>
                   {doctor.specialization}
